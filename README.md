@@ -8,15 +8,11 @@ A fully-featured, modern game engine made for educational purposes.
 - Dagger is extremely modular.
 - Dagger is clear and clearly educational.
 
-## Installation
+## Setting up the development environment
 
-You can clone and fully set up this project by simply running:
-
-```git
-  git clone --recursive https://github.com/enoxum/UbiBelPMF_2022.git
-```
-
-Afterwards, run the solution file `dagger.sln` in Visual Studio 2019 to start playing around. 
+- [Windows](docs/setting_up_windows.md)
+- [Linux](docs/setting_up_linux.md)
+- Mac (WIP)
 
 ## Resources
 
