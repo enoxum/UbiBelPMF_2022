@@ -9,7 +9,7 @@ using namespace dagger;
 
 namespace racing_game
 {
-    void SetupWorld(Engine& engine_);
+    void SetupWorld();
 
     class RacingGame : public Game
     {
@@ -18,7 +18,7 @@ namespace racing_game
             return "racing.ini";
         };
 
-        void GameplaySystemsSetup(Engine& engine_) override;
-        void WorldSetup(Engine& engine_) override;
+        void GameplaySystemsSetup() override;
+        void WorldSetup() override;
     };
 }

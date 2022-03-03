@@ -19,17 +19,21 @@
 using namespace dagger;
 using namespace racing_game;
 
-void RacingGame::GameplaySystemsSetup(Engine &engine_)
+void RacingGame::GameplaySystemsSetup()
 {
-    engine_.AddSystem<RacingPlayerInputSystem>();
-    engine_.AddSystem<RacingCarSystem>();
-    engine_.AddSystem<RacingCollisionsLogicSystem>();
-    engine_.AddSystem<SimpleCollisionsSystem>();
-    engine_.AddSystem<common_res::ParticleSystem>();
+    auto& engine = Engine::Instance();
+
+    engine.AddSystem<RacingPlayerInputSystem>();
+    engine.AddSystem<RacingCarSystem>();
+    engine.AddSystem<RacingCollisionsLogicSystem>();
+    engine.AddSystem<SimpleCollisionsSystem>();
+    engine.AddSystem<common_res::ParticleSystem>();
 }
 
-void RacingGame::WorldSetup(Engine &engine_)
+void RacingGame::WorldSetup()
 {
+    auto& engine = Engine::Instance();
+
     ShaderSystem::Use("standard");
 
     auto* camera = Engine::GetDefaultResource<Camera>();
@@ -39,12 +43,13 @@ void RacingGame::WorldSetup(Engine &engine_)
     camera->position = { 0, 0, 0 };
     camera->Update();
 
-    racing_game::SetupWorld(engine_);
+    racing_game::SetupWorld();
 }
 
-void racing_game::SetupWorld(Engine &engine_)
+void racing_game::SetupWorld()
 {
-    auto& reg = engine_.Registry();
+    auto& engine = Engine::Instance();
+    auto& reg = engine.Registry();
 
     constexpr Vector2 scale(1, 1);
 

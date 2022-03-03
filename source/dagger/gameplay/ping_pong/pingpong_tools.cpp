@@ -56,7 +56,7 @@ void PingPongTools::OnEndOfFrame()
         m_RestartGame = false;
         Engine::Registry().clear();
 
-        ping_pong::SetupWorld(Engine::Instance());
+        ping_pong::SetupWorld();
     }
 
     if (m_GenerateBall)

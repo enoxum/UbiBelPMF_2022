@@ -41,7 +41,7 @@ void SpriteRenderSystem::SpinUp()
     const StaticArray<Pair<UInt32, UInt32>, 9> sizesAndStrides = {
         pair(2, 0),     // #2: sub size
         pair(2, 2),     // #3: sub origin
-        pair(2, 4),     // #4: sub origin
+        pair(2, 4),     // #4: sub range
         pair(3, 6),     // #5: quad position
         pair(2, 9),     // #6: quad pivot
         pair(4, 11),    // #7: quad tint color
@@ -220,7 +220,9 @@ void SpriteRenderSystem::OnRender()
 
         const UInt32 renderSize = sizeof(SpriteData) * currentRender.size();
 
-        m_Data = reinterpret_cast<float*>(glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(Sprite) * currentRender.size(), GL_MAP_WRITE_BIT));
+        m_Data = reinterpret_cast<float*>(glMapBufferRange(GL_ARRAY_BUFFER, 
+            0, sizeof(Sprite) * currentRender.size(), GL_MAP_WRITE_BIT));
+
         memcpy(m_Data, &(*currentRender.begin()), renderSize);
         glUnmapBuffer(GL_ARRAY_BUFFER);
 

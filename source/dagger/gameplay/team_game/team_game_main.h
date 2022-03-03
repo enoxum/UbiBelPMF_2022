@@ -9,7 +9,7 @@ using namespace dagger;
 
 namespace team_game
 {
-    void SetupWorld(Engine& engine_);
+    void SetupWorld();
 
     class TeamGame : public Game
     {
@@ -18,7 +18,7 @@ namespace team_game
             return "teamgame.ini";
         };
 
-        void GameplaySystemsSetup(Engine& engine_) override;
-        void WorldSetup(Engine& engine_) override;
+        void GameplaySystemsSetup() override;
+        void WorldSetup() override;
     };
 }

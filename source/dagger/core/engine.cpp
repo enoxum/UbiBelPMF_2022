@@ -93,9 +93,9 @@ void Engine::EngineLoop()
 
 void Engine::EngineStop()
 {
-	for (auto& system : this->m_Systems)
+	for (auto system = this->m_Systems.rbegin(); system != this->m_Systems.rend(); system++)
 	{
-		system->WindDown();
+		(*system)->WindDown();
 	}
 
 	this->m_Systems.clear();

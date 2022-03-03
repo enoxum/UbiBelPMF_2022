@@ -13,22 +13,22 @@ namespace jss {
         template <typename Ptr, bool = std::is_class<Ptr>::value>
         struct has_smart_pointer_ops {
             using false_test = char;
-            template <typename T> struct true_test { false_test dummy[2]; };
+            template <typename Archetype> struct true_test { false_test dummy[2]; };
 
-            template <typename T> static false_test test_op_star(...);
-            template <typename T>
-            static true_test<decltype(*std::declval<T const&>())>
-                test_op_star(T*);
+            template <typename Archetype> static false_test test_op_star(...);
+            template <typename Archetype>
+            static true_test<decltype(*std::declval<Archetype const&>())>
+                test_op_star(Archetype*);
 
-            template <typename T> static false_test test_op_arrow(...);
-            template <typename T>
-            static true_test<decltype(std::declval<T const&>().operator->())>
-                test_op_arrow(T*);
+            template <typename Archetype> static false_test test_op_arrow(...);
+            template <typename Archetype>
+            static true_test<decltype(std::declval<Archetype const&>().operator->())>
+                test_op_arrow(Archetype*);
 
-            template <typename T> static false_test test_get(...);
-            template <typename T>
-            static true_test<decltype(std::declval<T const&>().get())>
-                test_get(T*);
+            template <typename Archetype> static false_test test_get(...);
+            template <typename Archetype>
+            static true_test<decltype(std::declval<Archetype const&>().get())>
+                test_get(Archetype*);
 
             static constexpr bool value =
                 !std::is_same<decltype(test_get<Ptr>(0)), false_test>::value &&
@@ -76,16 +76,16 @@ namespace jss {
 
         /// Check if Ptr is a smart pointer that holds a pointer convertible to
         /// T*
-        template <typename Ptr, typename T, bool = is_smart_pointer<Ptr>::value>
+        template <typename Ptr, typename Archetype, bool = is_smart_pointer<Ptr>::value>
         struct is_convertible_smart_pointer
             : std::integral_constant<
             bool, std::is_convertible<
             decltype(std::declval<Ptr const&>().get()),
-            T*>::value> {};
+            Archetype*>::value> {};
 
         /// If Ptr isn't a smart pointer then we don't want it
-        template <typename Ptr, typename T>
-        struct is_convertible_smart_pointer<Ptr, T, false> : std::false_type {};
+        template <typename Ptr, typename Archetype>
+        struct is_convertible_smart_pointer<Ptr, Archetype, false> : std::false_type {};
 
     }
 
@@ -94,19 +94,19 @@ namespace jss {
     /// array operations, and the pointee cannot be accidentally deleted. It
     /// supports implicit conversion from any smart pointer that holds a pointer
     /// convertible to T*
-    template <typename T> class object_ptr {
+    template <typename Archetype> class object_ptr {
     public:
         /// Construct a null pointer
         constexpr object_ptr() noexcept : ptr(nullptr) {}
         /// Construct a null pointer
         constexpr object_ptr(std::nullptr_t) noexcept : ptr(nullptr) {}
         /// Construct an object_ptr from a raw pointer
-        constexpr object_ptr(T* ptr_) noexcept : ptr(ptr_) {}
+        constexpr object_ptr(Archetype* ptr_) noexcept : ptr(ptr_) {}
         /// Construct an object_ptr from a raw pointer convertible to T*, such
         /// as BaseOfT*
         template <
             typename U,
-            typename = std::enable_if_t<std::is_convertible<U*, T*>::value>>
+            typename = std::enable_if_t<std::is_convertible<U*, Archetype*>::value>>
             constexpr object_ptr(U* ptr_) noexcept : ptr(ptr_) {}
         /// Construct an object_ptr from a smart pointer that holds a pointer
         /// convertible to T*,
@@ -114,21 +114,21 @@ namespace jss {
         template <
             typename Ptr,
             typename = std::enable_if_t<
-            detail::is_convertible_smart_pointer<Ptr, T>::value>>
+            detail::is_convertible_smart_pointer<Ptr, Archetype>::value>>
             constexpr object_ptr(Ptr const& other) noexcept : ptr(other.get()) {}
 
         /// Get the raw pointer value
-        constexpr T* get() const noexcept {
+        constexpr Archetype* get() const noexcept {
             return ptr;
         }
 
         /// Dereference the pointer
-        constexpr T& operator*() const noexcept {
+        constexpr Archetype& operator*() const noexcept {
             return *ptr;
         }
 
         /// Dereference the pointer for ptr->m usage
-        constexpr T* operator->() const noexcept {
+        constexpr Archetype* operator->() const noexcept {
             return ptr;
         }
 
@@ -138,7 +138,7 @@ namespace jss {
         }
 
         /// Convert to a raw pointer where necessary
-        constexpr explicit operator T* () const noexcept {
+        constexpr explicit operator Archetype* () const noexcept {
             return ptr;
         }
 
@@ -148,7 +148,7 @@ namespace jss {
         }
 
         /// Change the value
-        void reset(T* ptr_ = nullptr) noexcept {
+        void reset(Archetype* ptr_ = nullptr) noexcept {
             ptr = ptr_;
         }
 
@@ -187,17 +187,17 @@ namespace jss {
 
     private:
         /// The stored pointer
-        T* ptr;
+        Archetype* ptr;
     };
 
 }
 
 namespace std {
     /// Allow hashing object_ptrs so they can be used as keys in unordered_map
-    template <typename T> struct hash<jss::object_ptr<T>> {
-        constexpr size_t operator()(jss::object_ptr<T> const& p) const
+    template <typename Archetype> struct hash<jss::object_ptr<Archetype>> {
+        constexpr size_t operator()(jss::object_ptr<Archetype> const& p) const
             noexcept {
-            return hash<T*>()(p.get());
+            return hash<Archetype*>()(p.get());
         }
     };
 

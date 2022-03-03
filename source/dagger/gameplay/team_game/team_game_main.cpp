@@ -14,12 +14,13 @@
 using namespace dagger;
 using namespace team_game;
 
-void TeamGame::GameplaySystemsSetup(Engine &engine_)
+void TeamGame::GameplaySystemsSetup()
 {
-    engine_.AddSystem<SimpleCollisionsSystem>();
+    auto& engine = Engine::Instance();
+    engine.AddSystem<SimpleCollisionsSystem>();
 }
 
-void TeamGame::WorldSetup(Engine &engine_)
+void TeamGame::WorldSetup()
 {
     ShaderSystem::Use("standard");
 
@@ -30,12 +31,13 @@ void TeamGame::WorldSetup(Engine &engine_)
     camera->position = { 0, 0, 0 };
     camera->Update();
 
-    team_game::SetupWorld(engine_);
+    team_game::SetupWorld();
 }
 
-void team_game::SetupWorld(Engine &engine_)
+void team_game::SetupWorld()
 {
-    auto& reg = engine_.Registry();
+    auto& engine = Engine::Instance();
+    auto& reg = engine.Registry();
 
     float zPos = 1.f;
 
