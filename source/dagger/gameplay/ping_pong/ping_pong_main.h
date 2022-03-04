@@ -10,7 +10,7 @@ using namespace dagger;
 namespace ping_pong
 {
     void CreatePingPongBall(float tileSize_, ColorRGBA color_, Vector3 speed_, Vector3 pos_);
-    void SetupWorld(Engine& engine_);
+    void SetupWorld();
 
     class PingPongGame : public Game
     {
@@ -19,8 +19,8 @@ namespace ping_pong
             return "pingpong.ini";
         };
 
-        void CoreSystemsSetup(Engine& engine_) override;
-        void GameplaySystemsSetup(Engine& engine_) override;
-        void WorldSetup(Engine& engine_) override;
+        void CoreSystemsSetup() override;
+        void GameplaySystemsSetup() override;
+        void WorldSetup() override;
     };
 }

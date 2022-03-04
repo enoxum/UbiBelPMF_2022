@@ -217,6 +217,8 @@ namespace dagger
     {
         static Bool IsInputDown(EDaggerKeyboard key_);
         static Bool IsInputDown(EDaggerMouse button_);
+        static Bool IsInputReleased(EDaggerKeyboard key_);
+        static Bool IsInputReleased(EDaggerMouse button_);
 
         static const Vector2 CursorPositionInWindow();
         static const Vector2 CursorPositionInScreen();

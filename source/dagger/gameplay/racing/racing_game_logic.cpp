@@ -52,6 +52,6 @@ void RacingCollisionsLogicSystem::OnEndOfFrame()
         m_Restart = false;
         Engine::Registry().clear();
 
-        racing_game::SetupWorld(Engine::Instance());
+        racing_game::SetupWorld();
     }
 }

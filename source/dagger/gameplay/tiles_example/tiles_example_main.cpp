@@ -18,10 +18,10 @@
 using namespace dagger;
 using namespace tiles_example;
 
-void TilesExampleMain::GameplaySystemsSetup(Engine& engine_) 
+void TilesExampleMain::GameplaySystemsSetup() 
 {}
 
-void TilesExampleMain::WorldSetup(Engine& engine_) 
+void TilesExampleMain::WorldSetup() 
 {
     auto& reg = Engine::Registry();
     for (int i = -50; i < 50; i++)

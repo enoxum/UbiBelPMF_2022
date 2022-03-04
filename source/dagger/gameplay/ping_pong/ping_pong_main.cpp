@@ -45,34 +45,38 @@ void ping_pong::CreatePingPongBall(float tileSize_, ColorRGBA color_, Vector3 sp
     col.size.y = tileSize_;
 }
 
-void PingPongGame::CoreSystemsSetup(Engine& engine_)
+void PingPongGame::CoreSystemsSetup()
 {
-    engine_.AddSystem<WindowSystem>();
-    engine_.AddSystem<InputSystem>();
-    engine_.AddSystem<ShaderSystem>();
-    engine_.AddSystem<TextureSystem>();
-    engine_.AddSystem<SpriteRenderSystem>();
-    engine_.AddPausableSystem<TransformSystem>();
-    engine_.AddPausableSystem<AnimationSystem>();
+    auto& engine = Engine::Instance();
+
+    engine.AddSystem<WindowSystem>();
+    engine.AddSystem<InputSystem>();
+    engine.AddSystem<ShaderSystem>();
+    engine.AddSystem<TextureSystem>();
+    engine.AddSystem<SpriteRenderSystem>();
+    engine.AddPausableSystem<TransformSystem>();
+    engine.AddPausableSystem<AnimationSystem>();
 #if !defined(NDEBUG)
-    engine_.AddSystem<DiagnosticSystem>();
-    engine_.AddSystem<GUISystem>();
-    engine_.AddSystem<ToolMenuSystem>();
+    engine.AddSystem<DiagnosticSystem>();
+    engine.AddSystem<GUISystem>();
+    engine.AddSystem<ToolMenuSystem>();
 #endif //!defined(NDEBUG)
 }
 
-void PingPongGame::GameplaySystemsSetup(Engine& engine_)
+void PingPongGame::GameplaySystemsSetup()
 {
-    engine_.AddPausableSystem<SimpleCollisionsSystem>();
-    engine_.AddPausableSystem<PingPongBallSystem>();
-    engine_.AddPausableSystem<PingPongPlayerInputSystem>();
-    engine_.AddPausableSystem<PlayerScoresSystem>();
+    auto& engine = Engine::Instance();
+
+    engine.AddPausableSystem<SimpleCollisionsSystem>();
+    engine.AddPausableSystem<PingPongBallSystem>();
+    engine.AddPausableSystem<PingPongPlayerInputSystem>();
+    engine.AddPausableSystem<PlayerScoresSystem>();
 #if defined(DAGGER_DEBUG)
-    engine_.AddPausableSystem<PingPongTools>();
+    engine.AddPausableSystem<PingPongTools>();
 #endif //defined(DAGGER_DEBUG)
 }
 
-void PingPongGame::WorldSetup(Engine& engine_)
+void PingPongGame::WorldSetup()
 {
     auto* camera = Engine::GetDefaultResource<Camera>();
     camera->mode = ECameraMode::FixedResolution;
@@ -81,14 +85,15 @@ void PingPongGame::WorldSetup(Engine& engine_)
     camera->position = { 0, 0, 0 };
     camera->Update();
 
-    SetupWorld(engine_);
+    SetupWorld();
 }
 
-void ping_pong::SetupWorld(Engine& engine_)
+void ping_pong::SetupWorld()
 {
     Vector2 scale(1, 1);
 
-    auto& reg = engine_.Registry();
+    auto& engine = Engine::Instance();
+    auto& reg = engine.Registry();
 
     // field
     constexpr int screenWidth = 800;

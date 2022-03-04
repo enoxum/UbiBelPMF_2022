@@ -95,41 +95,41 @@ namespace dagger
 			return *(s_Instance->m_Registry.get());
 		}
 
-		template<typename K, typename T>
-		inline static tsl::sparse_map<K, T>& Cache()
+		template<typename K, typename Archetype>
+		inline static tsl::sparse_map<K, Archetype>& Cache()
 		{
-			static tsl::sparse_map<K, T> s_CachedMap;
+			static tsl::sparse_map<K, Archetype> s_CachedMap;
 			return s_CachedMap;
 		}
 
-		template<typename T>
-		inline static T* GetDefaultResource()
+		template<typename Archetype>
+		inline static Archetype* GetDefaultResource()
 		{
-			return Res<T>()[""];
+			return Res<Archetype>()[""];
 		}
 
-		template<typename T>
-		inline static void PutDefaultResource(T* ptr_)
+		template<typename Archetype>
+		inline static void PutDefaultResource(Archetype* ptr_)
 		{
-			Res<T>()[""] = ptr_;
+			Res<Archetype>()[""] = ptr_;
 		}
 
-		template<typename T>
-		inline static T* GetResource(String name_)
+		template<typename Archetype>
+		inline static Archetype* GetResource(String name_)
 		{
-			return Res<T>()[name_];
+			return Res<Archetype>()[name_];
 		}
 
-		template<typename T>
-		inline static void PutResource(String name_, T* ptr_)
+		template<typename Archetype>
+		inline static void PutResource(String name_, Archetype* ptr_)
 		{
-			Res<T>()[name_] = ptr_;
+			Res<Archetype>()[name_] = ptr_;
 		}
 
-		template<typename T>
-		inline static tsl::sparse_map<std::string, T*>& Res()
+		template<typename Archetype>
+		inline static tsl::sparse_map<std::string, Archetype*>& Res()
 		{
-			static tsl::sparse_map<std::string, T*> s_CachedMap;
+			static tsl::sparse_map<std::string, Archetype*> s_CachedMap;
 			return s_CachedMap;
 		}
 
@@ -164,11 +164,11 @@ namespace dagger
 				exit(-1);
 			}
 
-			m_Game->CoreSystemsSetup(*this);
-			m_Game->GameplaySystemsSetup(*this);
+			m_Game->CoreSystemsSetup();
+			m_Game->GameplaySystemsSetup();
 
 			EngineInit();
-			m_Game->WorldSetup(*this);
+			m_Game->WorldSetup();
 
 			while (m_ShouldStayUp)
 				EngineLoop();

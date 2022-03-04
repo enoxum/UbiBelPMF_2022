@@ -44,6 +44,11 @@ public:
         return m_Ratio;
     }
 
+    inline const String Name() const
+    {
+        return m_Name;
+    }
+
     Texture()
         : m_Name{}
         , m_Width{ 0 }

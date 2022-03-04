@@ -16,7 +16,7 @@ namespace tiles_example
             return "tiles_example.ini";
         };
 
-        void GameplaySystemsSetup(Engine& engine_) override;
-        void WorldSetup(Engine& engine_) override;
+        void GameplaySystemsSetup() override;
+        void WorldSetup() override;
     };
 }

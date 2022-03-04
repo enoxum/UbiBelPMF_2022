@@ -24,11 +24,13 @@
 using namespace dagger;
 using namespace platformer;
 
-void Platformer::GameplaySystemsSetup(Engine& engine_)
+void Platformer::GameplaySystemsSetup()
 {
-	engine_.AddSystem<PlatformerControllerSystem>();
-    engine_.AddSystem<ParallaxSystem>();
-    engine_.AddSystem<CameraFollowSystem>();
+    auto& engine = Engine::Instance();
+
+	engine.AddSystem<PlatformerControllerSystem>();
+    engine.AddSystem<ParallaxSystem>();
+    engine.AddSystem<CameraFollowSystem>();
 }
 
 void SetCamera()
@@ -142,7 +144,7 @@ void CreateBackdrop()
     }
 }
 
-void Platformer::WorldSetup(Engine& engine_)
+void Platformer::WorldSetup()
 {
     Engine::GetDefaultResource<Audio>()->PlayLoop("music");
 

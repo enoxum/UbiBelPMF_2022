@@ -41,13 +41,13 @@ using Entity = entt::entity;
 #define EPSILON_NOT_ZERO(a)     EPSILON_NOT_EQUAL(a, 0.0f)
 
 // OwningPtr<T>: the pointer is owned and destroyed by whoever holds this instance.
-template<typename T>
-using OwningPtr = std::unique_ptr<T>;
+template<typename Archetype>
+using OwningPtr = std::unique_ptr<Archetype>;
 
 // ViewPtr<T>: the pointer is not owned or managed by whoever holds this instance.
 // It just views the object through this. Can be used anywhere a raw pointer could be used.
-template<typename T>
-using ViewPtr = jss::object_ptr<T>;
+template<typename Archetype>
+using ViewPtr = jss::object_ptr<Archetype>;
 
 // Pair<A, B>: contains two types with no other relations in it.
 template<typename A, typename B>
@@ -56,12 +56,12 @@ using Pair = std::pair<A, B>;
 #define pair(X, Y)  std::make_pair((X), (Y))
 
 // StaticArray<T, N>: a contiguous sequence of statically-sized elements in memory.
-template<typename T, int N>
-using StaticArray = std::array<T, N>;
+template<typename Archetype, int N>
+using StaticArray = std::array<Archetype, N>;
 
 // Sequence<T>: a contiguous sequence of elements in memory.
-template<typename T>
-using Sequence = std::vector<T>;
+template<typename Archetype>
+using Sequence = std::vector<Archetype>;
 
 // Map<K, V>: a quick map with keys of type K and elements of type V.
 template<typename K, typename V>

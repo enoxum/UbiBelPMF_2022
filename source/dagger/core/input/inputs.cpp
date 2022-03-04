@@ -319,6 +319,20 @@ Bool dagger::Input::IsInputDown(EDaggerMouse button_)
 	return state->mouse[(UInt32)button_ - MouseStart];
 }
 
+Bool dagger::Input::IsInputReleased(EDaggerKeyboard key_)
+{
+	const auto key = (UInt32)key_;
+	const auto* state = Engine::GetDefaultResource<InputState>();
+	return !state->keys[key] && state->releasedLastFrame.contains(key);
+}
+
+Bool dagger::Input::IsInputReleased(EDaggerMouse button_)
+{
+	const auto button = (UInt32)button_ - MouseStart;
+	const auto* state = Engine::GetDefaultResource<InputState>();
+	return !state->mouse[button] && state->releasedLastFrame.contains(button);
+}
+
 const Vector2 dagger::Input::CursorPositionInWindow()
 {
 	const auto* state = Engine::GetDefaultResource<InputState>();

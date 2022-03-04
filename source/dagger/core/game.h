@@ -8,10 +8,10 @@ namespace dagger
 
     struct Game
     {
-        virtual void CoreSystemsSetup(Engine& engine_);
+        virtual void CoreSystemsSetup();
 
         virtual String GetIniFile() = 0;
-        virtual void GameplaySystemsSetup(Engine& engine_) = 0;
-        virtual void WorldSetup(Engine& engine_) = 0;
+        virtual void GameplaySystemsSetup() = 0;
+        virtual void WorldSetup() = 0;
     };
 }

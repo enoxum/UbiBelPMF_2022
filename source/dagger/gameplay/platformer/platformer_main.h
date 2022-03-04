@@ -14,7 +14,7 @@ namespace platformer
             return "platformer.ini";
         }
 
-        void GameplaySystemsSetup(Engine& engine_) override;
-        void WorldSetup(Engine& engine_) override;
+        void GameplaySystemsSetup() override;
+        void WorldSetup() override;
     };
 }
