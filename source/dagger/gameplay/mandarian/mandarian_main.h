@@ -9,6 +9,8 @@
 #include "core/game/transforms.h"
 #include "core/input/inputs.h"
 
+#include "gameplay/common/simple_physics.h"
+
 using namespace dagger;
 
 namespace mandarian
@@ -19,6 +21,7 @@ namespace mandarian
         Entity entity;
         Sprite &sprite;
         Transform &transform;
+        Body &body;
         InputReceiver &input;
 
         static Character Get(Entity);

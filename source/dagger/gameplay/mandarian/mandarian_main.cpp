@@ -13,9 +13,10 @@ Character Character::Get(Entity entity)
     auto &reg = Engine::Registry();
     auto &sprite = reg.get_or_emplace<Sprite>(entity);
     auto &transform = reg.get_or_emplace<Transform>(entity);
+    auto &body = reg.get_or_emplace<Body>(entity);
     auto &input = reg.get_or_emplace<InputReceiver>(entity);
 
-    return Character{ entity, sprite, transform, input };
+    return Character{ entity, sprite, transform, body, input };
 }
 
 Character Character::Create(
@@ -58,6 +59,7 @@ void MandarianGame::GameplaySystemsSetup()
     auto &engine = Engine::Instance();
 
     engine.AddPausableSystem<MandarianControllerSystem>();
+    engine.AddPausableSystem<SimplePhysicsSystem>();
 }
 
 void MandarianGame::WorldSetup()
@@ -66,5 +68,5 @@ void MandarianGame::WorldSetup()
 
     SetupCamera();
 
-    auto mandarian = Character::Create();
+    Character::Create();
 }

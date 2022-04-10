@@ -11,9 +11,10 @@ using namespace mandarian;
 
 void MandarianControllerSystem::Run()
 {
-    Engine::Registry().view<MandarianControllerFSM::StateComponent>()
-        .each([&](MandarianControllerFSM::StateComponent& state_)
-            {
-                mandarianFSM.Run(state_);
-            });
+    Engine::Registry().view<MandarianControllerFSM::StateComponent>().each(
+        [&](MandarianControllerFSM::StateComponent& state_)
+        {
+            mandarianFSM.Run(state_);
+        }
+    );
 }

@@ -4,17 +4,14 @@
 #include "core/engine.h"
 #include "core/input/inputs.h"
 #include "core/graphics/sprite.h"
-#include "core/game/transforms.h"
 
+#include "gameplay/common/simple_physics.h"
 #include "gameplay/mandarian/mandarian_controller.h"
 
 using namespace dagger;
 using namespace mandarian;
 
-void MandarianControllerFSM::Idle::Enter(MandarianControllerFSM::StateComponent& state_)
-{
-}
-
+DEFAULT_ENTER(MandarianControllerFSM, Idle);
 DEFAULT_EXIT(MandarianControllerFSM, Idle);
 
 void MandarianControllerFSM::Idle::Run(MandarianControllerFSM::StateComponent& state_) 
@@ -30,18 +27,12 @@ void MandarianControllerFSM::Idle::Run(MandarianControllerFSM::StateComponent& s
 	}
 }
 
-
-// Running
-
-void MandarianControllerFSM::Running::Enter(MandarianControllerFSM::StateComponent& state_) 
-{
-}
-
+DEFAULT_ENTER(MandarianControllerFSM, Running);
 DEFAULT_EXIT(MandarianControllerFSM, Running);
 
 void MandarianControllerFSM::Running::Run(MandarianControllerFSM::StateComponent& state_) 
 {
-	auto&& [sprite, transform, input] = Engine::Registry().get<Sprite, Transform, InputReceiver>(state_.entity);
+	auto&& [sprite, body, input] = Engine::Registry().get<Sprite, Body, InputReceiver>(state_.entity);
 
     Float32 runUp = input.Get("runUp");
     Float32 runDown = input.Get("runDown");
@@ -57,17 +48,17 @@ void MandarianControllerFSM::Running::Run(MandarianControllerFSM::StateComponent
 	}
 	else
 	{
-		Vector2 runningVelocity = { 0.0f, 0.0f };
+		Vector2 runningForce = { 0.0f, 0.0f };
 
-		runningVelocity.y += runUp;
-		runningVelocity.y -= runDown;
-		runningVelocity.x -= runLeft;
-		runningVelocity.x += runRight;
+		runningForce.y += runUp;
+		runningForce.y -= runDown;
+		runningForce.x -= runLeft;
+		runningForce.x += runRight;
 
-		if (EPSILON_NOT_ZERO(runningVelocity.x) && EPSILON_NOT_ZERO(runningVelocity.y))
-			runningVelocity = NORMALIZE(runningVelocity);
+		if (EPSILON_NOT_ZERO(runningForce.x) && EPSILON_NOT_ZERO(runningForce.y))
+			runningForce = NORMALIZE(runningForce);
 
-		transform.position.x += 100 * runningVelocity.x * Engine::DeltaTime();
-		transform.position.y += 100 * runningVelocity.y * Engine::DeltaTime();
+
+		body.applyForce(100.0f * runningForce);
 	}
 }
