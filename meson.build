@@ -51,6 +51,8 @@ sources = [
     'source/dagger/gameplay/common/particles.cpp',
     'source/dagger/gameplay/common/simple_collisions.cpp',
     'source/dagger/gameplay/mandarian/mandarian_main.cpp',
+    'source/dagger/gameplay/mandarian/mandarian_controller_fsm.cpp',
+    'source/dagger/gameplay/mandarian/mandarian_controller.cpp',
     'source/dagger/gameplay/editor/editor_main.cpp',
     'source/dagger/gameplay/ping_pong/ping_pong_main.cpp',
     'source/dagger/gameplay/ping_pong/pingpong_ball.cpp',

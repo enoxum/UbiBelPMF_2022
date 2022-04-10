@@ -1,0 +1,9 @@
+{
+    "context-name": "mandarian",
+    "commands": [
+        { "command-name": "runUp", "trigger": "KeyW" },
+        { "command-name": "runDown", "trigger": "KeyS" },
+        { "command-name": "runLeft", "trigger": "KeyA" },
+        { "command-name": "runRight", "trigger": "KeyD"}
+    ]
+}
