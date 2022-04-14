@@ -13,7 +13,7 @@ namespace matattack
 	{
 	public:
 
-		CharacterControllerFSM characterFSM;
+		FSMCharacterController characterFSM;
 
 		String SystemName() override {
 			return "Controller System";

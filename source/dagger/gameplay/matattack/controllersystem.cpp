@@ -13,8 +13,8 @@ using namespace matattack;
 
 void ControllerSystem::Run()
 {
-    Engine::Registry().view<CharacterControllerFSM::StateComponent>()
-        .each([&](CharacterControllerFSM::StateComponent& state_)
+    Engine::Registry().view<FSMCharacterController::StateComponent>()
+        .each([&](FSMCharacterController::StateComponent& state_)
             {
                 characterFSM.Run(state_);
             });

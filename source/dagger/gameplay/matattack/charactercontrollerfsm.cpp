@@ -13,16 +13,16 @@ using namespace dagger;
 // Idle
 
 
-void CharacterControllerFSM::Idle::Enter(CharacterControllerFSM::StateComponent& state_)
+void FSMCharacterController::Idle::Enter(FSMCharacterController::StateComponent& state_)
 {
 	//Logger::trace("idle_enter");
 	//auto& animator = Engine::Registry().get<Animator>(state_.entity);
 	//AnimatorPlay(animator, "souls_like_knight_character:IDLE");
 }
 
-DEFAULT_EXIT(CharacterControllerFSM, Idle);
+DEFAULT_EXIT(FSMCharacterController, Idle);
 
-void CharacterControllerFSM::Idle::Run(CharacterControllerFSM::StateComponent& state_)
+void FSMCharacterController::Idle::Run(FSMCharacterController::StateComponent& state_)
 {
 	auto& input = Engine::Registry().get<InputReceiver>(state_.entity);
 
@@ -37,7 +37,7 @@ void CharacterControllerFSM::Idle::Run(CharacterControllerFSM::StateComponent& s
 
 // Running
 
-void CharacterControllerFSM::Running::Enter(CharacterControllerFSM::StateComponent& state_)
+void FSMCharacterController::Running::Enter(FSMCharacterController::StateComponent& state_)
 {
 	Logger::trace("running_enter");
 	//auto& animator = Engine::Registry().get<Animator>(state_.entity);
@@ -45,10 +45,10 @@ void CharacterControllerFSM::Running::Enter(CharacterControllerFSM::StateCompone
 }
 
 // same as: DEFAULT_EXIT(CharacterControllerFSM, Running);
-void CharacterControllerFSM::Running::Exit(CharacterControllerFSM::StateComponent& state_)
+void FSMCharacterController::Running::Exit(FSMCharacterController::StateComponent& state_)
 {}
 
-void CharacterControllerFSM::Running::Run(CharacterControllerFSM::StateComponent& state_)
+void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent& state_)
 {
 
 	//Logger::trace("running_run");

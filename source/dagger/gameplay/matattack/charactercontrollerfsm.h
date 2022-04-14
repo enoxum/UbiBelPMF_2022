@@ -8,12 +8,12 @@ enum struct ECharacterStates
 	Running
 };
 
-struct CharacterControllerFSM : public FSM<ECharacterStates>
+struct FSMCharacterController : public FSM<ECharacterStates>
 {
-	DEFINE_STATE(CharacterControllerFSM, ECharacterStates, Idle);
-	DEFINE_STATE(CharacterControllerFSM, ECharacterStates, Running);
+	DEFINE_STATE(FSMCharacterController, ECharacterStates, Idle);
+	DEFINE_STATE(FSMCharacterController, ECharacterStates, Running);
 
-	CharacterControllerFSM()
+	FSMCharacterController()
 	{
 		CONNECT_STATE(ECharacterStates, Idle);
 		CONNECT_STATE(ECharacterStates, Running);
