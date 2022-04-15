@@ -118,26 +118,51 @@ void createPlayers()
     auto& reg = engine.Registry();
 
     {
-        auto player = reg.create();
+        auto player1 = reg.create();
 
         // dodajemo komponentu sprite, entitetu player
-        auto& sprite = reg.get_or_emplace<Sprite>(player);
+        auto& sprite = reg.get_or_emplace<Sprite>(player1);
         // dodajemo komponenti sprite, sliku ...
-        AssignSprite(sprite, "EmptyWhitePixel");
-        sprite.size = { 30, 30 };
+        AssignSprite(sprite, "matattack:characters:chickboy:idle:idle1");
+        sprite.size = { 50, 50 };
 
         // dodajemo komponentu Transform, entitenu player
-        auto& transform = reg.emplace<Transform>(player);
-        transform.position = { 0, 0, 0 };
+        auto& transform = reg.emplace<Transform>(player1);
+        transform.position = { -50, 0, 0 };
 
-        auto& character = reg.emplace<Character>(player);
+        auto& character = reg.emplace<Character>(player1);
         // up to debate
         character.speed = 100;
 
-        auto& input = reg.emplace<InputReceiver>(player);
+        auto& input = reg.emplace<InputReceiver>(player1);
         input.contexts.push_back("ASDW");
 
-        ATTACH_TO_FSM(FSMCharacterController, player);
+        ATTACH_TO_FSM(FSMCharacterController, player1);
+
+    }
+
+
+    {
+        auto player2 = reg.create();
+
+        // dodajemo komponentu sprite, entitetu player
+        auto& sprite = reg.get_or_emplace<Sprite>(player2);
+        // dodajemo komponenti sprite, sliku ...
+        AssignSprite(sprite, "matattack:characters:chickboy:idle:idle1");
+        sprite.size = { 50, 50 };
+
+        // dodajemo komponentu Transform, entitenu player
+        auto& transform = reg.emplace<Transform>(player2);
+        transform.position = { 50, 0, 0 };
+
+        auto& character = reg.emplace<Character>(player2);
+        // up to debate
+        character.speed = 100;
+
+        auto& input = reg.emplace<InputReceiver>(player2);
+        input.contexts.push_back("Arrows");
+
+        ATTACH_TO_FSM(FSMCharacterController, player2);
 
     }
 
