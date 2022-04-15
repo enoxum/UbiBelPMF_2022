@@ -12,6 +12,7 @@ void SimpleCollisionsSystem::Run()
     auto it = view.begin();
     while(it != view.end())
     {
+        // data of the first entity
         auto &collision = view.get<SimpleCollision>(*it);
         auto &transform = view.get<Transform>(*it);
 
@@ -19,12 +20,14 @@ void SimpleCollisionsSystem::Run()
         it2++;
         while(it2 != view.end())
         {
+            // data of the second entity
             auto &col = view.get<SimpleCollision>(*it2);
             auto &tr = view.get<Transform>(*it2);
 
             // processing one collision per frame for each colider
             if (collision.IsCollided(transform.position, col, tr.position))
             {
+                //Logger::trace("they are colliding!");
                 collision.colided = true;
                 collision.colidedWith = *it2;
 
@@ -73,6 +76,12 @@ Vector2 SimpleCollision::GetCollisionSides(const Vector3& pos_, const SimpleColl
     {
         res.y = std::abs(p.y + size.y - p2.y) < std::abs(p2.y + other_.size.y - p.y) ? 1 : -1;
     }
+
+    Logger::trace("p");
+    Logger::trace(res.x);
+    Logger::trace(res.y);
+    Logger::trace("k");
+
 
     return res;
 }

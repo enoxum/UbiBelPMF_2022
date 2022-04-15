@@ -7,6 +7,7 @@
 #include "core/game/transforms.h"
 
 #include "matattack.h"
+#include "gameplay/common/simple_collisions.h"
 
 using namespace dagger;
 
@@ -25,13 +26,15 @@ DEFAULT_EXIT(FSMCharacterController, Idle);
 void FSMCharacterController::Idle::Run(FSMCharacterController::StateComponent& state_)
 {
 	auto& input = Engine::Registry().get<InputReceiver>(state_.entity);
+	//auto& simple_collision = Engine::Registry().get<SimpleCollision>(state_.entity);
 
 	//Logger::trace("idle_run");
-
+	
 	if (EPSILON_NOT_ZERO(input.Get("run")) || EPSILON_NOT_ZERO(input.Get("jump")))
 	{
 		GoTo(ECharacterStates::Running, state_);
 	}
+	
 }
 
 
@@ -39,7 +42,7 @@ void FSMCharacterController::Idle::Run(FSMCharacterController::StateComponent& s
 
 void FSMCharacterController::Running::Enter(FSMCharacterController::StateComponent& state_)
 {
-	Logger::trace("running_enter");
+	//Logger::trace("running_enter");
 	//auto& animator = Engine::Registry().get<Animator>(state_.entity);
 	//AnimatorPlay(animator, "souls_like_knight_character:RUN");
 }
@@ -54,13 +57,13 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 	//Logger::trace("running_run");
 
 
-	auto&& [sprite, input, character, transform] =
-		Engine::Registry().get<Sprite, InputReceiver, matattack::Character, Transform>(state_.entity);
+	auto&& [sprite, input, character, transform, simple_colision] =
+		Engine::Registry().get<Sprite, InputReceiver, matattack::CharacterInfo, Transform, SimpleCollision>(state_.entity);
 
 	Float32 run = input.Get("run");
 	Float32 jump = input.Get("jump");
 
-	Logger::trace(jump);
+	//Logger::trace(jump);
 
 	if (EPSILON_ZERO(run) && EPSILON_ZERO(jump))
 	{

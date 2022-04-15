@@ -11,7 +11,7 @@ namespace matattack
 {
 
     // ovu komponentu pravimo, da bismo razlikovali one koje slusaju input, i na njega se pomeraju!
-    struct Character
+    struct CharacterInfo
     {
         int speed{ 1 };
     };
