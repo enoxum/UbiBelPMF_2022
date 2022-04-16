@@ -77,13 +77,15 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 
 		// zasto su ovde samo sprite menjali poziciju, a ne i od transform-a?
 		//sprite.position.x = transform.position.x;
-		sprite.position.x += character.speed * run * Engine::DeltaTime();
-		transform.position.x += character.speed * run * Engine::DeltaTime();
+		//sprite.position.x += character.speed * run * Engine::DeltaTime();
+		sprite.position.x = transform.position.x;
+
+		//transform.position.x += character.speed * run * Engine::DeltaTime();
 
 		// trebalo bi specijalno stanje, kad je jump, pa u njega da idemo, ali neka ostane ovde za sad
 		// => isto spec stanje za padanje tj gravitacija
 		sprite.position.y += character.speed * jump * Engine::DeltaTime();
-		transform.position.y += character.speed * jump * Engine::DeltaTime();
+		//transform.position.y += character.speed * jump * Engine::DeltaTime();
 
 		// ovde bi ubacili gravitaciju, da uvek pada => ili bi bio sistem??
 	}

@@ -6,7 +6,10 @@
 			{ "trigger": "KeyLeft", "value": -1 },
 			{ "trigger": "KeyRight", "value": 1 } 
 		] }, 
-		{ "command-name": "jump", "trigger": "KeyUp" },
+		{ "command-name": "jump", 
+		  "actions": [
+			{ "trigger": "KeyUp", "value": 1 }
+		] }, 
 		{ "command-name": "down", "trigger": "KeyDown" },
 		{ "command-name": "light", "trigger": "KeyL", "event": "Released" },
 		{ "command-name": "heavy", "trigger": "KeyL", "duration": 1000 },
