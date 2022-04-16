@@ -54,6 +54,7 @@ sources = [
     'source/dagger/gameplay/mandarian/mandarian_main.cpp',
     'source/dagger/gameplay/mandarian/mandarian_controller_fsm.cpp',
     'source/dagger/gameplay/mandarian/mandarian_controller.cpp',
+    'source/dagger/gameplay/mandarian/mandarian_camera_focus_system.cpp',
     'source/dagger/gameplay/editor/editor_main.cpp',
     'source/dagger/gameplay/ping_pong/ping_pong_main.cpp',
     'source/dagger/gameplay/ping_pong/pingpong_ball.cpp',

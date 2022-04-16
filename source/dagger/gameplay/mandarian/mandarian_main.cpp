@@ -4,6 +4,7 @@
 #include "core/graphics/window.h"
 
 #include "mandarian_controller.h"
+#include "mandarian_camera_focus_system.h"
 
 using namespace mandarian;
 using namespace dagger;
@@ -27,7 +28,7 @@ Character Character::Create(
 {
     auto &reg = Engine::Registry();
     auto entity = reg.create();
-
+    reg.emplace<Player>(entity);
     auto character = Character::Get(entity);
 
     ATTACH_TO_FSM(MandarianControllerFSM, entity); 
@@ -60,6 +61,7 @@ void MandarianGame::GameplaySystemsSetup()
 
     engine.AddPausableSystem<MandarianControllerSystem>();
     engine.AddPausableSystem<SimplePhysicsSystem>();
+    engine.AddPausableSystem<MandarianCameraFocusSystem>();
 }
 
 void MandarianGame::WorldSetup()
