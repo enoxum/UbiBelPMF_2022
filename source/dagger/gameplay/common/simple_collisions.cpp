@@ -2,6 +2,7 @@
 
 #include "core/engine.h"
 #include "core/game/transforms.h"
+#include "../matattack/matattack.h"
 
 using namespace dagger;
 
@@ -25,14 +26,18 @@ void SimpleCollisionsSystem::Run()
             auto &tr = view.get<Transform>(*it2);
 
             // processing one collision per frame for each colider
-            if (collision.IsCollided(transform.position, col, tr.position))
+            // ako bar 1 od 2 entiteta ima is_collidable = true, onda moraju se colliduju, a su oboma false, onda se nece collide
+            if (collision.IsCollided(transform.position, col, tr.position) && (collision.is_collidable || col.is_collidable))
             {
                 //Logger::trace("they are colliding!");
                 collision.colided = true;
                 collision.colidedWith = *it2;
+                transform.position = collision.pos;
 
                 col.colided = true;
                 col.colidedWith = *it;
+                tr.position = col.pos;
+                //tr.position = chr.previous_position;
             }
             it2++;
         }

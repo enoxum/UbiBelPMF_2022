@@ -75,59 +75,52 @@ struct Character
         if (input_ != "")
             chr.input.contexts.push_back(input_);
 
-        chr.char_info.speed = 100;
+        chr.transform.position = { position_, 0.0f };
 
         chr.simple_collision.size = { 50, 50 };
+        chr.simple_collision.pos = chr.transform.position;
+        chr.simple_collision.is_collidable = false;
 
-        chr.transform.position = { position_, 0.0f };
+        chr.char_info.speed = 100;
 
         return chr;
     }
 };
 
 
-void setSingleBlock(int x, int y, int z, String path_to_sprite, unsigned size_x, unsigned size_y) {
+void setSingleBlock(int x, int y, int z, String path_to_sprite, unsigned size_x, unsigned size_y, bool is_collidable) {
 
     auto& engine = Engine::Instance();
     auto& reg = engine.Registry();
 
     {
-        auto back = reg.create();
-        auto& sprite = reg.get_or_emplace<Sprite>(back);
+        auto block = reg.create();
+        auto& sprite = reg.get_or_emplace<Sprite>(block);
 
         AssignSprite(sprite, path_to_sprite);
         sprite.size = { size_x, size_y };
-        sprite.position = { x, y, z };    
+        sprite.position = { x, y, z };
+
+        auto& simple_collision = reg.emplace<SimpleCollision>(block);
+        simple_collision.size = sprite.size;
+        simple_collision.pos = sprite.position;
+        simple_collision.is_collidable = is_collidable;
+
+        auto& transform = reg.emplace<Transform>(block);
+        transform.position = sprite.position;
     }
 }
 
 void setPlatform(int start_x, int start_y, int start_z, unsigned num_of_iterations) {
     for (unsigned i = 0u; i < num_of_iterations; ++i)
     {
-        setSingleBlock(start_x, start_y, start_z, "matattack:tiles:tile_with_grass", 100, 100);
+        setSingleBlock(start_x, start_y, start_z, "matattack:tiles:tile_with_grass", 100, 100, true);
         start_x += 100;
     }
 }
 
-void setMap() {
-    
-    // setting the trees (the trees need to be behind the player and the platforms, whats why they have a greater z value)
-    setSingleBlock(-300, -100, 10, "matattack:tiles:tree", 100, 100);
-    setSingleBlock(600, 100, 10, "matattack:tiles:tree", 100, 100);
-
-
-    // da li zelimo da platforme budu isto z kao i player? => verovatno
-    // middle platform
-    setPlatform(-300, -200, 0, 7);
-    // left and right platforms
-    setPlatform(-600, 0, 0, 3);
-    setPlatform(400, 0, 0, 3);
-
-}
-
-
 // postavlja pozadinu
-void createBackdrop()
+void createBackdrop(String background_path)
 {
 
     auto& engine = Engine::Instance();
@@ -141,11 +134,27 @@ void createBackdrop()
         auto back = reg.create();
         auto& sprite = reg.get_or_emplace<Sprite>(back);
 
-        AssignSprite(sprite, "matattack:background:sky");
+        AssignSprite(sprite, background_path);
         sprite.position.z = 10;
     }
 
-    setMap();
+}
+
+void setMap() {
+
+    createBackdrop("matattack:background:sky");
+
+    // setting the trees (the trees need to be behind the player and the platforms, whats why they have a greater z value)
+    setSingleBlock(-300, -100, 10, "matattack:tiles:tree", 100, 100, false);
+    setSingleBlock(600, 100, 10, "matattack:tiles:tree", 100, 100, false);
+
+
+    // da li zelimo da platforme budu isto z kao i player? => verovatno
+    // middle platform
+    setPlatform(-300, -200, 0, 7);
+    // left and right platforms
+    setPlatform(-600, 0, 0, 3);
+    setPlatform(400, 0, 0, 3);
 
 }
 
@@ -160,7 +169,7 @@ void Matattack::WorldSetup()
 void matattack::SetupWorld()
 {
     setCamera();
-    createBackdrop();
+    setMap();
     
     auto mainChar = Character::Create("ASDW", { -100, 0 }, "matattack:characters:chickboy:idle:idle1");
     auto sndChar = Character::Create("Arrows", { 100, 0 }, "matattack:characters:chickboy:idle:idle1");

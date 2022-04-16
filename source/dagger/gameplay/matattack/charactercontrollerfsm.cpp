@@ -84,7 +84,7 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 
 		// trebalo bi specijalno stanje, kad je jump, pa u njega da idemo, ali neka ostane ovde za sad
 		// => isto spec stanje za padanje tj gravitacija
-		sprite.position.y += character.speed * jump * Engine::DeltaTime();
+		//sprite.position.y = transform.position.y;
 		//transform.position.y += character.speed * jump * Engine::DeltaTime();
 
 		// ovde bi ubacili gravitaciju, da uvek pada => ili bi bio sistem??

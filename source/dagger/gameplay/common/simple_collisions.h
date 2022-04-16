@@ -8,6 +8,8 @@ struct SimpleCollision
 {
     Vector2 size;
     Vector2 pivot {-0.5f, -0.5f};
+    Vector3 pos;
+    bool is_collidable;
 
     bool colided = false;
     entt::entity colidedWith;
