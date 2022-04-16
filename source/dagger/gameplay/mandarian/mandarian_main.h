@@ -22,7 +22,7 @@ namespace mandarian
 
     private:
         void SetupCamera();
-
+        void CreateMap();
     };
 
 };

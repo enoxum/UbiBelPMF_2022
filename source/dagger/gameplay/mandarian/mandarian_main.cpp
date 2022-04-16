@@ -50,9 +50,19 @@ void MandarianGame::SetupCamera()
     auto *camera = Engine::GetDefaultResource<Camera>();
     camera->mode = ECameraMode::FixedResolution;
     camera->size = { 800, 600 };
-    camera->zoom = 1;
+    camera->zoom = 0.5;
     camera->position = { 0, 0, 0 };
     camera->Update();
+}
+
+void MandarianGame::CreateMap() 
+{
+    auto& reg = Engine::Registry();
+    auto* camera = Engine::GetDefaultResource<Camera>();
+    auto entity = reg.create();
+    auto& sprite = reg.get_or_emplace<Sprite>(entity);
+    AssignSprite(sprite, "logos:dagger");
+    sprite.position.z = 10;
 }
 
 void MandarianGame::GameplaySystemsSetup() 
@@ -69,6 +79,7 @@ void MandarianGame::WorldSetup()
     ShaderSystem::Use("standard");
 
     SetupCamera();
+    CreateMap();
 
     Character::Create();
 }
