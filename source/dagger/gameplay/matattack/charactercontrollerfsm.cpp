@@ -71,7 +71,7 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 	else
 	{
 		// zasto je ovo postojalo??
-		//sprite.scale.x = run;
+		sprite.scale.x = run;
 		//sprite.scale.y = jump;
 
 		// zasto su ovde samo sprite menjali poziciju, a ne i od transform-a?
