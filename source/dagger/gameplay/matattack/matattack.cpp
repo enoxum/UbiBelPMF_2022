@@ -43,6 +43,7 @@ struct Character
     CharacterInfo& char_info;
     Transform& transform;
     SimpleCollision& simple_collision;
+    Animator& animator;
 
     static Character Get(Entity entity)
     {
@@ -52,8 +53,9 @@ struct Character
         auto& char_info = reg.get_or_emplace<CharacterInfo>(entity);
         auto& transform = reg.get_or_emplace<Transform>(entity);
         auto& simple_collision = reg.get_or_emplace<SimpleCollision>(entity);
+        auto& anim = reg.get_or_emplace<Animator>(entity);
 
-        return Character{ entity, sprite, input, char_info, transform, simple_collision };
+        return Character{ entity, sprite, input, char_info, transform, simple_collision, anim };
     }
 
     static Character Create( String input_ = "", Vector2 position_ = { 0, 0 }, String sprite_path = "matattack:characters:chickboy:idle:idle1")
@@ -66,11 +68,12 @@ struct Character
         auto chr = Character::Get(entity);
 
         // ako budemo hteli da budu razlicitih velicina likovi da budu, ovde menjamo!
-        chr.sprite.scale = { 1, 1 };
+        chr.sprite.scale = { 1.5, 1.5 };
         chr.sprite.position = { position_, 0.0f };
         chr.sprite.size = { 50, 50 };
 
         AssignSprite(chr.sprite, sprite_path);
+        AnimatorPlay(chr.animator, "matattack:idle");
 
         if (input_ != "")
             chr.input.contexts.push_back(input_);
@@ -114,8 +117,8 @@ void setSingleBlock(int x, int y, int z, String path_to_sprite, unsigned size_x,
 void setPlatform(int start_x, int start_y, int start_z, unsigned num_of_iterations) {
     for (unsigned i = 0u; i < num_of_iterations; ++i)
     {
-        setSingleBlock(start_x, start_y, start_z, "matattack:tiles:tile_with_grass", 100, 100, true);
-        start_x += 100;
+        setSingleBlock(start_x, start_y, start_z, "matattack:tiles:tile_with_grass", 50, 50, true);
+        start_x += 50;
     }
 }
 
@@ -145,16 +148,16 @@ void setMap() {
     createBackdrop("matattack:background:sky");
 
     // setting the trees (the trees need to be behind the player and the platforms, whats why they have a greater z value)
-    setSingleBlock(-300, -100, 10, "matattack:tiles:tree", 100, 100, false);
-    setSingleBlock(600, 100, 10, "matattack:tiles:tree", 100, 100, false);
+    setSingleBlock(-300, -125, 10, "matattack:tiles:tree", 100, 100, false);
+    setSingleBlock(600, 75, 10, "matattack:tiles:tree", 100, 100, false);
 
 
     // da li zelimo da platforme budu isto z kao i player? => verovatno
     // middle platform
-    setPlatform(-300, -200, 0, 7);
+    setPlatform(-350, -200, 0, 16);
     // left and right platforms
-    setPlatform(-600, 0, 0, 3);
-    setPlatform(400, 0, 0, 3);
+    setPlatform(-600, 0, 0, 6);
+    setPlatform(400, 0, 0, 6);
 
 }
 
@@ -171,6 +174,6 @@ void matattack::SetupWorld()
     setCamera();
     setMap();
     
-    auto mainChar = Character::Create("ASDW", { -100, 0 }, "matattack:characters:chickboy:idle:idle1");
-    auto sndChar = Character::Create("Arrows", { 100, 0 }, "matattack:characters:chickboy:idle:idle1");
+    auto mainChar = Character::Create("ASDW", { -100, -150 }, "matattack:characters:chickboy:idle:idle1");
+    auto sndChar = Character::Create("Arrows", { 100, -150 }, "matattack:characters:chickboy:idle:idle1");
 }
