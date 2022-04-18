@@ -12,12 +12,10 @@
 using namespace dagger;
 
 // Idle
-
 void FSMCharacterController::Idle::Enter(FSMCharacterController::StateComponent& state_)
 {
 	auto& animator = Engine::Registry().get<Animator>(state_.entity);
 	AnimatorPlay(animator, "matattack:idle");
-	//Logger::trace("idle_enter");
 }
 
 DEFAULT_EXIT(FSMCharacterController, Idle);
@@ -25,23 +23,16 @@ DEFAULT_EXIT(FSMCharacterController, Idle);
 void FSMCharacterController::Idle::Run(FSMCharacterController::StateComponent& state_)
 {
 	auto& input = Engine::Registry().get<InputReceiver>(state_.entity);
-	//auto& simple_collision = Engine::Registry().get<SimpleCollision>(state_.entity);
-
-	//Logger::trace("idle_run");
-	
+	//auto& simple_collision = Engine::Registry().get<SimpleCollision>(state_.entity);	
 	if (EPSILON_NOT_ZERO(input.Get("run")) || EPSILON_NOT_ZERO(input.Get("jump")))
 	{
 		GoTo(ECharacterStates::Running, state_);
 	}
 	
 }
-
-
 // Running
-
 void FSMCharacterController::Running::Enter(FSMCharacterController::StateComponent& state_)
 {
-	//Logger::trace("running_enter");
 	auto& animator = Engine::Registry().get<Animator>(state_.entity);
 	AnimatorPlay(animator, "matattack:run");
 }
@@ -53,16 +44,11 @@ void FSMCharacterController::Running::Exit(FSMCharacterController::StateComponen
 void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent& state_)
 {
 
-	//Logger::trace("running_run");
-
-
 	auto&& [sprite, input, character, transform, simple_colision] =
 		Engine::Registry().get<Sprite, InputReceiver, matattack::CharacterInfo, Transform, SimpleCollision>(state_.entity);
 
 	Float32 run = input.Get("run");
 	Float32 jump = input.Get("jump");
-
-	//Logger::trace(jump);
 
 	if (EPSILON_ZERO(run) && EPSILON_ZERO(jump))
 	{
@@ -70,8 +56,7 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 	}
 	else
 	{
-		// zasto je ovo postojalo??
-		sprite.scale.x = run;
+		sprite.scale.x = run*1.5; // rotira dok trci sprite
 		//sprite.scale.y = jump;
 
 		// zasto su ovde samo sprite menjali poziciju, a ne i od transform-a?
