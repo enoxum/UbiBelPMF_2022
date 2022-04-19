@@ -32,11 +32,23 @@ void SimpleCollisionsSystem::Run()
                 //Logger::trace("they are colliding!");
                 collision.colided = true;
                 collision.colidedWith = *it2;
-                transform.position = collision.pos;
+                Vector2 side;
+
+                if (collision.is_moveable) {
+                    side = collision.GetCollisionSides(transform.position, col, tr.position);
+                    transform.position.x += (transform.position.x - collision.pos.x) * side.x;
+                    transform.position.y += (transform.position.y - collision.pos.y) * side.y;
+                }
 
                 col.colided = true;
                 col.colidedWith = *it;
-                tr.position = col.pos;
+
+                if (col.is_moveable) {
+                    side = col.GetCollisionSides(tr.position, collision, transform.position);
+                    tr.position.x += (tr.position.x - collision.pos.x) * side.x;
+                    tr.position.y += (tr.position.y - collision.pos.y) * side.y;
+                }
+
                 //tr.position = chr.previous_position;
             }
             it2++;
@@ -81,12 +93,6 @@ Vector2 SimpleCollision::GetCollisionSides(const Vector3& pos_, const SimpleColl
     {
         res.y = std::abs(p.y + size.y - p2.y) < std::abs(p2.y + other_.size.y - p.y) ? 1 : -1;
     }
-
-    Logger::trace("p");
-    Logger::trace(res.x);
-    Logger::trace(res.y);
-    Logger::trace("k");
-
 
     return res;
 }

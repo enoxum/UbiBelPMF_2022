@@ -23,7 +23,12 @@ DEFAULT_EXIT(FSMCharacterController, Idle);
 void FSMCharacterController::Idle::Run(FSMCharacterController::StateComponent& state_)
 {
 	auto& input = Engine::Registry().get<InputReceiver>(state_.entity);
-	//auto& simple_collision = Engine::Registry().get<SimpleCollision>(state_.entity);	
+	auto& sprite = Engine::Registry().get<Sprite>(state_.entity);
+	auto& transform = Engine::Registry().get<Transform>(state_.entity);
+
+	sprite.position = transform.position;
+
+
 	if (EPSILON_NOT_ZERO(input.Get("run")) || EPSILON_NOT_ZERO(input.Get("jump")))
 	{
 		GoTo(ECharacterStates::Running, state_);

@@ -10,6 +10,7 @@ struct SimpleCollision
     Vector2 pivot {-0.5f, -0.5f};
     Vector3 pos;
     bool is_collidable;
+    bool is_moveable;
 
     bool colided = false;
     entt::entity colidedWith;
