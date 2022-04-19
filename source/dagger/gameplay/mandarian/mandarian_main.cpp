@@ -30,6 +30,16 @@ void MandarianGame::CreateMap()
     sprite.position.z = 10;
 }
 
+void MandarianGame::CreateEnemies(Entity mandarian)
+{
+    Enemy::Create({ -200.0f, -200.0f });
+    Enemy::Create({ -200.0f,  200.0f });
+    Enemy::Create({  200.0f, -200.0f });
+    Enemy::Create({  200.0f,  200.0f });
+
+    Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(mandarian);
+}
+
 void MandarianGame::GameplaySystemsSetup() 
 {
     auto &engine = Engine::Instance();
@@ -37,6 +47,7 @@ void MandarianGame::GameplaySystemsSetup()
     engine.AddPausableSystem<MandarianControllerSystem>();
     engine.AddPausableSystem<SimplePhysicsSystem>();
     engine.AddPausableSystem<MandarianCameraFocusSystem>();
+    engine.AddPausableSystem<EnemyMovementSystem>();
 }
 
 void MandarianGame::WorldSetup()
@@ -46,10 +57,6 @@ void MandarianGame::WorldSetup()
     SetupCamera();
     //CreateMap();
 
-    Character::Create();
-
-    Enemy::Create({ -200.0f, -200.0f });
-    Enemy::Create({ -200.0f,  200.0f });
-    Enemy::Create({  200.0f, -200.0f });
-    Enemy::Create({  200.0f,  200.0f });
+    auto character = Character::Create();
+    CreateEnemies(character.entity);    
 }

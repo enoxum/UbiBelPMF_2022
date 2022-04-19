@@ -31,4 +31,19 @@ namespace mandarian
             Vector2 scale_ = {10.0f, 10.0f});
     };
 
+    class EnemyMovementSystem
+		: public System
+	{
+        Entity mandarian;
+
+	public:
+		String SystemName() override {
+			return "Enemy Movement System";
+		}
+
+        void SetMandarian(Entity mandarian_) { mandarian = mandarian_; };
+
+		void Run() override;
+	};
+
 };

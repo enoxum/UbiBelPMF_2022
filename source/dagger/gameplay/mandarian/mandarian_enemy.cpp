@@ -31,3 +31,21 @@ Enemy Enemy::Create(
 
     return enemy;
 }
+
+void EnemyMovementSystem::Run()
+{
+    auto &mandarianTransform = Engine::Registry().get<Transform>(mandarian);
+    Engine::Registry().view<Transform, Body, EnemyTag>().each(
+        [&](Transform &transform, Body &body, EnemyTag &tag)
+        {
+            Vector2 direction;
+            
+            direction.x = mandarianTransform.position.x - transform.position.x;
+            direction.y = mandarianTransform.position.y - transform.position.y;
+
+            direction = NORMALIZE(direction);
+
+            body.applyForce(50.0f * direction);
+        }
+    );
+}
