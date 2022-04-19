@@ -21,7 +21,7 @@ void SimplePhysicsSystem::Run()
             if (EPSILON_ZERO(body.force.x)) body.force.x = 0.0f;
             if (EPSILON_ZERO(body.force.y)) body.force.y = 0.0f;
             
-            Logger::trace("Force: ({}, {})", body.force.x, body.force.y);
+//            Logger::trace("Force: ({}, {})", body.force.x, body.force.y);
 
             Vector2 acceleration = { 0.0f, 0.0f };
 
@@ -36,7 +36,7 @@ void SimplePhysicsSystem::Run()
             if (EPSILON_ZERO(body.velocity.x)) body.velocity.x = 0.0f;
             if (EPSILON_ZERO(body.velocity.y)) body.velocity.y = 0.0f;
 
-            Logger::trace("Velocity: ({}, {})", body.velocity.x, body.velocity.y);
+            //Logger::trace("Velocity: ({}, {})", body.velocity.x, body.velocity.y);
 
             transform.position.x += body.velocity.x * Engine::DeltaTime();
             transform.position.y += body.velocity.y * Engine::DeltaTime();
