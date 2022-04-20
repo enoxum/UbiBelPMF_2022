@@ -30,6 +30,8 @@ void Matattack::GameplaySystemsSetup()
 
 }
 
+// konzistentno pisanje imena fja
+// neka mala promena
 void setCamera()
 {
     auto* camera = Engine::GetDefaultResource<Camera>();
