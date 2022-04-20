@@ -14,6 +14,7 @@ namespace matattack
     struct CharacterInfo
     {
         int speed{ 50 };
+        int jumping_speed{ 500 };
     };
 
     void SetupWorld();

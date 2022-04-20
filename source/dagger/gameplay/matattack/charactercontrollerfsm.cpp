@@ -24,12 +24,44 @@ void FSMCharacterController::Idle::Run(FSMCharacterController::StateComponent& s
 {
 	auto& input = Engine::Registry().get<InputReceiver>(state_.entity);
 
-	if (EPSILON_NOT_ZERO(input.Get("run")) || EPSILON_NOT_ZERO(input.Get("jump")))
+	if (EPSILON_NOT_ZERO(input.Get("run")))
 	{
 		GoTo(ECharacterStates::Running, state_);
 	}
+
+	if (EPSILON_NOT_ZERO(input.Get("jump")))
+	{
+		GoTo(ECharacterStates::Jumping, state_);
+	}
 	
 }
+
+// Jumping
+void FSMCharacterController::Jumping::Enter(FSMCharacterController::StateComponent& state_)
+{
+	auto& animator = Engine::Registry().get<Animator>(state_.entity);
+	// animacija za skok, trenutno nemamo!
+}
+
+DEFAULT_EXIT(FSMCharacterController, Jumping);
+
+void FSMCharacterController::Jumping::Run(FSMCharacterController::StateComponent& state_)
+{
+
+	auto&& [sprite, input, character, transform, simple_colision] =
+		Engine::Registry().get<Sprite, InputReceiver, matattack::CharacterInfo, Transform, SimpleCollision>(state_.entity);
+
+	Float32 jump = input.Get("jump");
+
+	if (EPSILON_ZERO(jump)) {
+		GoTo(ECharacterStates::Idle, state_);
+	}
+	else {
+		sprite.position = transform.position;
+	}
+}
+
+
 // Running
 void FSMCharacterController::Running::Enter(FSMCharacterController::StateComponent& state_)
 {
@@ -48,29 +80,16 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 		Engine::Registry().get<Sprite, InputReceiver, matattack::CharacterInfo, Transform, SimpleCollision>(state_.entity);
 
 	Float32 run = input.Get("run");
-	Float32 jump = input.Get("jump");
 
-	if (EPSILON_ZERO(run) && EPSILON_ZERO(jump))
+	if (EPSILON_ZERO(run))
 	{
 		GoTo(ECharacterStates::Idle, state_);
 	}
 	else
 	{
 		sprite.scale.x = run*1.5; // rotira dok trci sprite
-		//sprite.scale.y = jump;
-
-		// zasto su ovde samo sprite menjali poziciju, a ne i od transform-a?
-		//sprite.position.x = transform.position.x;
-		//sprite.position.x += character.speed * run * Engine::DeltaTime();
 		sprite.position = transform.position;
 
-		//transform.position.x += character.speed * run * Engine::DeltaTime();
-
-		// trebalo bi specijalno stanje, kad je jump, pa u njega da idemo, ali neka ostane ovde za sad
-		// => isto spec stanje za padanje tj gravitacija
-		//sprite.position.y = transform.position.y;
-		//transform.position.y += character.speed * jump * Engine::DeltaTime();
-
-		// ovde bi ubacili gravitaciju, da uvek pada => ili bi bio sistem??
 	}
 }
+
