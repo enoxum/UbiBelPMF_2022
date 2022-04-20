@@ -14,6 +14,7 @@
 #include "movementsystem.h"
 #include "controllersystem.h"
 #include "gravitysystem.h"
+#include "jumpingsystem.h"
 
 using namespace dagger;
 using namespace matattack;
@@ -25,6 +26,8 @@ void Matattack::GameplaySystemsSetup()
     engine.AddSystem<ControllerSystem>();
     engine.AddSystem<MovementSystem>();
     engine.AddSystem<GravitySystem>();
+    engine.AddSystem<JumpingSystem>();
+
 }
 
 void setCamera()

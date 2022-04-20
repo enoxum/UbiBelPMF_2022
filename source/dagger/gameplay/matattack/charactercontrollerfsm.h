@@ -6,19 +6,19 @@ enum struct ECharacterStates
 {
 	Idle,
 	Running, 
-	//Jumping
+	Jumping
 };
 
 struct FSMCharacterController : public FSM<ECharacterStates>
 {
 	DEFINE_STATE(FSMCharacterController, ECharacterStates, Idle);
 	DEFINE_STATE(FSMCharacterController, ECharacterStates, Running);
-	//DEFINE_STATE(FSMCharacterController, ECharacterStates, Jumping);
+	DEFINE_STATE(FSMCharacterController, ECharacterStates, Jumping);
 
 	FSMCharacterController()
 	{
 		CONNECT_STATE(ECharacterStates, Idle);
 		CONNECT_STATE(ECharacterStates, Running);
-		//CONNECT_STATE(ECharacterStates, Jumping);
+		CONNECT_STATE(ECharacterStates, Jumping);
 	}
 };

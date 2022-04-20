@@ -70,6 +70,7 @@ sources = [
 	'source/dagger/gameplay/matattack/gravitysystem.cpp',
 	'source/dagger/gameplay/matattack/matattack.cpp',
 	'source/dagger/gameplay/matattack/movementsystem.cpp',
+	'source/dagger/gameplay/matattack/jumpingsystem.cpp',
     'source/dagger/gameplay/tiles_example/tiles_example_main.cpp',
     'source/dagger/tools/FileBrowser/imgui_demo.cpp',
     'source/dagger/tools/FileBrowser/ImGuiFileBrowser.cpp',
