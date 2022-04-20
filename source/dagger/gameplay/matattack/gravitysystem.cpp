@@ -19,13 +19,11 @@ void GravitySystem::Run()
 
 		auto& gravity = view.get<Gravity>(*it);
 		auto& transform = view.get<Transform>(*it);
-		auto& sprite = view.get<Sprite>(*it);
 		auto& simple_collision = view.get<SimpleCollision>(*it);
 
 
 		simple_collision.pos.y = transform.position.y;
 		transform.position.y -= gravity.weight * Engine::DeltaTime();
-		sprite.position.y = transform.position.y;
 
 		//Logger::trace("treci deo");
 

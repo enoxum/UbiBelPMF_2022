@@ -23,11 +23,6 @@ DEFAULT_EXIT(FSMCharacterController, Idle);
 void FSMCharacterController::Idle::Run(FSMCharacterController::StateComponent& state_)
 {
 	auto& input = Engine::Registry().get<InputReceiver>(state_.entity);
-	auto& sprite = Engine::Registry().get<Sprite>(state_.entity);
-	auto& transform = Engine::Registry().get<Transform>(state_.entity);
-
-	sprite.position = transform.position;
-
 
 	if (EPSILON_NOT_ZERO(input.Get("run")) || EPSILON_NOT_ZERO(input.Get("jump")))
 	{
@@ -67,7 +62,7 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 		// zasto su ovde samo sprite menjali poziciju, a ne i od transform-a?
 		//sprite.position.x = transform.position.x;
 		//sprite.position.x += character.speed * run * Engine::DeltaTime();
-		sprite.position.x = transform.position.x;
+		sprite.position = transform.position;
 
 		//transform.position.x += character.speed * run * Engine::DeltaTime();
 
