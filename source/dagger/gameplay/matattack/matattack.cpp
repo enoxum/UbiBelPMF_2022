@@ -93,16 +93,14 @@ struct Character
         chr.simple_collision.is_collidable = false;
         chr.simple_collision.is_moveable = true;
 
-        chr.char_info.speed = 100;
+        chr.char_info.speed = 200.0F;
 
         // up to debate (the value) 
-        chr.gravity.baseSpeed = 200.7F;
-        chr.gravity.increase = 50.0F;
+        chr.gravity.increase = 1200.0F;
         chr.gravity.speed = 0.0F;
 
-        chr.upspeed.baseSpeed = 350.0F;
-        chr.upspeed.decrease = 50.0F;
-        chr.upspeed.upspeed = 0.0F;
+        chr.upspeed.jumpSpeed = 800.0F;
+        chr.upspeed.cutoff = 2.0F;
 
         return chr;
     }

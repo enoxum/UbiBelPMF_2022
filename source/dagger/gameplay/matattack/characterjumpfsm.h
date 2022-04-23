@@ -3,9 +3,8 @@
 #include "core/game/finite_state_machine.h"
 
 struct UpSpeed {
-	Float32 baseSpeed;
-	Float32 decrease;
-	Float32 upspeed;
+	Float32 jumpSpeed;
+	Float32 cutoff;
 };
 
 enum struct EJumpStates
