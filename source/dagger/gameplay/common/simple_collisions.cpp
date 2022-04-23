@@ -16,6 +16,7 @@ void SimpleCollisionsSystem::Run()
         // data of the first entity
         auto &collision = view.get<SimpleCollision>(*it);
         auto &transform = view.get<Transform>(*it);
+        collision.colided = false;
 
         auto it2 = it;
         it2++;
@@ -24,6 +25,7 @@ void SimpleCollisionsSystem::Run()
             // data of the second entity
             auto &col = view.get<SimpleCollision>(*it2);
             auto &tr = view.get<Transform>(*it2);
+            col.colided = false;
 
             // processing one collision per frame for each colider
             // ako bar 1 od 2 entiteta ima is_collidable = true, onda moraju se colliduju, a su oboma false, onda se nece collide

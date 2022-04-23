@@ -8,7 +8,9 @@ using namespace dagger;
 struct Gravity
 {
 	// how fast its falling
-	float weight;
+	Float32 baseSpeed;
+	Float32 speed;
+	Float32 increase;
 };
 
 class GravitySystem : public System 

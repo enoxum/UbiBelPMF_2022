@@ -23,7 +23,7 @@ void GravitySystem::Run()
 
 
 		simple_collision.pos.y = transform.position.y;
-		transform.position.y -= gravity.weight * Engine::DeltaTime();
+		transform.position.y -= gravity.speed * Engine::DeltaTime();
 
 		//Logger::trace("treci deo");
 
