@@ -16,7 +16,7 @@ void MandarianGame::SetupCamera()
     auto *camera = Engine::GetDefaultResource<Camera>();
     camera->mode = ECameraMode::FixedResolution;
     camera->size = { 800, 600 };
-    camera->zoom = 0.5;
+    camera->zoom = 2;
     camera->position = { 0, 0, 0 };
     camera->Update();
 }
@@ -24,10 +24,28 @@ void MandarianGame::SetupCamera()
 void MandarianGame::CreateMap() 
 {
     auto& reg = Engine::Registry();
-    auto entity = reg.create();
-    auto& sprite = reg.get_or_emplace<Sprite>(entity);
-    AssignSprite(sprite, "logos:dagger");
-    sprite.position.z = 10;
+    Vector2 scale(1, 1);
+    constexpr int height = 50;
+    constexpr int width = 50;
+    constexpr float tileSize = 20.f;
+    float zPos = 1.f;
+    constexpr float Space = 0.0f;
+
+    // add grass
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            auto entity = reg.create();
+            auto& sprite = reg.get_or_emplace<Sprite>(entity);
+            
+            AssignSprite(sprite, "MiniWorldSprites:Ground:TexturedGrass");
+            sprite.size = scale * tileSize;
+            auto& transform = reg.emplace<Transform>(entity);
+            transform.position.x = (0.5f + j + j * Space - static_cast<float>(width * (1 + Space)) / 2.f) * tileSize;
+            transform.position.y = (0.5f + i + i * Space - static_cast<float>(height * (1 + Space)) / 2.f) * tileSize;
+            transform.position.z = zPos;
+        }     
+    }
+
 }
 
 void MandarianGame::CreateEnemies(Entity mandarian)
@@ -55,7 +73,7 @@ void MandarianGame::WorldSetup()
     ShaderSystem::Use("standard");
 
     SetupCamera();
-    //CreateMap();
+    CreateMap();
 
     auto character = Character::Create();
     CreateEnemies(character.entity);    
