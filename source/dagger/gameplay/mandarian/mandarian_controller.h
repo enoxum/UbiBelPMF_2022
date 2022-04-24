@@ -7,6 +7,7 @@
 #include "core/game/transforms.h"
 #include "core/input/inputs.h"
 
+#include "gameplay/common/simple_collisions.h"
 #include "gameplay/common/simple_physics.h"
 #include "gameplay/mandarian/mandarian_controller_fsm.h"
 
@@ -20,6 +21,7 @@ namespace mandarian
         Sprite &sprite;
         Transform &transform;
         Body &body;
+        CircleCollision &collision;
         InputReceiver &input;
 
         static Character Get(Entity);
@@ -28,6 +30,7 @@ namespace mandarian
                 ColorRGB color_ = { 0.0f, 0.0f, 0.0f }, 
                 Vector2 position_ = { 0.0f, 0.0f },
                 Vector2 scale_ = { 10.0f, 10.0f },
+                Float32 radius_ = 10.0f,
                 String input_ = String{ "mandarian" });
     };
 
