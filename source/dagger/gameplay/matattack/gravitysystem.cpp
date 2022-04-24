@@ -21,7 +21,7 @@ void GravitySystem::Run()
 		auto& transform = view.get<Transform>(*it);
 		auto& simple_collision = view.get<SimpleCollision>(*it);
 
-
+		// ako ocemo graple => takomentarisemo if, i uvek radimo
 		if (!simple_collision.colided) 
 		{
 			gravity.speed += gravity.increase * Engine::DeltaTime();

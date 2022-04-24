@@ -44,12 +44,14 @@ void FSMCharacterJump::GoingUp::Enter(FSMCharacterJump::StateComponent& state_)
 
 void FSMCharacterJump::GoingUp::Run(FSMCharacterJump::StateComponent& state_)
 {
-	auto&& [sprite, input, character, transform, upspeed, gravity] =
-		Engine::Registry().get<Sprite, InputReceiver, matattack::CharacterInfo, Transform, UpSpeed, Gravity>(state_.entity);
+	auto&& [sprite, input, character, transform, upspeed, gravity, simple_collision] =
+		Engine::Registry().get<Sprite, InputReceiver, matattack::CharacterInfo, Transform, UpSpeed, Gravity, SimpleCollision>(state_.entity);
 
 	Float32 jump = input.Get("jump");
 
-	if (!EPSILON_NOT_ZERO(jump) || gravity.speed >= 0)
+	// Vukan dodao => zelimo da mozemo da prestanemo da moze da drzi w, kad skace 
+	// => dodamo 
+	if (!EPSILON_NOT_ZERO(jump) || gravity.speed >= 0 || (simple_collision.colided && simple_collision.side_y == 1))
 	{
 		GoTo(EJumpStates::GoingDown, state_);
 	}
@@ -63,13 +65,13 @@ void FSMCharacterJump::GoingUp::Exit(FSMCharacterJump::StateComponent& state_) {
 
 void FSMCharacterJump::GoingDown::Enter(FSMCharacterJump::StateComponent& state_)
 {
-	auto&& [animator, gravity, upspeed] = Engine::Registry().get<Animator, Gravity, UpSpeed>(state_.entity);
-	if(gravity.speed <= 0)
-	{
-		gravity.speed /= upspeed.cutoff;
-	} else 
+	auto&& [animator, gravity, upspeed, simple_collision] = Engine::Registry().get<Animator, Gravity, UpSpeed, SimpleCollision>(state_.entity);
+	if(gravity.speed > 0 || (simple_collision.colided && simple_collision.side_y == 1))
 	{
 		gravity.speed = 0;
+	} else 
+	{
+		gravity.speed /= upspeed.cutoff;
 	}
 	//AnimatorPlay(animator, "matattack:falling");
 }
@@ -79,7 +81,7 @@ void FSMCharacterJump::GoingDown::Run(FSMCharacterJump::StateComponent& state_)
 	auto&& [sprite, input, character, transform, simple_collision, upspeed] =
 		Engine::Registry().get<Sprite, InputReceiver, matattack::CharacterInfo, Transform, SimpleCollision, UpSpeed>(state_.entity);
 
-	if (simple_collision.colided) {
+	if (simple_collision.colided && simple_collision.side_y == -1) {
 		GoTo(EJumpStates::OnGround, state_);
 	}
 

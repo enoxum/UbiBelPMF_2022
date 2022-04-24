@@ -35,11 +35,21 @@ void SimpleCollisionsSystem::Run()
                 collision.colided = true;
                 collision.colidedWith = *it2;
                 Vector2 side;
+                Vector3 collision_center;
 
                 if (collision.is_moveable) {
                     side = collision.GetCollisionSides(transform.position, col, tr.position);
-                    transform.position.x += (transform.position.x - collision.pos.x) * side.x;
-                    transform.position.y += (transform.position.y - collision.pos.y) * side.y;
+                    collision_center = collision.GetCollisionCenter(transform.position, col, tr.position);
+
+                    collision.side_x = side.x;
+                    collision.side_y = side.y;
+
+                    // collision.pos.x => stara x pozicija igraca
+                    transform.position.x -= (transform.position.x - collision.pos.x) * abs(side.x);
+                    transform.position.y -= (transform.position.y - collision.pos.y) * abs(side.y);
+                    /*Logger::trace("Drugi side!:");
+                    Logger::trace(side.x);
+                    Logger::trace(side.y);*/
                 }
 
                 col.colided = true;
@@ -47,8 +57,16 @@ void SimpleCollisionsSystem::Run()
 
                 if (col.is_moveable) {
                     side = col.GetCollisionSides(tr.position, collision, transform.position);
-                    tr.position.x += (tr.position.x - collision.pos.x) * side.x;
-                    tr.position.y += (tr.position.y - collision.pos.y) * side.y;
+                    collision_center = col.GetCollisionCenter(tr.position, collision, transform.position);
+
+                    col.side_x = side.x;
+                    col.side_y = side.y;
+                    
+                    tr.position.x -= (tr.position.x - col.pos.x) * abs(side.x);
+                    tr.position.y -= (tr.position.y - col.pos.y) * abs(side.y);
+                    /*Logger::trace("Drugi side!:");
+                    Logger::trace(side.x);
+                    Logger::trace(side.y);*/
                 }
 
                 //tr.position = chr.previous_position;

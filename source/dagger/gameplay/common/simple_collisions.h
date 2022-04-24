@@ -12,6 +12,9 @@ struct SimpleCollision
     bool is_collidable;
     bool is_moveable;
 
+    float side_x;
+    float side_y;
+
     bool colided = false;
     entt::entity colidedWith;
 
