@@ -20,6 +20,17 @@ struct SimpleCollision
     Vector3 GetCollisionCenter(const Vector3& pos_, const SimpleCollision& other_, const Vector3& posOther_);
 };
 
+struct CircleCollision
+{
+    Float32 radius;
+    Vector2 pivot { -0.5f, -0.5f };
+
+    bool colided = false;
+    Entity colidedWith;
+
+    bool isCollided(const Vector3& pos_, const CircleCollision& other_, const Vector3& posOther_);
+};
+
 class SimpleCollisionsSystem : public System
 {
 public:
