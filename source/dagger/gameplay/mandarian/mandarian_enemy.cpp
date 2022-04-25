@@ -9,8 +9,9 @@ Enemy Enemy::Get(Entity entity)
     auto &sprite = reg.get_or_emplace<Sprite>(entity);
     auto &transform = reg.get_or_emplace<Transform>(entity);
     auto &body = reg.get_or_emplace<Body>(entity);
+    auto &health = reg.get_or_emplace<Health>(entity);
 
-    return Enemy{ entity, sprite, transform, body };
+    return Enemy{ entity, sprite, transform, body, health };
 }
 
 Enemy Enemy::Create(
@@ -28,6 +29,11 @@ Enemy Enemy::Create(
     enemy.sprite.color = { color_, 1.0f };
 
     enemy.transform.position = { position_, 0.0f };
+
+    enemy.health.current = 100;
+    enemy.health.max = 100;
+    enemy.health.min = 0;
+    enemy.health.immortal = false;
 
     return enemy;
 }

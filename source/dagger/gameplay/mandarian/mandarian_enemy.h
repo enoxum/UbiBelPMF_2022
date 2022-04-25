@@ -8,11 +8,14 @@
 #include "core/graphics/sprite.h"
 #include "core/game/transforms.h"
 #include "gameplay/common/simple_physics.h"
+#include "mandarian_damage_system.h"
 
 using namespace dagger;
 
 namespace mandarian 
 {
+    struct Health;
+
     struct EnemyTag {
         Bool tag;
     };
@@ -23,6 +26,7 @@ namespace mandarian
         Sprite &sprite;
         Transform &transform;
         Body &body;
+        Health &health;
 
         static Enemy Get(Entity entity);
         static Enemy Create(
