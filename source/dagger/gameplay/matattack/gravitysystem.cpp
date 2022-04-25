@@ -21,9 +21,13 @@ void GravitySystem::Run()
 		auto& transform = view.get<Transform>(*it);
 		auto& simple_collision = view.get<SimpleCollision>(*it);
 
-
-		simple_collision.pos.y = transform.position.y;
-		transform.position.y -= gravity.weight * Engine::DeltaTime();
+		// ako ocemo graple => takomentarisemo if, i uvek radimo
+		if (!simple_collision.colided) 
+		{
+			gravity.speed += gravity.increase * Engine::DeltaTime();
+			simple_collision.pos.y = transform.position.y;
+			transform.position.y -= gravity.speed * Engine::DeltaTime();
+		}
 
 		//Logger::trace("treci deo");
 

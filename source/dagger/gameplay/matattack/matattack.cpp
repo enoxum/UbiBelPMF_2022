@@ -14,6 +14,7 @@
 #include "movementsystem.h"
 #include "controllersystem.h"
 #include "gravitysystem.h"
+#include "jumpsystem.h"
 
 using namespace dagger;
 using namespace matattack;
@@ -25,6 +26,7 @@ void Matattack::GameplaySystemsSetup()
     engine.AddSystem<ControllerSystem>();
     engine.AddSystem<MovementSystem>();
     engine.AddSystem<GravitySystem>();
+    engine.AddSystem<JumpSystem>();
 }
 
 void setCamera()
@@ -47,6 +49,7 @@ struct Character
     SimpleCollision& simple_collision;
     Animator& animator;
     Gravity& gravity;
+    UpSpeed& upspeed;
 
     static Character Get(Entity entity)
     {
@@ -58,8 +61,9 @@ struct Character
         auto& simple_collision = reg.get_or_emplace<SimpleCollision>(entity);
         auto& anim = reg.get_or_emplace<Animator>(entity);
         auto& gravity = reg.get_or_emplace<Gravity>(entity);
+        auto& upspeed = reg.get_or_emplace<UpSpeed>(entity);
 
-        return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity };
+        return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity, upspeed };
     }
 
     static Character Create( String input_ = "", Vector2 position_ = { 0, 0 }, String sprite_path = "matattack:characters:chickboy:idle:idle1")
@@ -68,6 +72,7 @@ struct Character
         auto entity = reg.create();
 
         ATTACH_TO_FSM(FSMCharacterController, entity);
+        ATTACH_TO_FSM(FSMCharacterJump, entity);
 
         auto chr = Character::Get(entity);
 
@@ -88,10 +93,14 @@ struct Character
         chr.simple_collision.is_collidable = false;
         chr.simple_collision.is_moveable = true;
 
-        chr.char_info.speed = 100;
+        chr.char_info.speed = 200.0F;
 
         // up to debate (the value) 
-        chr.gravity.weight = 200.7F;
+        chr.gravity.increase = 1200.0F;
+        chr.gravity.speed = 0.0F;
+
+        chr.upspeed.jumpSpeed = 800.0F;
+        chr.upspeed.cutoff = 2.0F;
 
         return chr;
     }

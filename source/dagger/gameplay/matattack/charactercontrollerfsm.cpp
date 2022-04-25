@@ -24,7 +24,7 @@ void FSMCharacterController::Idle::Run(FSMCharacterController::StateComponent& s
 {
 	auto& input = Engine::Registry().get<InputReceiver>(state_.entity);
 
-	if (EPSILON_NOT_ZERO(input.Get("run")) || EPSILON_NOT_ZERO(input.Get("jump")))
+	if (EPSILON_NOT_ZERO(input.Get("run")))
 	{
 		GoTo(ECharacterStates::Running, state_);
 	}
@@ -48,9 +48,8 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 		Engine::Registry().get<Sprite, InputReceiver, matattack::CharacterInfo, Transform, SimpleCollision>(state_.entity);
 
 	Float32 run = input.Get("run");
-	Float32 jump = input.Get("jump");
 
-	if (EPSILON_ZERO(run) && EPSILON_ZERO(jump))
+	if (EPSILON_ZERO(run))
 	{
 		GoTo(ECharacterStates::Idle, state_);
 	}
