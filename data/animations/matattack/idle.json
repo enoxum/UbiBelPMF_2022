@@ -1,13 +1,11 @@
 {
 	"animation-name": "matattack:idle",
-	"animation-length-ms": 600,
+	"animation-length-ms": 300,
 	"animation-frames": 
 	[
-		{ "texture-name": "matattack:characters:chickboy:idle:idle1" },
-		{ "texture-name": "matattack:characters:chickboy:idle:idle2" },
-		{ "texture-name": "matattack:characters:chickboy:idle:idle3" },
-		{ "texture-name": "matattack:characters:chickboy:idle:idle4" },
-		{ "texture-name": "matattack:characters:chickboy:idle:idle5" },
-		{ "texture-name": "matattack:characters:chickboy:idle:idle6" }
+		{ "texture-name": "matattack:characters:fox:idle:idle1" },
+		{ "texture-name": "matattack:characters:fox:idle:idle2" },
+		{ "texture-name": "matattack:characters:fox:idle:idle3" },
+		{ "texture-name": "matattack:characters:fox:idle:idle4" }
 	]
 }

@@ -1,17 +1,13 @@
 {
 	"animation-name": "matattack:run",
-	"animation-length-ms": 500,
+	"animation-length-ms": 400,
 	"animation-frames": 
 	[
-		{ "texture-name": "matattack:characters:chickboy:run:run1", "relative-length": 1 },
-		{ "texture-name": "matattack:characters:chickboy:run:run2", "relative-length": 1 },
-		{ "texture-name": "matattack:characters:chickboy:run:run3", "relative-length": 2 },
-		{ "texture-name": "matattack:characters:chickboy:run:run4", "relative-length": 2 },
-		{ "texture-name": "matattack:characters:chickboy:run:run5", "relative-length": 1 },
-		{ "texture-name": "matattack:characters:chickboy:run:run6", "relative-length": 1 },
-		{ "texture-name": "matattack:characters:chickboy:run:run7", "relative-length": 2 },
-		{ "texture-name": "matattack:characters:chickboy:run:run8", "relative-length": 2 },
-        { "texture-name": "matattack:characters:chickboy:run:run9", "relative-length": 1 },
-		{ "texture-name": "matattack:characters:chickboy:run:run10", "relative-length": 1 }
+		{ "texture-name": "matattack:characters:fox:run:run1", "relative-length": 1 },
+		{ "texture-name": "matattack:characters:fox:run:run2", "relative-length": 1 },
+		{ "texture-name": "matattack:characters:fox:run:run3", "relative-length": 2 },
+		{ "texture-name": "matattack:characters:fox:run:run4", "relative-length": 2 },
+		{ "texture-name": "matattack:characters:fox:run:run5", "relative-length": 1 },
+		{ "texture-name": "matattack:characters:fox:run:run6", "relative-length": 1 }
 	]
 }
