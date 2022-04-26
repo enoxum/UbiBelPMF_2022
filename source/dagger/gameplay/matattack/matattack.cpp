@@ -15,6 +15,8 @@
 #include "controllersystem.h"
 #include "gravitysystem.h"
 #include "jumpsystem.h"
+#include "tools.h"
+#include "levelchangesystem.h" 
 
 using namespace dagger;
 using namespace matattack;
@@ -22,11 +24,13 @@ using namespace matattack;
 void Matattack::GameplaySystemsSetup()
 {
     auto& engine = Engine::Instance();
-    engine.AddSystem<SimpleCollisionsSystem>();
-    engine.AddSystem<ControllerSystem>();
-    engine.AddSystem<MovementSystem>();
-    engine.AddSystem<GravitySystem>();
-    engine.AddSystem<JumpSystem>();
+    engine.AddPausableSystem<SimpleCollisionsSystem>();
+    engine.AddPausableSystem<ControllerSystem>();
+    engine.AddPausableSystem<MovementSystem>();
+    engine.AddPausableSystem<GravitySystem>();
+    engine.AddPausableSystem<JumpSystem>();
+    engine.AddPausableSystem<Tools>();
+    engine.AddSystem<LevelChangeSystem>();
 }
 
 void setCamera()
@@ -66,7 +70,7 @@ struct Character
         return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity, upspeed };
     }
 
-    static Character Create( String input_ = "", Vector2 position_ = { 0, 0 }, String sprite_path = "matattack:characters:chickboy:idle:idle1")
+    static Character Create( String input_ = "", Vector2 position_ = { 0, 0 }, String sprite_path = "matattack:characters:fox:idle:idle1")
     {
         auto& reg = Engine::Registry();
         auto entity = reg.create();
@@ -213,6 +217,19 @@ void setMap3() {
 }
 
 void setLevel() {
+
+    setSingleBlock(-730, 380, 10, "matattack:items:hp_text2", 40, 40, false, false);
+    setSingleBlock(-680, 380, 10, "matattack:items:heart", 50, 50, false, false);
+    setSingleBlock(-640, 380, 10, "matattack:items:heart", 50, 50, false, false);
+    setSingleBlock(-600, 380, 10, "matattack:items:heart", 50, 50, false, false);
+    setSingleBlock(-670, 340, 10, "matattack:items:health_bar", 180, 30, false, false);
+
+    setSingleBlock(590, 380, 10, "matattack:items:hp_text3", 40, 40, false, false);
+    setSingleBlock(720, 380, 10, "matattack:items:heart", 50, 50, false, false);
+    setSingleBlock(680, 380, 10, "matattack:items:heart", 50, 50, false, false);
+    setSingleBlock(640, 380, 10, "matattack:items:heart", 50, 50, false, false);
+    setSingleBlock(650, 340, 10, "matattack:items:health_bar", 180, 30, false, false);
+
     int lvl = std::rand() % 3 + 1;
     switch (lvl)
     {case 1:
@@ -230,15 +247,28 @@ void setLevel() {
 void Matattack::WorldSetup()
 {
     ShaderSystem::Use("standard");
-    matattack::SetupWorld();
+   /* Engine::ToggleSystemsPause(true);
+    createBackdrop("matattack:items:press_enter");
+    KeyboardEvent event_;
+    if (event_.key == EDaggerKeyboard::KeyEnter && event_.action == EDaggerInputState::Pressed)
+    {
+        Logger::trace("enter pressed");
+        Engine::Registry().clear();*/
+
+        matattack::SetupWorld();
+    //    Engine::ToggleSystemsPause(false);
+    //}
+        
 }
 
 void matattack::SetupWorld()
 {
     setCamera();
     setLevel();
-    //setMap1(); 
     
-    auto mainChar = Character::Create("ASDW", { -100, 250 }, "matattack:characters:chickboy:idle:idle1");
-    auto sndChar = Character::Create("Arrows", { 100, 250 }, "matattack:characters:chickboy:idle:idle1");
+    auto fstChar = Character::Create("ASDW", { -100, 250 }, "matattack:characters:fox:idle:idle1");
+    auto sndChar = Character::Create("Arrows", { 100, 250 }, "matattack:characters:fox:idle:idle1");
+    
+   
 }
+
