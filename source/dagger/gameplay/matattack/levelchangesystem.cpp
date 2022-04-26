@@ -18,10 +18,10 @@ void LevelChangeSystem::WindDown()
 
 void LevelChangeSystem::LevelChooser(LevelChangeEvent lce)
 {
-    //auto& reg = Engine::Registry();
-    //auto entities = reg.view<Sprite>();
-    //reg.destroy(entities.begin(), entities.end());
-    //reg.clear();
+    auto& reg = Engine::Registry();
+    auto entities = reg.view<Sprite>();
+    reg.destroy(entities.begin(), entities.end());
+    reg.clear();
     matattack::SetupWorld();
 }
 
