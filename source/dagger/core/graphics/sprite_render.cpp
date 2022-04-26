@@ -204,7 +204,8 @@ void SpriteRenderSystem::OnRender()
             Engine::Dispatcher().trigger<ShaderChangeRequest>(ShaderChangeRequest(prevShader));
         }
 
-        assert(ptr->image != nullptr);
+        if (ptr->image == nullptr)
+            return;
         while (ptr != sprites.end() && ptr->image == nullptr) ptr++;
         if (ptr == sprites.end()) break;
 
