@@ -13,12 +13,8 @@ namespace matattack
 {
     class Tools
         : public System
-        , public Publisher<ToolMenuRender>
-        , public Subscriber<GUIRender>
+        , public Subscriber<ToolMenuRender>
     {
-        bool m_lvl1 = false;
-        bool m_lvl2 = false;
-        bool m_lvl3 = false;
 
     public:
         inline String SystemName() { return "Matattack Tools System"; }
@@ -28,7 +24,6 @@ namespace matattack
 
     protected:
         void RenderToolMenu();
-        void LevelChooser();
 
     };
 }
