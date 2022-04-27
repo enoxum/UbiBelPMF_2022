@@ -6,6 +6,7 @@
 #include "mandarian_controller.h"
 #include "mandarian_enemy.h"
 #include "mandarian_camera_focus_system.h"
+#include "mandarian_level.h"
 
 using namespace mandarian;
 using namespace dagger;
@@ -66,6 +67,7 @@ void MandarianGame::GameplaySystemsSetup()
     engine.AddPausableSystem<SimplePhysicsSystem>();
     engine.AddPausableSystem<MandarianCameraFocusSystem>();
     engine.AddPausableSystem<EnemyMovementSystem>();
+    engine.AddPausableSystem<LevelSystem>();
 }
 
 void MandarianGame::WorldSetup()
@@ -76,5 +78,7 @@ void MandarianGame::WorldSetup()
     CreateMap();
 
     auto character = Character::Create();
-    CreateEnemies(character.entity);    
+
+    Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(character.entity);
+    Engine::GetDefaultResource<LevelSystem>()->SetMandarian(character.entity);
 }
