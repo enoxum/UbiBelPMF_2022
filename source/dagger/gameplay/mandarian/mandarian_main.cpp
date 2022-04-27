@@ -49,16 +49,6 @@ void MandarianGame::CreateMap()
 
 }
 
-void MandarianGame::CreateEnemies(Entity mandarian)
-{
-    Enemy::Create({ -200.0f, -200.0f });
-    Enemy::Create({ -200.0f,  200.0f });
-    Enemy::Create({  200.0f, -200.0f });
-    Enemy::Create({  200.0f,  200.0f });
-
-    Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(mandarian);
-}
-
 void MandarianGame::GameplaySystemsSetup() 
 {
     auto &engine = Engine::Instance();

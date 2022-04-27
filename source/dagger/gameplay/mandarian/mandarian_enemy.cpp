@@ -14,19 +14,37 @@ Enemy Enemy::Get(Entity entity)
 }
 
 Enemy Enemy::Create(
+            UInt8 tier_,
             Vector2 position_,
-            ColorRGB color_,
-            Vector2 scale_)
+            Vector2 scale_,
+            ColorRGB color_)
 {
     auto &reg = Engine::Registry();
     auto entity = reg.create();
     reg.emplace<EnemyTag>(entity);
     auto enemy = Enemy::Get(entity);
 
-    AssignSprite(enemy.sprite, "EmptyWhitePixel");
+    switch (tier_)
+    {
+    case 1u:
+        AssignSprite(enemy.sprite, "mandarian:tier1enemy");
+        enemy.body.mass = 1.0f;
+        break;
+    case 2u:
+        AssignSprite(enemy.sprite, "mandarian:tier2enemy");
+        enemy.body.mass = 3.0f;
+        break;
+    case 3u:
+        AssignSprite(enemy.sprite, "mandarian:tier3enemy");
+        break;
+    default:
+        AssignSprite(enemy.sprite, "EmptyWhitePixel");
+        break;
+    }
+
     enemy.sprite.scale = { scale_ };
     enemy.sprite.color = { color_, 1.0f };
-
+    
     enemy.transform.position = { position_, 0.0f };
 
     return enemy;
@@ -45,7 +63,7 @@ void EnemyMovementSystem::Run()
 
             direction = NORMALIZE(direction);
 
-            body.applyForce(50.0f * direction);
+            body.applyForce(7.0f * direction);
         }
     );
 }

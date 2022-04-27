@@ -41,7 +41,10 @@ namespace mandarian
     private:
         void RenderGUI();
         void UpdateTimer();
-        void SpawnEnemies();
+
+        void SpawnTier1Enemies();
+        void SpawnTier2Enemies();
+        void SpawnTier3Enemies();
     };
 
 };
