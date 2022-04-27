@@ -25,6 +25,13 @@ void LevelChangeSystem::LevelChooser(LevelChangeEvent lce)
 
 void LevelChangeSystem::OnKey(KeyboardEvent ke) 
 {
+    if (ke.key == EDaggerKeyboard::KeyEnter && ke.action == EDaggerInputState::Pressed && !LevelChangeSystem::isStarted)
+    {
+        auto& reg = Engine::Registry();
+        reg.clear();
+        LevelChangeSystem::isStarted = true;
+        matattack::SetupWorld();
+    }
     Logger::critical(ke.key);
 }
 

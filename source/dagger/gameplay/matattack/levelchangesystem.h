@@ -19,6 +19,8 @@ public:
     void SpinUp() override;
     void WindDown() override;
 
+    bool isStarted = false;
+
 protected:
     void LevelChooser(LevelChangeEvent lce);
     void OnKey(KeyboardEvent ke);
