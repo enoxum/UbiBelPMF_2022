@@ -143,7 +143,7 @@ void setPlatform(int start_x, int start_y, int start_z, unsigned num_of_iteratio
     }
 }
 
-void createBackdrop(String background_path)
+void matattack::CreateBackdrop(String background_path)
 {
 
     auto& engine = Engine::Instance();
@@ -163,7 +163,7 @@ void createBackdrop(String background_path)
 
 void setMap1() {
 
-    createBackdrop("matattack:background:sky");
+    CreateBackdrop("matattack:background:sky");
 
     // setting the trees (the trees need to be behind the player and the platforms, whats why they have a greater z value)
     setSingleBlock(-300, -225, 10, "matattack:tiles:tree", 100, 100, false, false);
@@ -187,7 +187,7 @@ void setMap1() {
 
 void setMap2() {
 
-    createBackdrop("matattack:background:desert");
+    CreateBackdrop("matattack:background:desert");
 
     setSingleBlock(-300, -250, 10, "matattack:tiles:skeleton", 100, 50, false, false);
     setSingleBlock(300, -225, 10, "matattack:tiles:cactus", 80, 100, false, false);
@@ -203,7 +203,7 @@ void setMap2() {
 
 void setMap3() {
 
-    createBackdrop("matattack:background:forest");
+    CreateBackdrop("matattack:background:forest");
 
     setSingleBlock(-250, -200, 10, "matattack:tiles:tree_forest", 125, 150, false, false);
     setSingleBlock(300, 175, 10, "matattack:tiles:tree_forest", 125, 150, false, false);
@@ -244,31 +244,30 @@ void setLevel() {
 
 }
 
-void Matattack::WorldSetup()
-{
-    ShaderSystem::Use("standard");
-   /* Engine::ToggleSystemsPause(true);
-    createBackdrop("matattack:items:press_enter");
-    KeyboardEvent event_;
-    if (event_.key == EDaggerKeyboard::KeyEnter && event_.action == EDaggerInputState::Pressed)
-    {
-        Logger::trace("enter pressed");
-        Engine::Registry().clear();*/
-
-        matattack::SetupWorld();
-    //    Engine::ToggleSystemsPause(false);
-    //}
-        
-}
-
 void matattack::SetupWorld()
 {
     setCamera();
     setLevel();
-    
+
     auto fstChar = Character::Create("ASDW", { -100, 250 }, "matattack:characters:fox:idle:idle1");
     auto sndChar = Character::Create("Arrows", { 100, 250 }, "matattack:characters:fox:idle:idle1");
-    
-   
+
+}
+
+void Matattack::WorldSetup()
+{
+    ShaderSystem::Use("standard");
+    /*Engine::ToggleSystemsPause(true);*/
+    CreateBackdrop("matattack:items:press_enter");
+   // Engine::Dispatcher().sink<KeyboardEvent>().connect<&matattack::SetupWorld>(this);
+   /* KeyboardEvent event_;
+    if (event_.key == EDaggerKeyboard::KeyEnter && event_.action == EDaggerInputState::Pressed)
+    {
+        
+        dagger::Engine::Dispatcher().trigger<KeyboardEvent>(event_);*/
+        //matattack::SetupWorld();
+    //    Engine::ToggleSystemsPause(false);
+   // }
+        
 }
 

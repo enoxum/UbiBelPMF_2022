@@ -17,6 +17,7 @@ namespace matattack
     };
 
     void SetupWorld();
+    void CreateBackdrop(String background_path);
 
     class Matattack : public Game
     {
