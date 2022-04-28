@@ -31,6 +31,8 @@ includes = [
 ]
 
 sources = [
+    'source/dagger/gameplay/team_game/player_controller.cpp',
+    'source/dagger/gameplay/team_game/item_collection.cpp',
     'source/dagger/core/game/transforms.cpp',
     'source/dagger/core/graphics/animation.cpp',
     'source/dagger/core/graphics/animations.cpp',

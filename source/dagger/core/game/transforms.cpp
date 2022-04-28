@@ -3,7 +3,6 @@
 #include "core/graphics/sprite.h"
 
 #include <algorithm>
-#include <execution>
 
 using namespace dagger;
 

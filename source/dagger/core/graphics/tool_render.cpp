@@ -6,7 +6,6 @@
 
 #include <limits>
 #include <algorithm>
-#include <execution>
 #include <chrono>
 #include <cstdint>
 #include <regex>

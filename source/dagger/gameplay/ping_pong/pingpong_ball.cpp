@@ -7,7 +7,6 @@
 #include "gameplay/common/simple_collisions.h"
 
 #include <algorithm>
-#include <execution>
 
 using namespace dagger;
 using namespace ping_pong;

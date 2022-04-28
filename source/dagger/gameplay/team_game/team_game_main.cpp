@@ -11,6 +11,7 @@
 
 #include "gameplay/common/simple_collisions.h"
 #include "player_controller.h"
+#include "item_collection.h"
 
 
 using namespace dagger;
@@ -21,6 +22,7 @@ void TeamGame::GameplaySystemsSetup()
     auto& engine = Engine::Instance();
     engine.AddSystem<SimpleCollisionsSystem>();
     engine.AddPausableSystem<PlayerControlSystem>();
+    engine.AddPausableSystem<ItemCollectionSystem>();
 }
 
 void TeamGame::WorldSetup()
@@ -58,5 +60,41 @@ void team_game::SetupWorld()
         col.size = sprite.size;
 
         reg.emplace<Player>(entity);
+    }
+
+    {
+        auto entity = reg.create();
+        auto& sprite = reg.emplace<Sprite>(entity);
+        AssignSprite(sprite, "logos:dagger");
+        float ratio = sprite.size.y / sprite.size.x;
+        sprite.size = { 100 / ratio, 100  };
+
+        auto& transform = reg.emplace<Transform>(entity);
+        transform.position = { 100 , 0, zPos };
+
+        auto& col = reg.emplace<SimpleCollision>(entity);
+        col.size = sprite.size;
+
+        
+        Item& i = reg.emplace<Item>(entity);
+        i.id = "Dagger 1";
+    }
+
+     {
+        auto entity = reg.create();
+        auto& sprite = reg.emplace<Sprite>(entity);
+        AssignSprite(sprite, "logos:dagger");
+        float ratio = sprite.size.y / sprite.size.x;
+        sprite.size = { 100 / ratio, 100  };
+
+        auto& transform = reg.emplace<Transform>(entity);
+        transform.position = { -150 , 70, zPos };
+
+        auto& col = reg.emplace<SimpleCollision>(entity);
+        col.size = sprite.size;
+
+        
+        Item& i = reg.emplace<Item>(entity);
+        i.id = "Dagger 2";
     }
 }
