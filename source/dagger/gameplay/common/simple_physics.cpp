@@ -3,6 +3,8 @@
 #include "core/engine.h"
 #include "core/game/transforms.h"
 
+#include "simple_collisions.h"
+
 using namespace dagger;
 
 
@@ -14,14 +16,12 @@ void Body::applyForce(Vector2 force_)
 
 void SimplePhysicsSystem::Run() 
 {
-    Engine::Registry().view<Body, Transform>().each(
-        [&](auto &body, auto &transform) 
+    Engine::Registry().view<Body, Transform, CircleCollision>().each(
+        [&](auto &body, auto &transform, auto &collision) 
         {
             body.force *= drag;
             if (EPSILON_ZERO(body.force.x)) body.force.x = 0.0f;
             if (EPSILON_ZERO(body.force.y)) body.force.y = 0.0f;
-            
-//            Logger::trace("Force: ({}, {})", body.force.x, body.force.y);
 
             Vector2 acceleration = { 0.0f, 0.0f };
 
@@ -35,9 +35,27 @@ void SimplePhysicsSystem::Run()
 
             if (EPSILON_ZERO(body.velocity.x)) body.velocity.x = 0.0f;
             if (EPSILON_ZERO(body.velocity.y)) body.velocity.y = 0.0f;
+            
 
-            //Logger::trace("Velocity: ({}, {})", body.velocity.x, body.velocity.y);
+            if (collision.colided) 
+            {
+                if (Engine::Registry().valid(collision.colidedWith))
+                {
+                    auto &collisionOther = Engine::Registry().get<CircleCollision>(collision.colidedWith);
+                    auto &transformOther = Engine::Registry().get<Transform>(collision.colidedWith);
 
+                    do
+                    {
+                        Vector2 diff = transform.position - transformOther.position;
+                        transform.position.x += diff.x * Engine::DeltaTime();
+                        transform.position.y += diff.y * Engine::DeltaTime();
+                    } 
+                    while (collision.isCollided(transform.position, collisionOther, transformOther.position));
+                }
+
+                collision.colided = false;
+            }
+ 
             transform.position.x += body.velocity.x * Engine::DeltaTime();
             transform.position.y += body.velocity.y * Engine::DeltaTime();
         }
