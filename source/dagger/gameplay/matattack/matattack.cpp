@@ -15,6 +15,7 @@
 #include "controllersystem.h"
 #include "gravitysystem.h"
 #include "jumpsystem.h"
+#include "attacksystem.h"
 
 using namespace dagger;
 using namespace matattack;
@@ -27,6 +28,7 @@ void Matattack::GameplaySystemsSetup()
     engine.AddSystem<MovementSystem>();
     engine.AddSystem<GravitySystem>();
     engine.AddSystem<JumpSystem>();
+    engine.AddSystem<AttackSystem>();
 }
 
 void setCamera()
@@ -73,6 +75,8 @@ struct Character
 
         ATTACH_TO_FSM(FSMCharacterController, entity);
         ATTACH_TO_FSM(FSMCharacterJump, entity);
+        ATTACH_TO_FSM(FSMCharacterAttack, entity);
+
 
         auto chr = Character::Get(entity);
 

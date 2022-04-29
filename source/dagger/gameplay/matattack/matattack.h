@@ -14,6 +14,10 @@ namespace matattack
     struct CharacterInfo
     {
         Float32 speed;
+        bool is_colliding_with_other_player{ false };
+        bool is_attacking{ false };
+        bool is_attacked{ false };
+        int hp{ 100 };
     };
 
     void SetupWorld();

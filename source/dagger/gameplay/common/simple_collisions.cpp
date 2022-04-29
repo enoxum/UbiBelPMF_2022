@@ -20,6 +20,7 @@ void SimpleCollisionsSystem::Run()
 
         auto it2 = it;
         it2++;
+
         while(it2 != view.end())
         {
             // data of the second entity
@@ -27,9 +28,50 @@ void SimpleCollisionsSystem::Run()
             auto &tr = view.get<Transform>(*it2);
             col.colided = false;
 
+
+            bool players_in_question = Engine::Registry().has<matattack::CharacterInfo>(*it) && Engine::Registry().has<matattack::CharacterInfo>(*it2);
+            bool basic_collision_detection = collision.IsCollided(transform.position, col, tr.position);
+
+            // ovaj if moze u drugi, ali onda 2 player-a moraju reaguju
+            // kolizija 2 player-a
+            if (players_in_question && basic_collision_detection) {
+
+                auto& char1_info = Engine::Registry().get<matattack::CharacterInfo>(*it);
+                auto& char2_info = Engine::Registry().get<matattack::CharacterInfo>(*it2);
+
+                char1_info.is_colliding_with_other_player = true;
+                char2_info.is_colliding_with_other_player = true;
+
+                if (char1_info.is_attacking) {
+                    char2_info.is_attacked = true;
+                }
+                else if (char2_info.is_attacking) {
+                    char1_info.is_attacked = true;
+                }
+
+               /* Logger::trace("Kolizija 2 player-a");
+                Logger::trace(char1_info.hp);
+                Logger::trace(char2_info.hp);*/
+
+
+            }
+            else if (players_in_question) {
+                
+                auto& char1_info = Engine::Registry().get<matattack::CharacterInfo>(*it);
+                auto& char2_info = Engine::Registry().get<matattack::CharacterInfo>(*it2);
+
+                char1_info.is_colliding_with_other_player = false;
+                char1_info.is_colliding_with_other_player = false;
+
+                // gasimo ga u state-machinu => MOZDA nam ne treba ovde
+                /*char1_info.is_attacked = false;
+                char2_info.is_attacked = false;*/
+                
+            }
+            // ovo treba uvek se desava
             // processing one collision per frame for each colider
             // ako bar 1 od 2 entiteta ima is_collidable = true, onda moraju se colliduju, a su oboma false, onda se nece collide
-            if (collision.IsCollided(transform.position, col, tr.position) && (collision.is_collidable || col.is_collidable))
+            if (basic_collision_detection && (collision.is_collidable || col.is_collidable))
             {
                 //Logger::trace("they are colliding!");
                 collision.colided = true;
