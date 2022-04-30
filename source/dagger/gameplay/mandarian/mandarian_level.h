@@ -6,11 +6,36 @@
 #include "core/engine.h"
 
 #include "core/graphics/window.h"
+#include "core/graphics/sprite.h"
+#include "core/game/transforms.h"
+
+#include "gameplay/common/simple_collisions.h"
 
 using namespace dagger;
 
 namespace mandarian 
 {
+
+    struct Experience
+    {
+        UInt16 points { 10u };
+    };
+
+    struct Mandarin
+    {
+        Entity entity;
+        Sprite &sprite;
+        Transform &transform;
+        Experience &experience;
+
+        static Mandarin Get(Entity entity);
+        static Mandarin Create(
+            UInt16 points = 10u,
+            Vector2 position_ = { 0.0f, 0.0f },
+            Vector2 scale_ = { 10.0f, 10.0f }
+        );
+    };
+
     struct Timer
     {
         UInt8 minutes;
@@ -41,6 +66,8 @@ namespace mandarian
     private:
         void RenderGUI();
         void UpdateTimer();
+        void UpdateExperience();
+        void SpawnEnemies();
 
         void SpawnTier1Enemies();
         void SpawnTier2Enemies();

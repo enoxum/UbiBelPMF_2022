@@ -7,6 +7,32 @@
 
 using namespace mandarian;
 
+Mandarin Mandarin::Get(Entity entity)
+{
+    auto &reg = Engine::Registry();
+    
+    auto &sprite = reg.get_or_emplace<Sprite>(entity);
+    auto &transform = reg.get_or_emplace<Transform>(entity);
+    auto &experience = reg.get_or_emplace<Experience>(entity);
+
+    return Mandarin { entity, sprite, transform, experience };
+}
+
+Mandarin Mandarin::Create(UInt16 points_, Vector2 position_, Vector2 scale_)
+{
+    auto entity = Engine::Registry().create();
+    auto mandarin = Mandarin::Get(entity);
+
+    AssignSprite(mandarin.sprite, "EmptyWhitePixel");
+    mandarin.sprite.scale = { scale_ };
+
+    mandarin.transform.position = { position_, 0.0f };
+
+    mandarin.experience.points = points_;
+
+    return mandarin;
+}
+
 void LevelSystem::RenderGUI()
 {
     ImGui::SetNextWindowSize(ImVec2(200, 60), ImGuiCond_FirstUseEver);
@@ -138,14 +164,22 @@ void LevelSystem::WindDown()
     Engine::Dispatcher().sink<GUIRender>().disconnect<&LevelSystem::RenderGUI>(this);
 }
 
-void LevelSystem::Run()
+void LevelSystem::UpdateExperience()
 {
-    UpdateTimer();
+    Engine::Registry().view<Experience, CircleCollision>().each(
+        [&](auto entity, auto &experience, auto &collision) 
+        {
+            // TODO: Implement mandarin pickup system
+        }
+    );
+}
 
+void LevelSystem::SpawnEnemies()
+{
     if (timer.minutes == 0u && timer.seconds % 5u == 0u)
     {
         SpawnTier1Enemies();
-    }  
+    }
     else if (timer.minutes == 0u && timer.seconds > 20 && timer.seconds % 7u == 0u)
     {
         SpawnTier2Enemies();
@@ -154,8 +188,16 @@ void LevelSystem::Run()
     {
         SpawnTier3Enemies();   
     }
+    // TODO: Implement other minutes of the game.
     else
     {
         flag = true;
     }
+}
+
+void LevelSystem::Run()
+{
+    UpdateTimer();
+    UpdateExperience();
+//    SpawnEnemies();
 }
