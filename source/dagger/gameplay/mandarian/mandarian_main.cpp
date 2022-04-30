@@ -73,10 +73,10 @@ void MandarianGame::WorldSetup()
     Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(character.entity);
     Engine::GetDefaultResource<LevelSystem>()->SetMandarian(character.entity);
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 100; i++)
     {
-        Float32 xPos = 200 * (rand() / static_cast<Float32>(RAND_MAX));
-        Float32 yPos = 200 * (rand() / static_cast<Float32>(RAND_MAX));
+        Float32 xPos = 1000 * (rand() / static_cast<Float32>(RAND_MAX));
+        Float32 yPos = 1000 * (rand() / static_cast<Float32>(RAND_MAX));
         Mandarin::Create(10u, { xPos, yPos });
     }
 }

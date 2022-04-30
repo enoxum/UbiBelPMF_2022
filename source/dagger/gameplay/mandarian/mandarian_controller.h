@@ -15,6 +15,26 @@ using namespace dagger;
 
 namespace mandarian 
 {
+    struct CharacterStats
+    {
+        UInt16 maxHealth { 100u };  // Maximum amount of HP
+        UInt16 recovery { 0u };     // HP generated for new Lvl
+        UInt16 armor { 0u };        // Amount of reduced incoming damage
+        Float32 might { 1.0f };     // Multiplicator for demage
+        Float32 area { 1.0f };      // Multiplicator for area of attacks
+        Float32 speed { 1.0f };     // Movement speed of all projectiles
+        Float32 duration { 1.0f };  // Multiplicator for duration of spells
+        Float32 cooldown { 1.0f };  // Multiplicator for cooldown of spells 
+        Float32 growth { 1.0f };    // Multiplicator for experiance gained
+        UInt16 magnet { 30u };      // Radius of mandarin pickup
+    };
+
+    struct CharacterExperience
+    {
+        UInt8 level { 0u };
+        UInt8 points { 0u };
+    };
+
     struct Character
     {
         Entity entity;
@@ -23,6 +43,8 @@ namespace mandarian
         Body &body;
         CircleCollision &collision;
         InputReceiver &input;
+        CharacterStats &stats;
+        CharacterExperience &experience;
 
         static Character Get(Entity);
 

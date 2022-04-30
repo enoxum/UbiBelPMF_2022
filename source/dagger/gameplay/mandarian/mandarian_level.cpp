@@ -4,6 +4,7 @@
 
 #include "core/game/transforms.h"
 #include "mandarian_enemy.h"
+#include "mandarian_controller.h"
 
 using namespace mandarian;
 
@@ -35,10 +36,35 @@ Mandarin Mandarin::Create(UInt16 points_, Vector2 position_, Vector2 scale_)
 
 void LevelSystem::RenderGUI()
 {
+    const auto mandarianStats = Engine::Registry().get<CharacterStats>(mandarian);
+    const auto mandarianExperience = Engine::Registry().get<CharacterExperience>(mandarian);
+
     ImGui::SetNextWindowSize(ImVec2(200, 60), ImGuiCond_FirstUseEver);
     ImGui::Begin("Status");
     ImGui::Separator();
+
     ImGui::Text("Timer: %02d:%02d", timer.minutes, timer.seconds);
+
+    ImGui::Separator();
+
+    ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.0f, 1.0f), "Mandarian Experience:");
+    ImGui::Text("Level%d: %dEXP", mandarianExperience.level, mandarianExperience.points);
+
+    ImGui::Separator();
+
+    ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.0f, 1.0f), "Mandarian Stats:");
+    ImGui::Text("Max Health: %dHP",         mandarianStats.maxHealth);
+    ImGui::Text("Recovery:   %dHP/Level",   mandarianStats.recovery);
+    ImGui::Text("Armor:      %d",           mandarianStats.armor);
+    ImGui::Text("Might:      %.0f%%", 100 * mandarianStats.might);
+    ImGui::Text("Area:       %.0f%%", 100 * mandarianStats.area);
+    ImGui::Text("Speed:      %.0f%%", 100 * mandarianStats.speed);
+    ImGui::Text("Duration:   %.0f%%", 100 * mandarianStats.duration);
+    ImGui::Text("Cooldown:   %.0f%%", 100 * mandarianStats.cooldown);
+    ImGui::Text("Growth:     %.0f%%", 100 * mandarianStats.growth);
+    ImGui::Text("Magnet:     %d",           mandarianStats.magnet);
+
+    ImGui::Separator();
     ImGui::End();
 }
 
@@ -166,10 +192,29 @@ void LevelSystem::WindDown()
 
 void LevelSystem::UpdateExperience()
 {
-    Engine::Registry().view<Experience, CircleCollision>().each(
-        [&](auto entity, auto &experience, auto &collision) 
+    auto &registry = Engine::Registry();
+
+    const auto mandarianTransform = registry.get<Transform>(mandarian);
+    auto &mandarianStats = registry.get<CharacterStats>(mandarian);
+    auto &mandarianExperience = registry.get<CharacterExperience>(mandarian);
+
+    registry.view<Transform, Experience>().each(
+        [&](auto entity, auto &transform, auto &experience) 
         {
-            // TODO: Implement mandarin pickup system
+            const auto distance = glm::distance(transform.position, mandarianTransform.position);
+            
+            if (distance < mandarianStats.magnet) 
+            {
+                mandarianExperience.points += mandarianStats.growth * experience.points;            
+                if (mandarianExperience.level * 10u + 50u < mandarianExperience.points)
+                {
+                    mandarianExperience.points = 0u;
+                    mandarianExperience.level++;
+                    // TODO: Update stats pause gameplay systems while choosing updates.
+                }
+            
+                registry.destroy(entity);
+            }
         }
     );
 }

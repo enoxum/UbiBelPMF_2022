@@ -17,8 +17,10 @@ Character Character::Get(Entity entity)
     auto &body = reg.get_or_emplace<Body>(entity);
     auto &collision = reg.get_or_emplace<CircleCollision>(entity);
     auto &input = reg.get_or_emplace<InputReceiver>(entity);
+    auto &stats = reg.get_or_emplace<CharacterStats>(entity);
+    auto &experience = reg.get_or_emplace<CharacterExperience>(entity);
 
-    return Character{ entity, sprite, transform, body, collision, input };
+    return Character{ entity, sprite, transform, body, collision, input, stats, experience };
 }
 
 Character Character::Create(
