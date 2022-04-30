@@ -41,40 +41,12 @@ void SimpleCollisionsSystem::Run()
                 event.collision = true;
                 Engine::Dispatcher().trigger<PlayerCollisionEvent>(event);
 
-                /*auto& char1_info = Engine::Registry().get<matattack::CharacterInfo>(*it);
-                auto& char2_info = Engine::Registry().get<matattack::CharacterInfo>(*it2);
-
-                char1_info.is_colliding_with_other_player = true;
-                char2_info.is_colliding_with_other_player = true;
-
-                if (char1_info.is_attacking) {
-                    char2_info.is_attacked = true;
-                }
-                else if (char2_info.is_attacking) {
-                    char1_info.is_attacked = true;
-                }*/
-
-                /* Logger::trace("Kolizija 2 player-a");
-                Logger::trace(char1_info.hp);
-                Logger::trace(char2_info.hp);*/
-                
-
             }
             else if (players_in_question) {
 
                 PlayerCollisionEvent event;
                 event.collision = false;
                 Engine::Dispatcher().trigger<PlayerCollisionEvent>(event);
-
-                /*auto& char1_info = Engine::Registry().get<matattack::CharacterInfo>(*it);
-                auto& char2_info = Engine::Registry().get<matattack::CharacterInfo>(*it2);
-
-                char1_info.is_colliding_with_other_player = false;
-                char1_info.is_colliding_with_other_player = false; */
-
-                // gasimo ga u state-machinu => MOZDA nam ne treba ovde
-                /*char1_info.is_attacked = false;
-                char2_info.is_attacked = false;*/
                 
             }
             // ovo treba uvek se desava
