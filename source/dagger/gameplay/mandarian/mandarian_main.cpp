@@ -53,10 +53,11 @@ void MandarianGame::GameplaySystemsSetup()
 {
     auto &engine = Engine::Instance();
 
+    engine.AddPausableSystem<SimpleCollisionsSystem>();
+    engine.AddPausableSystem<EnemyMovementSystem>();
     engine.AddPausableSystem<MandarianControllerSystem>();
     engine.AddPausableSystem<SimplePhysicsSystem>();
     engine.AddPausableSystem<MandarianCameraFocusSystem>();
-    engine.AddPausableSystem<EnemyMovementSystem>();
     engine.AddPausableSystem<LevelSystem>();
 }
 

@@ -71,7 +71,7 @@ void LevelSystem::SpawnTier2Enemies()
         Float32 twoPI = 2 * M_PIf32;
         Float32 step = twoPI / n;
 
-        for (Float32 angle = 0.0f; angle < twoPI; angle += step)
+        for (Float32 angle = 0.0f; angle < twoPI - step; angle += step)
         {
             Vector2 offset { distance * cos(angle), distance * sin(angle) };
 

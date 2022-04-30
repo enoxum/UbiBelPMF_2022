@@ -7,6 +7,8 @@
 
 #include "core/graphics/sprite.h"
 #include "core/game/transforms.h"
+
+#include "gameplay/common/simple_collisions.h"
 #include "gameplay/common/simple_physics.h"
 
 using namespace dagger;
@@ -24,13 +26,15 @@ namespace mandarian
         Sprite &sprite;
         Transform &transform;
         Body &body;
+        CircleCollision &collision;
 
         static Enemy Get(Entity entity);
         static Enemy Create(
             UInt8 tier_ = 1u,
             Vector2 position_ = {0.0f, 0.0f},
             Vector2 scale_ = {1.0f, 1.0f},
-            ColorRGB color_ = {1.0f, 1.0f, 1.0f});
+            ColorRGB color_ = {1.0f, 1.0f, 1.0f},
+            Float32 radius_ = 10.0f);
     };
 
     class EnemyMovementSystem

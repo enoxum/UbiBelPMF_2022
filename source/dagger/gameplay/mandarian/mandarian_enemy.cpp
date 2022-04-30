@@ -9,15 +9,17 @@ Enemy Enemy::Get(Entity entity)
     auto &sprite = reg.get_or_emplace<Sprite>(entity);
     auto &transform = reg.get_or_emplace<Transform>(entity);
     auto &body = reg.get_or_emplace<Body>(entity);
+    auto &collision = reg.get_or_emplace<CircleCollision>(entity);
 
-    return Enemy{ entity, sprite, transform, body };
+    return Enemy{ entity, sprite, transform, body, collision };
 }
 
 Enemy Enemy::Create(
             UInt8 tier_,
             Vector2 position_,
             Vector2 scale_,
-            ColorRGB color_)
+            ColorRGB color_,
+            Float32 radius_)
 {
     auto &reg = Engine::Registry();
     auto entity = reg.create();
@@ -46,6 +48,8 @@ Enemy Enemy::Create(
     enemy.sprite.color = { color_, 1.0f };
     
     enemy.transform.position = { position_, 0.0f };
+
+    enemy.collision.radius = radius_;
 
     return enemy;
 }
