@@ -1,6 +1,7 @@
 #pragma once
 #include "core/core.h"
 #include "core/game/finite_state_machine.h"
+#include "events.h"
 
 
 enum struct EAttackStates
@@ -15,6 +16,8 @@ struct FSMCharacterAttack : public FSM<EAttackStates>
 	DEFINE_STATE(FSMCharacterAttack, EAttackStates, NoAction);
 	DEFINE_STATE(FSMCharacterAttack, EAttackStates, Attacking);
 	DEFINE_STATE(FSMCharacterAttack, EAttackStates, IsAttacked);
+
+	bool DetectPlayerCollision(PlayerCollisionEvent ev);
 
 	FSMCharacterAttack()
 	{

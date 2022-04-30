@@ -3,6 +3,7 @@
 #include "core/core.h"
 #include "core/system.h"
 #include "characterattackfsm.h"
+#include "events.h"
 
 using namespace dagger;
 
@@ -17,7 +18,9 @@ namespace matattack
             return "Character Attack System";
         }
 
+        void SpinUp() override;
         void Run() override;
+        void WindDown() override;
 
     };
 }

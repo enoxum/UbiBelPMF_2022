@@ -11,6 +11,11 @@
 
 using namespace matattack;
 
+void AttackSystem::SpinUp() 
+{
+    Engine::Dispatcher().sink<PlayerCollisionEvent>().connect<&FSMCharacterAttack::DetectPlayerCollision>(attackFSM);
+};
+
 void AttackSystem::Run()
 {
     Engine::Registry().view<FSMCharacterAttack::StateComponent>()
@@ -19,3 +24,8 @@ void AttackSystem::Run()
                 attackFSM.Run(state_);
             });
 }
+
+void AttackSystem::WindDown() 
+{
+    Engine::Dispatcher().sink<PlayerCollisionEvent>().disconnect<&FSMCharacterAttack::DetectPlayerCollision>(attackFSM);
+};

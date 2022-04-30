@@ -11,6 +11,17 @@
 #include "matattack.h"
 #include "gameplay/common/simple_collisions.h"
 
+bool FSMCharacterAttack::DetectPlayerCollision(PlayerCollisionEvent ev)
+{
+	if (ev.collision) {
+		Logger::critical("kolizija");
+	}
+	else {
+		Logger::critical("ne kolizija");
+	}
+	return ev.collision;
+}
+
 void FSMCharacterAttack::NoAction::Enter(FSMCharacterAttack::StateComponent& state_)
 {
 	//auto& animator = Engine::Registry().get<Animator>(state_.entity);
