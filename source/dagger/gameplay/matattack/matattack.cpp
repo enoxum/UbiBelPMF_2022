@@ -52,6 +52,7 @@ struct Character
     Animator& animator;
     Gravity& gravity;
     UpSpeed& upspeed;
+    AttackInfo& attack_info;
 
     static Character Get(Entity entity)
     {
@@ -64,8 +65,9 @@ struct Character
         auto& anim = reg.get_or_emplace<Animator>(entity);
         auto& gravity = reg.get_or_emplace<Gravity>(entity);
         auto& upspeed = reg.get_or_emplace<UpSpeed>(entity);
+        auto& attack_info = reg.get_or_emplace<AttackInfo>(entity);
 
-        return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity, upspeed };
+        return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity, upspeed, attack_info };
     }
 
     static Character Create( String input_ = "", Vector2 position_ = { 0, 0 }, String sprite_path = "matattack:characters:chickboy:idle:idle1")
@@ -105,6 +107,9 @@ struct Character
 
         chr.upspeed.jumpSpeed = 800.0F;
         chr.upspeed.cutoff = 2.0F;
+
+        chr.attack_info.attack_damage = 10;
+        chr.attack_info.hp = 100;
 
         return chr;
     }

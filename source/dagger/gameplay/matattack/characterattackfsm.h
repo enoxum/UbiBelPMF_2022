@@ -3,26 +3,30 @@
 #include "core/game/finite_state_machine.h"
 #include "events.h"
 
+struct AttackInfo {
+	bool is_attacking = false;
+	bool is_attacked = false;
+	SInt32 attack_damage = 10;
+	SInt32 hp = 100;
+};
+
 
 enum struct EAttackStates
 {
 	NoAction,
-	Attacking,
 	IsAttacked
 };
 
 struct FSMCharacterAttack : public FSM<EAttackStates>
 {
 	DEFINE_STATE(FSMCharacterAttack, EAttackStates, NoAction);
-	DEFINE_STATE(FSMCharacterAttack, EAttackStates, Attacking);
 	DEFINE_STATE(FSMCharacterAttack, EAttackStates, IsAttacked);
 
-	bool DetectPlayerCollision(PlayerCollisionEvent ev);
+	void DetectPlayerCollision(PlayerCollisionEvent ev);
 
 	FSMCharacterAttack()
 	{
 		CONNECT_STATE(EAttackStates, NoAction);
-		CONNECT_STATE(EAttackStates, Attacking);
 		CONNECT_STATE(EAttackStates, IsAttacked);
 	}
 };

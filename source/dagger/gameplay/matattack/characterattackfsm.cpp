@@ -11,15 +11,37 @@
 #include "matattack.h"
 #include "gameplay/common/simple_collisions.h"
 
-bool FSMCharacterAttack::DetectPlayerCollision(PlayerCollisionEvent ev)
+void FSMCharacterAttack::DetectPlayerCollision(PlayerCollisionEvent ev)
 {
-	if (ev.collision) {
-		Logger::critical("kolizija");
+	auto view = Engine::Registry().view<AttackInfo>();
+	auto it1 = view.begin();
+	auto it2 = it1;
+	it2++;
+	auto &p1_attack_info = view.get<AttackInfo>(*it1);
+	auto &p2_attack_info = view.get<AttackInfo>(*it2);
+
+	if (ev.collision)
+	{
+		if (p1_attack_info.is_attacking)
+		{
+			p2_attack_info.is_attacked = true;
+		}
+		else {
+			p2_attack_info.is_attacked = false;
+		}
+
+		if (p2_attack_info.is_attacking)
+		{
+			p1_attack_info.is_attacked = true;
+		}
+		else{
+			p1_attack_info.is_attacked = false;
+		}
 	}
 	else {
-		Logger::critical("ne kolizija");
+		p1_attack_info.is_attacked = false;
+		p2_attack_info.is_attacked = false;
 	}
-	return ev.collision;
 }
 
 void FSMCharacterAttack::NoAction::Enter(FSMCharacterAttack::StateComponent& state_)
@@ -30,15 +52,18 @@ void FSMCharacterAttack::NoAction::Enter(FSMCharacterAttack::StateComponent& sta
 
 void FSMCharacterAttack::NoAction::Run(FSMCharacterAttack::StateComponent& state_)
 {
-	auto&& [char_info, input] = Engine::Registry().get<matattack::CharacterInfo, InputReceiver>(state_.entity);
+	auto&& [input, attack_info] = Engine::Registry().get<InputReceiver, AttackInfo>(state_.entity);
 	// sviPlayeri = view()<CharacterInfo>;
 
 	if (EPSILON_NOT_ZERO(input.Get("attack")))
 	{
-		GoTo(EAttackStates::Attacking, state_);
+		attack_info.is_attacking = true;
+	}
+	else{
+		attack_info.is_attacking = false;
 	}
 
-	if (char_info.is_colliding_with_other_player && char_info.is_attacked) {
+	if (attack_info.is_attacked) {
 		GoTo(EAttackStates::IsAttacked, state_);
 	}
 }
@@ -47,31 +72,6 @@ DEFAULT_EXIT(FSMCharacterAttack, NoAction);
 
 
 // kada napada
-void FSMCharacterAttack::Attacking::Enter(FSMCharacterAttack::StateComponent& state_)
-{
-	auto& animator = Engine::Registry().get<Animator>(state_.entity);
-	// ovako neka animacija vrv
-	//AnimatorPlay(animator, "matattack:attack");
-	auto& char_info = Engine::Registry().get<matattack::CharacterInfo>(state_.entity);
-	char_info.is_attacking = true;
-}
-
-void FSMCharacterAttack::Attacking::Run(FSMCharacterAttack::StateComponent& state_)
-{
-	auto&& [char_info, input] = Engine::Registry().get<matattack::CharacterInfo, InputReceiver>(state_.entity);
-
-	char_info.is_attacking = false;
-	
-	if (char_info.is_attacked) {
-		GoTo(EAttackStates::IsAttacked, state_);
-	}
-	else {
-		GoTo(EAttackStates::NoAction, state_);
-	}
-	
-}
-
-DEFAULT_EXIT(FSMCharacterAttack, Attacking);
 
 
 
@@ -87,14 +87,12 @@ void FSMCharacterAttack::IsAttacked::Enter(FSMCharacterAttack::StateComponent& s
 
 void FSMCharacterAttack::IsAttacked::Run(FSMCharacterAttack::StateComponent& state_)
 {
-	auto&& [char_info, input] = Engine::Registry().get<matattack::CharacterInfo, InputReceiver>(state_.entity);
+	auto& attack_info = Engine::Registry().get<AttackInfo>(state_.entity);
 
 	// sistem koji te odgurava
 
-	char_info.hp -= 10;
-
-	char_info.is_attacked = false;
-	Logger::trace(char_info.hp);
+	attack_info.hp -= 10;
+	Logger::trace(attack_info.hp);
 
 	GoTo(EAttackStates::NoAction, state_);
 }
