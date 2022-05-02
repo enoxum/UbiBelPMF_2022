@@ -16,7 +16,7 @@ namespace matattack
         Float32 speed;
     };
 
-    void SetupWorld();
+    void SetupWorld(int lvl);
     void CreateBackdrop(String background_path);
 
     class Matattack : public Game
