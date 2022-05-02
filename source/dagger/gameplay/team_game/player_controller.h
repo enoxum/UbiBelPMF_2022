@@ -6,7 +6,6 @@
 #include "core/engine.h"
 
 #include "item_collection.h"
-#include<vector>
 
 using namespace dagger;
 
@@ -14,7 +13,6 @@ namespace team_game
 {
     struct Player {
         char c;
-        std::vector<Item> items;
     };
 
     class PlayerControlSystem : public System {

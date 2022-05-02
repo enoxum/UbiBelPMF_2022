@@ -12,10 +12,10 @@ namespace team_game
     // bool operator== (const Item& item1, const Item& item2) 
     struct Item {
         String id;
+    };
 
-        friend bool operator== (const Item& item1, const Item& item2) {
-            return item1.id == item2.id;
-        }   
+    struct CollectedItem {
+        String id;
     };
 
     class ItemCollectionSystem : public System {
