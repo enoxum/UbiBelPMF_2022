@@ -16,6 +16,7 @@
 #include "gravitysystem.h"
 #include "jumpsystem.h"
 #include "attacksystem.h"
+#include "knockbacksystem.h"
 
 using namespace dagger;
 using namespace matattack;
@@ -29,6 +30,7 @@ void Matattack::GameplaySystemsSetup()
     engine.AddSystem<GravitySystem>();
     engine.AddSystem<JumpSystem>();
     engine.AddSystem<AttackSystem>();
+    engine.AddSystem<KnockbackSystem>();
 }
 
 void setCamera()
@@ -53,6 +55,7 @@ struct Character
     Gravity& gravity;
     UpSpeed& upspeed;
     AttackInfo& attack_info;
+    KnockbackInfo& knockback_info;
 
     static Character Get(Entity entity)
     {
@@ -66,8 +69,9 @@ struct Character
         auto& gravity = reg.get_or_emplace<Gravity>(entity);
         auto& upspeed = reg.get_or_emplace<UpSpeed>(entity);
         auto& attack_info = reg.get_or_emplace<AttackInfo>(entity);
+        auto& knockback_info = reg.get_or_emplace<KnockbackInfo>(entity);
 
-        return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity, upspeed, attack_info };
+        return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity, upspeed, attack_info, knockback_info };
     }
 
     static Character Create( String input_ = "", Vector2 position_ = { 0, 0 }, String sprite_path = "matattack:characters:chickboy:idle:idle1")
@@ -110,6 +114,10 @@ struct Character
         chr.attack_info.attack_damage = 10;
         chr.attack_info.hp = 100;
         chr.attack_info.base_imunity_duration = 100;
+
+        chr.knockback_info.base_horizontal_speed = 1000.0F;
+        chr.knockback_info.horizontal_decrease = 10.0F;
+        chr.knockback_info.base_vertical_speed = 300.0F;
 
         return chr;
     }
