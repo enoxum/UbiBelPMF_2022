@@ -2,21 +2,29 @@
 
 #include "core/core.h"
 #include "core/system.h"
-#include "characterattackfsm.h"
 #include "events.h"
 
 using namespace dagger;
 
+struct AttackInfo {
+    bool is_attacking = false;
+    SInt32 base_imunity_duration = 100;
+    SInt32 imunity_duration = 0;
+    SInt32 attack_damage = 10;
+    SInt32 hp = 100;
+};
 
 namespace matattack
 {
     class AttackSystem : public System
     {
     public:
-        FSMCharacterAttack attackFSM;
         String SystemName() override {
             return "Character Attack System";
         }
+
+        void DetectPlayerCollision();
+        void DealDamage(AttackInfo& attacker_info, AttackInfo& victim_info);
 
         void SpinUp() override;
         void Run() override;

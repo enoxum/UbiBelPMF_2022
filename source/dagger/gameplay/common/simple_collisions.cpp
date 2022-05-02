@@ -42,13 +42,6 @@ void SimpleCollisionsSystem::Run()
                 Engine::Dispatcher().trigger<PlayerCollisionEvent>(event);
 
             }
-            else if (players_in_question) {
-
-                PlayerCollisionEvent event;
-                event.collision = false;
-                Engine::Dispatcher().trigger<PlayerCollisionEvent>(event);
-                
-            }
             // ovo treba uvek se desava
             // processing one collision per frame for each colider
             // ako bar 1 od 2 entiteta ima is_collidable = true, onda moraju se colliduju, a su oboma false, onda se nece collide

@@ -77,7 +77,6 @@ struct Character
 
         ATTACH_TO_FSM(FSMCharacterController, entity);
         ATTACH_TO_FSM(FSMCharacterJump, entity);
-        ATTACH_TO_FSM(FSMCharacterAttack, entity);
 
 
         auto chr = Character::Get(entity);
@@ -110,6 +109,7 @@ struct Character
 
         chr.attack_info.attack_damage = 10;
         chr.attack_info.hp = 100;
+        chr.attack_info.base_imunity_duration = 100;
 
         return chr;
     }
