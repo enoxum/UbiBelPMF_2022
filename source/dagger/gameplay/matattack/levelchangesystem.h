@@ -1,6 +1,7 @@
 #pragma once
 #include "core/core.h"
 #include "core/system.h"
+#include "core/input/inputs.h"
 
 using namespace dagger;
 
@@ -24,5 +25,5 @@ public:
 protected:
     void LevelChooser(LevelChangeEvent lce);
     void OnKey(KeyboardEvent ke);
-
+    void OnMouse(MouseEvent me);
 };
