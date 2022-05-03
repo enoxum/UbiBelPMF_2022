@@ -9,21 +9,21 @@ using namespace dagger;
 
 namespace team_game
 {
-    struct Item {
-        String id;
+    struct Gravity {
+        char c;
     };
 
-    struct CollectedItem {
-        String id;
-    };
+    class GravitySystem : public System {
 
-    class ItemCollectionSystem : public System {
     public:
-        inline String SystemName() { return "Item collection system"; }
+        static const double gravityForce;
+
+        inline String SystemName() { return "Gravity control system"; }
         void Run() override;
 
         void SpinUp() override;
         void WindDown() override;
+
     };
 
 }

@@ -31,9 +31,8 @@ void ItemCollectionSystem::Run()
     for(const auto player: view) 
     {
         auto &col = view.get<SimpleCollision>(player);
-        Player& p = view.get<Player>(player);  
-
-        if (col.colided && Engine::Registry().valid(col.colidedWith))
+        
+        if (col.colided && Engine::Registry().valid(col.colidedWith) && viewCollisions.contains(col.colidedWith))
         {
             // move item to "invisible place"
             Transform& transform = viewCollisions.get<Transform>(col.colidedWith);

@@ -12,6 +12,8 @@
 #include "gameplay/common/simple_collisions.h"
 #include "player_controller.h"
 #include "item_collection.h"
+#include "solid_object_interaction.h"
+#include "gravity.h"
 
 
 using namespace dagger;
@@ -23,6 +25,8 @@ void TeamGame::GameplaySystemsSetup()
     engine.AddSystem<SimpleCollisionsSystem>();
     engine.AddPausableSystem<PlayerControlSystem>();
     engine.AddPausableSystem<ItemCollectionSystem>();
+    engine.AddPausableSystem<SolidObjectInteractionSystem>();
+    engine.AddPausableSystem<GravitySystem>();
 }
 
 void TeamGame::WorldSetup()
@@ -60,41 +64,92 @@ void team_game::SetupWorld()
         col.size = sprite.size;
 
         reg.emplace<Player>(entity);
+        reg.emplace<Gravity>(entity);
+    }
+
+    // {
+    //     auto entity = reg.create();
+    //     auto& sprite = reg.emplace<Sprite>(entity);
+    //     AssignSprite(sprite, "logos:dagger");
+    //     float ratio = sprite.size.y / sprite.size.x;
+    //     sprite.size = { 100 / ratio, 100  };
+
+    //     auto& transform = reg.emplace<Transform>(entity);
+    //     transform.position = { 100 , 0, zPos };
+
+    //     auto& col = reg.emplace<SimpleCollision>(entity);
+    //     col.size = sprite.size;
+        
+    //     Item& i = reg.emplace<Item>(entity);
+    //     i.id = "Dagger 1";
+    // }
+
+    {
+        auto entity = reg.create();
+        auto& sprite = reg.emplace<Sprite>(entity);
+        AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
+        float ratio = sprite.size.y / sprite.size.x;
+        sprite.size = { 180, 30  };
+
+        auto& transform = reg.emplace<Transform>(entity);
+        transform.position = { -200 , 0, zPos };
+
+        auto& col = reg.emplace<SimpleCollision>(entity);
+        col.size = sprite.size;
+        
+        Platform& i = reg.emplace<Platform>(entity);
+        i.id = "PLTLeft";
+    }
+
+
+    {
+        auto entity = reg.create();
+        auto& sprite = reg.emplace<Sprite>(entity);
+        AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
+        float ratio = sprite.size.y / sprite.size.x;
+        sprite.size = { 120, 30  };
+
+        auto& transform = reg.emplace<Transform>(entity);
+        transform.position = { 200 , 0, zPos };
+
+        auto& col = reg.emplace<SimpleCollision>(entity);
+        col.size = sprite.size;
+        
+        Platform& i = reg.emplace<Platform>(entity);
+        i.id = "PLTRight";
     }
 
     {
         auto entity = reg.create();
         auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "logos:dagger");
+        AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
         float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 100 / ratio, 100  };
+        sprite.size = { 300, 30  };
 
         auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { 100 , 0, zPos };
+        transform.position = { 0 , -80, zPos };
 
         auto& col = reg.emplace<SimpleCollision>(entity);
         col.size = sprite.size;
-
         
-        Item& i = reg.emplace<Item>(entity);
-        i.id = "Dagger 1";
+        Platform& i = reg.emplace<Platform>(entity);
+        i.id = "PLTBottom";
     }
 
-     {
+    {
         auto entity = reg.create();
         auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "logos:dagger");
+        AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
         float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 100 / ratio, 100  };
+        sprite.size = { 300, 30  };
 
         auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { -150 , 70, zPos };
+        transform.position = { 0 , 80, zPos };
 
         auto& col = reg.emplace<SimpleCollision>(entity);
         col.size = sprite.size;
-
         
-        Item& i = reg.emplace<Item>(entity);
-        i.id = "Dagger 2";
+        Platform& i = reg.emplace<Platform>(entity);
+        i.id = "PLTTop";
     }
 }

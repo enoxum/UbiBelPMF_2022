@@ -9,17 +9,13 @@ using namespace dagger;
 
 namespace team_game
 {
-    struct Item {
+    struct Platform {
         String id;
     };
 
-    struct CollectedItem {
-        String id;
-    };
-
-    class ItemCollectionSystem : public System {
+    class SolidObjectInteractionSystem : public System {
     public:
-        inline String SystemName() { return "Item collection system"; }
+        inline String SystemName() { return "Solid object interaction system"; }
         void Run() override;
 
         void SpinUp() override;

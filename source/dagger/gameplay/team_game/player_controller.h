@@ -6,6 +6,7 @@
 #include "core/engine.h"
 
 #include "item_collection.h"
+#include<vector>
 
 using namespace dagger;
 

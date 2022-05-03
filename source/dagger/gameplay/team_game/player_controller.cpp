@@ -48,12 +48,14 @@ void PlayerControlSystem::Run() {
         ent.position.x += step;
 
         if (jumping) {
-            jumpVelocity -= 0.008f;
             ent.position.y += jumpVelocity;
-            if (ent.position.y <= 0) {   // if(standing_on_ground) ...
-                jumpVelocity = 0.0;
+            jumpVelocity -= 0.008f;
+            if (jumpVelocity <= 0)
+            {
                 jumping = false;
+                jumpVelocity = 0;
             }
+            
         }
     });
 
