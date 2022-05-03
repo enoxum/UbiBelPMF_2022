@@ -53,7 +53,7 @@ void team_game::SetupWorld()
     {
         auto entity = reg.create();
         auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "logos:character");
+        AssignSprite(sprite, "logos:dagger");
         float ratio = sprite.size.y / sprite.size.x;
         sprite.size = { 100 / ratio, 100  };
 
@@ -67,22 +67,22 @@ void team_game::SetupWorld()
         reg.emplace<Gravity>(entity);
     }
 
-    // {
-    //     auto entity = reg.create();
-    //     auto& sprite = reg.emplace<Sprite>(entity);
-    //     AssignSprite(sprite, "logos:dagger");
-    //     float ratio = sprite.size.y / sprite.size.x;
-    //     sprite.size = { 100 / ratio, 100  };
+    {
+        auto entity = reg.create();
+        auto& sprite = reg.emplace<Sprite>(entity);
+        AssignSprite(sprite, "logos:character");
+        float ratio = sprite.size.y / sprite.size.x;
+        sprite.size = { 100 / ratio, 100  };
 
-    //     auto& transform = reg.emplace<Transform>(entity);
-    //     transform.position = { 100 , 0, zPos };
+        auto& transform = reg.emplace<Transform>(entity);
+        transform.position = { 330 , 100, zPos };
 
-    //     auto& col = reg.emplace<SimpleCollision>(entity);
-    //     col.size = sprite.size;
+        auto& col = reg.emplace<SimpleCollision>(entity);
+        col.size = sprite.size;
         
-    //     Item& i = reg.emplace<Item>(entity);
-    //     i.id = "Dagger 1";
-    // }
+        Item& i = reg.emplace<Item>(entity);
+        i.id = "Dagger 1";
+    }
 
     {
         auto entity = reg.create();
@@ -110,7 +110,7 @@ void team_game::SetupWorld()
         sprite.size = { 120, 30  };
 
         auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { 200 , 0, zPos };
+        transform.position = { 330 , 0, zPos };
 
         auto& col = reg.emplace<SimpleCollision>(entity);
         col.size = sprite.size;
@@ -124,7 +124,7 @@ void team_game::SetupWorld()
         auto& sprite = reg.emplace<Sprite>(entity);
         AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
         float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 300, 30  };
+        sprite.size = { 500, 30  };
 
         auto& transform = reg.emplace<Transform>(entity);
         transform.position = { 0 , -80, zPos };
@@ -144,7 +144,7 @@ void team_game::SetupWorld()
         sprite.size = { 300, 30  };
 
         auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { 0 , 80, zPos };
+        transform.position = { 0 , 150, zPos };
 
         auto& col = reg.emplace<SimpleCollision>(entity);
         col.size = sprite.size;

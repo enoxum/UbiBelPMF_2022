@@ -37,8 +37,6 @@ void SolidObjectInteractionSystem::Run()
         
         if (col.colided && Engine::Registry().valid(col.colidedWith) && viewCollisions.contains(col.colidedWith))
         {
-            Platform& plt = viewCollisions.get<Platform>(col.colidedWith);
-
             SimpleCollision& collision = viewCollisions.get<SimpleCollision>(col.colidedWith);
             Transform& solidObjectPosition = viewCollisions.get<Transform>(col.colidedWith);
             Transform& playerPosition = view.get<Transform>(player);
@@ -48,32 +46,31 @@ void SolidObjectInteractionSystem::Run()
             Sprite& platformSpriteSize = viewCollisions.get<Sprite>(col.colidedWith);
             Sprite& playerSpriteSize = view.get<Sprite>(player);
 
-            auto platformHeight = platformSpriteSize.size[1] / 2;
-            auto playerHeight = playerSpriteSize.size[1] / 2;
-            auto platformOffset = platformSpriteSize.size[0] / 2;
-            auto playerOffset = playerSpriteSize.size[0] / 2;
+            auto platformHeight = platformSpriteSize.size.y / 2;
+            auto playerHeight = playerSpriteSize.size.y / 2;
+            auto platformWidth = platformSpriteSize.size.x / 2;
+            auto playerWidth = playerSpriteSize.size.x / 2;
 
-
-            if (collisionSides.x < 0)
-            {
-                playerPosition.position[0] = solidObjectPosition.position[0] + platformOffset + playerOffset;
-            }
-            
-            if (collisionSides.x > 0)
-            {
-                playerPosition.position[0] = solidObjectPosition.position[0] - (platformOffset + playerOffset);
-            }
-
-            if (collisionSides.y > 0)
+            if (collisionSides.y > 0 && playerPosition.position.y + playerHeight > (solidObjectPosition.position.y - platformHeight))
             {
                 col.colided = false;
-                playerPosition.position[1] = solidObjectPosition.position[1] - platformHeight - playerHeight;
+                playerPosition.position[1] = solidObjectPosition.position.y - platformHeight - playerHeight - 5;
             }
 
             if (collisionSides.y < 0)
             {
-                playerPosition.position[1] = solidObjectPosition.position[1] + platformHeight + playerHeight  
+                playerPosition.position.y = solidObjectPosition.position.y + platformHeight + playerHeight  
                                             + GravitySystem::gravityForce;
+            }
+
+            if (collisionSides.x < 0)
+            {
+                playerPosition.position.x = solidObjectPosition.position.x + platformWidth + playerWidth;
+            }
+            
+            if (collisionSides.x > 0)
+            {
+                playerPosition.position.x = solidObjectPosition.position.x - (platformWidth + playerWidth);
             }
 
             col.colided = false;
