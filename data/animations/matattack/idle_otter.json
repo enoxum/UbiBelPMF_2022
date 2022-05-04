@@ -1,0 +1,23 @@
+{
+	"animation-name": "matattack:idle_otter",
+	"animation-length-ms": 1200,
+	"animation-frames": 
+	[
+		{ "texture-name": "matattack:characters:otter:idle:idle1" },
+		{ "texture-name": "matattack:characters:otter:idle:idle2" },
+		{ "texture-name": "matattack:characters:otter:idle:idle3" },
+		{ "texture-name": "matattack:characters:otter:idle:idle4" },
+        { "texture-name": "matattack:characters:otter:idle:idle5" },
+		{ "texture-name": "matattack:characters:otter:idle:idle6" },
+		{ "texture-name": "matattack:characters:otter:idle:idle7" },
+		{ "texture-name": "matattack:characters:otter:idle:idle8" },
+        { "texture-name": "matattack:characters:otter:idle:idle9" },
+		{ "texture-name": "matattack:characters:otter:idle:idle10" },
+		{ "texture-name": "matattack:characters:otter:idle:idle11" },
+		{ "texture-name": "matattack:characters:otter:idle:idle12" },
+        { "texture-name": "matattack:characters:otter:idle:idle13" },
+        { "texture-name": "matattack:characters:otter:idle:idle14" },
+		{ "texture-name": "matattack:characters:otter:idle:idle15" },
+		{ "texture-name": "matattack:characters:otter:idle:idle16" }
+	]
+}
