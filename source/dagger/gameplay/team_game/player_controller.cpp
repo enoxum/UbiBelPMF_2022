@@ -20,7 +20,7 @@ void PlayerControlSystem::WindDown()
 void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
 {
     auto& reg = Engine::Registry();
-    auto& ents = reg.view<Player, Transform>();
+    auto ents = reg.view<Player, Transform>();
 
 
     for (const auto ent : ents)
