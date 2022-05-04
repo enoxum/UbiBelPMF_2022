@@ -20,12 +20,13 @@ void PlayerControlSystem::WindDown()
 void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
 {
     auto& reg = Engine::Registry();
-    auto& ents = reg.view<Player>();
+    auto& ents = reg.view<Player, Transform>();
 
 
     for (const auto ent : ents)
     {
         auto& player = ents.get<Player>(ent);
+        auto& pos = ents.get<Transform>(ent);
 
         if (kEvent_.key == EDaggerKeyboard::KeyLeft && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
             step = -0.2;
@@ -42,6 +43,7 @@ void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
         else if (!player.jumping && kEvent_.key == EDaggerKeyboard::KeyUp && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
             player.jumping = true;
             jumpVelocity = 1.5f;
+            pos.position.y += jumpVelocity;
         }
 
     }
@@ -60,7 +62,7 @@ void PlayerControlSystem::Run() {
         if (player.jumping) {
             ent.position.y += jumpVelocity;
             jumpVelocity -= 0.008f;
-            if (jumpVelocity <= 0)
+            if (jumpVelocity <= 0.1)
             {
                 player.jumping = false;
                 jumpVelocity = 0;
