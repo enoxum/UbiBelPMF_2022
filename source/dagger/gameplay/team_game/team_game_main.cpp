@@ -24,8 +24,8 @@ void TeamGame::GameplaySystemsSetup()
     auto& engine = Engine::Instance();
     engine.AddSystem<SimpleCollisionsSystem>();
     engine.AddPausableSystem<PlayerControlSystem>();
-    engine.AddPausableSystem<ItemCollectionSystem>();
     engine.AddPausableSystem<SolidObjectInteractionSystem>();
+    engine.AddPausableSystem<ItemCollectionSystem>();
     engine.AddPausableSystem<GravitySystem>();
 }
 
@@ -53,7 +53,7 @@ void team_game::SetupWorld()
     {
         auto entity = reg.create();
         auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "logos:dagger");
+        AssignSprite(sprite, "logos:character");
         float ratio = sprite.size.y / sprite.size.x;
         sprite.size = { 100 / ratio, 100  };
 
@@ -70,7 +70,7 @@ void team_game::SetupWorld()
     {
         auto entity = reg.create();
         auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "logos:character");
+        AssignSprite(sprite, "logos:dagger");
         float ratio = sprite.size.y / sprite.size.x;
         sprite.size = { 100 / ratio, 100  };
 

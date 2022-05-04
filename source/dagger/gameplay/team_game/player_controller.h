@@ -13,13 +13,13 @@ using namespace dagger;
 namespace team_game
 {
     struct Player {
-        char c;
+        bool jumping = false;
     };
 
     class PlayerControlSystem : public System {
 
         double step = 0.0f;
-        bool jumping = false;
+        //bool jumping = false;
         double jumpVelocity = 0.0f;
 
     public:

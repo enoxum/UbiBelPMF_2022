@@ -19,21 +19,31 @@ void PlayerControlSystem::WindDown()
 
 void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
 {
-    if (kEvent_.key == EDaggerKeyboard::KeyLeft && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-        step = -0.2;
-    }
-    else if (kEvent_.key == EDaggerKeyboard::KeyLeft && kEvent_.action == EDaggerInputState::Released) {
-        step = 0.0;
-    }
-    else if (kEvent_.key == EDaggerKeyboard::KeyRight && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-        step = 0.2;
-    }
-    else if (kEvent_.key == EDaggerKeyboard::KeyRight && kEvent_.action == EDaggerInputState::Released) {
-        step = 0.0;
-    }
-    else if (!jumping && kEvent_.key == EDaggerKeyboard::KeyUp && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-        jumping = true;
-        jumpVelocity = 1.5f;
+    auto& reg = Engine::Registry();
+    auto& ents = reg.view<Player>();
+
+
+    for (const auto ent : ents)
+    {
+        auto& player = ents.get<Player>(ent);
+
+        if (kEvent_.key == EDaggerKeyboard::KeyLeft && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
+            step = -0.2;
+        }
+        else if (kEvent_.key == EDaggerKeyboard::KeyLeft && kEvent_.action == EDaggerInputState::Released) {
+            step = 0.0;
+        }
+        else if (kEvent_.key == EDaggerKeyboard::KeyRight && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
+            step = 0.2;
+        }
+        else if (kEvent_.key == EDaggerKeyboard::KeyRight && kEvent_.action == EDaggerInputState::Released) {
+            step = 0.0;
+        }
+        else if (!player.jumping && kEvent_.key == EDaggerKeyboard::KeyUp && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
+            player.jumping = true;
+            jumpVelocity = 1.5f;
+        }
+
     }
 }
 
@@ -41,18 +51,18 @@ void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
 void PlayerControlSystem::Run() {
 
     auto& reg = Engine::Registry();
-    auto ents = reg.view<Transform, const Player>();
+    auto ents = reg.view<Transform, Player>();
 
-    ents.each([this](Transform& ent, const Player) {
+    ents.each([this](Transform& ent, Player player) {
 
         ent.position.x += step;
 
-        if (jumping) {
+        if (player.jumping) {
             ent.position.y += jumpVelocity;
             jumpVelocity -= 0.008f;
             if (jumpVelocity <= 0)
             {
-                jumping = false;
+                player.jumping = false;
                 jumpVelocity = 0;
             }
             

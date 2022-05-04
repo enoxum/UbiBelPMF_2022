@@ -61,6 +61,7 @@ void SolidObjectInteractionSystem::Run()
             {
                 playerPosition.position.y = solidObjectPosition.position.y + platformHeight + playerHeight  
                                             + GravitySystem::gravityForce;
+                p.jumping = false;
             }
 
             if (collisionSides.x < 0)
