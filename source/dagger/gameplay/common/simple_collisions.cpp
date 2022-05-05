@@ -3,6 +3,7 @@
 #include "core/engine.h"
 #include "core/game/transforms.h"
 #include "../matattack/matattack.h"
+#include "../matattack/events.h"
 
 using namespace dagger;
 
@@ -20,6 +21,7 @@ void SimpleCollisionsSystem::Run()
 
         auto it2 = it;
         it2++;
+
         while(it2 != view.end())
         {
             // data of the second entity
@@ -27,9 +29,23 @@ void SimpleCollisionsSystem::Run()
             auto &tr = view.get<Transform>(*it2);
             col.colided = false;
 
+
+            bool players_in_question = Engine::Registry().has<matattack::CharacterInfo>(*it) && Engine::Registry().has<matattack::CharacterInfo>(*it2);
+            bool basic_collision_detection = collision.IsCollided(transform.position, col, tr.position);
+
+            // ovaj if moze u drugi, ali onda 2 player-a moraju reaguju
+            // kolizija 2 player-a
+            if (players_in_question && basic_collision_detection) {
+
+                PlayerCollisionEvent event;
+                event.collision = true;
+                Engine::Dispatcher().trigger<PlayerCollisionEvent>(event);
+
+            }
+            // ovo treba uvek se desava
             // processing one collision per frame for each colider
             // ako bar 1 od 2 entiteta ima is_collidable = true, onda moraju se colliduju, a su oboma false, onda se nece collide
-            if (collision.IsCollided(transform.position, col, tr.position) && (collision.is_collidable || col.is_collidable))
+            if (basic_collision_detection && (collision.is_collidable || col.is_collidable))
             {
                 //Logger::trace("they are colliding!");
                 collision.colided = true;
