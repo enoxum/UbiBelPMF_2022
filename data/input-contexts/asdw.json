@@ -14,6 +14,10 @@
 		  "actions": [
 			{ "trigger": "KeyQ", "value": 1 }
 		] }, 
+		{ "command-name": "special", 
+			"actions": [
+			  { "trigger": "KeyE", "value": 1 }
+		  ] }, 
 		{ "command-name": "down", "trigger": "KeyS" },
 		{ "command-name": "light", "trigger": "KeyR", "event": "Released" },
 		{ "command-name": "heavy", "trigger": "KeyR", "duration": 1000 },

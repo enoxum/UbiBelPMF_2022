@@ -17,6 +17,7 @@
 #include "jumpsystem.h"
 #include "attacksystem.h"
 #include "knockbacksystem.h"
+#include "specialabilitysystem.h"
 
 using namespace dagger;
 using namespace matattack;
@@ -31,6 +32,7 @@ void Matattack::GameplaySystemsSetup()
     engine.AddSystem<JumpSystem>();
     engine.AddSystem<AttackSystem>();
     engine.AddSystem<KnockbackSystem>();
+    engine.AddSystem<SpecialAbilitySystem>();
 }
 
 void setCamera()
@@ -56,6 +58,7 @@ struct Character
     UpSpeed& upspeed;
     AttackInfo& attack_info;
     KnockbackInfo& knockback_info;
+    SpecialInfo& special_info;
 
     static Character Get(Entity entity)
     {
@@ -70,11 +73,12 @@ struct Character
         auto& upspeed = reg.get_or_emplace<UpSpeed>(entity);
         auto& attack_info = reg.get_or_emplace<AttackInfo>(entity);
         auto& knockback_info = reg.get_or_emplace<KnockbackInfo>(entity);
+        auto& special_info = reg.get_or_emplace<SpecialInfo>(entity);
 
-        return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity, upspeed, attack_info, knockback_info };
+        return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity, upspeed, attack_info, knockback_info, special_info };
     }
 
-    static Character Create( String input_ = "", Vector2 position_ = { 0, 0 }, String sprite_path = "matattack:characters:chickboy:idle:idle1")
+    static Character Create( String input_, Vector2 position_, String sprite_path, SpecialAbilities special_name)
     {
         auto& reg = Engine::Registry();
         auto entity = reg.create();
@@ -118,6 +122,8 @@ struct Character
         chr.knockback_info.base_horizontal_speed = 1000.0F;
         chr.knockback_info.horizontal_decrease = 10.0F;
         chr.knockback_info.base_vertical_speed = 300.0F;
+
+        chr.special_info.special_name = special_name;
 
         return chr;
     }
@@ -256,6 +262,6 @@ void matattack::SetupWorld()
     setLevel();
     //setMap1(); 
     
-    auto mainChar = Character::Create("ASDW", { -100, 250 }, "matattack:characters:chickboy:idle:idle1");
-    auto sndChar = Character::Create("Arrows", { 100, 250 }, "matattack:characters:chickboy:idle:idle1");
+    auto mainChar = Character::Create("ASDW", { -100, 250 }, "matattack:characters:chickboy:idle:idle1", SpecialAbilities::DASH);
+    auto sndChar = Character::Create("Arrows", { 100, 250 }, "matattack:characters:chickboy:idle:idle1", SpecialAbilities::DOUBLE_JUMP);
 }

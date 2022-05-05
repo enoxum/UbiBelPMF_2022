@@ -69,14 +69,17 @@ void AttackSystem::Run()
 		auto& animator = view.get<Animator>(*it);
 		auto& attack_info = view.get<AttackInfo>(*it);
 		
-		if (EPSILON_NOT_ZERO(input.Get("attack"))) {
+		if (EPSILON_NOT_ZERO(input.Get("attack")))
+		{
 			attack_info.is_attacking = true;
 		}
-		else {
+		else
+		{
 			attack_info.is_attacking = false;
 		}
 
-		if (attack_info.imunity_duration > 0) {
+		if (attack_info.imunity_duration > 0)
+		{
 			attack_info.imunity_duration--;
 		}
 
