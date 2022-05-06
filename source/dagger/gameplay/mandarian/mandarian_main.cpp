@@ -6,10 +6,10 @@
 #include "mandarian_controller.h"
 #include "mandarian_enemy.h"
 #include "mandarian_camera_focus_system.h"
+#include "mandarian_damage_system.h"
 
 using namespace mandarian;
 using namespace dagger;
-
 
 void MandarianGame::SetupCamera()
 {
@@ -75,7 +75,7 @@ void MandarianGame::WorldSetup()
 
     SetupCamera();
     CreateMap();
-
+    
     auto character = Character::Create();
     CreateEnemies(character.entity);    
 }

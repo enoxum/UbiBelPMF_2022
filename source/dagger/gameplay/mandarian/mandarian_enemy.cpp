@@ -30,9 +30,9 @@ Enemy Enemy::Create(
 
     enemy.transform.position = { position_, 0.0f };
 
-    enemy.health.current = 100;
-    enemy.health.max = 100;
-    enemy.health.min = 0;
+    enemy.health.current = 100.0f;
+    enemy.health.max = 100.0f;
+    enemy.health.min = 0.0f;
     enemy.health.immortal = false;
 
     return enemy;

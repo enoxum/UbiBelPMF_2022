@@ -19,9 +19,26 @@ namespace mandarian
         Bool immortal;
     };
 
-    struct Damage
+    struct DamagingTag
     {
-        UInt32 amount;
+        Bool tag;
+    };
+
+    struct DamageData
+    {
+        Float32 damage;
+        Float32 radius;
+        Vector2 position;
+        Bool global;
+    };
+
+    struct Damaging
+    {
+        Entity entity;
+        DamageData &data;
+
+        static Damaging Get(Entity entity);
+        static Damaging Create(Float32 damage, Float32 radius, Vector2 position, Bool global);
     };
 
     class MandarianDamageSystem
@@ -31,7 +48,7 @@ namespace mandarian
             return "Mandarian Damage System";
         };
 
-        void DealDamage(Enemy, Float32);
+        void DealDamage(Enemy, Damaging);
         void Kill(Enemy);
 
         void Run() override;
