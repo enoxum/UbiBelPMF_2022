@@ -9,10 +9,6 @@
 #include "core/graphics/window.h"
 #include "core/game/transforms.h"
 
-
-
-//#include "gameplay/common/simple_collisions.h"
-
 using namespace dagger;
 using namespace glavonje;
 
@@ -20,63 +16,45 @@ void Glavonje::GameplaySystemsSetup(){
 
 }
 
-
-struct HeadBall{
-        Vector3 position{0,0,0};
-        Vector3 speed{0,0,0};
-        bool touchWithGoal{false};
-    };
-
-void glavonje::CreateBall(ColorRGBA ballColor, Vector3 ballSpeed, Vector3 ballPosition){
+void glavonje::CreateBall(ColorRGBA ballColor_, Vector3 ballSpeed_, Vector3 ballPosition_){
     auto& reg = Engine::Registry();
-    auto entity = reg.create();
-    auto& sprite = reg.emplace<Sprite>(entity);
+    auto ballEntity = reg.create();
+    auto& sprite = reg.emplace<Sprite>(ballEntity);
 
     AssignSprite(sprite, "PingPong:ball");
     sprite.size = Vector2(10, 10);
+    sprite.color = ballColor_;
 
-    sprite.color = ballColor;
-
-    auto& transform = reg.emplace<Transform>(entity);
-    transform.position = ballPosition;
-    transform.position.z = ballPosition.z;
-    auto& ball = reg.emplace<HeadBall>(entity);
-    ball.speed = ballSpeed;
+    auto& transform = reg.emplace<Transform>(ballEntity);
+    transform.position = ballPosition_;
+    auto& velocity = reg.emplace<Velocity>(ballEntity);
+    velocity.speed = ballSpeed_;
 }
 
-struct Gol
+struct Goal
 {
     Entity entity;
     Sprite& sprite;
-    
 
-    static Gol Get(Entity entity){
-        auto& reg = Engine::Registry();
-        auto& sprite = reg.get_or_emplace<Sprite>(entity);
-        
-
-        return Gol{entity, sprite};
-
-    }
-
-    static Gol Create( 
+    static Goal Create( 
         ColorRGB color_ = { 0, 0, 0 }, 
         Vector2 position_ = { 0, 0 })
-
     {
         auto& reg = Engine::Registry();
-        auto entity = reg.create();
+        auto goalEntity = reg.create();
 
-        auto chr = Gol::Get(entity);
+        auto& sprite = reg.get_or_emplace<Sprite>(goalEntity);
+        auto goal = Goal{goalEntity, sprite};
         
-        chr.sprite.scale = { 1, 1 };
-        chr.sprite.position = { position_, 0.0f };
-        chr.sprite.color = { color_, 1.0f };
-        chr.sprite.size = Vector2(100,100);
-        AssignSprite(chr.sprite, "souls_like_knight_character:IDLE:idle1");
+
+        goal.sprite.scale = { 1, 1 };
+        goal.sprite.position = { position_, 0.0f };
+        goal.sprite.color = { color_, 1.0f };
+        goal.sprite.size = Vector2(100,100);
+        AssignSprite(goal.sprite, "souls_like_knight_character:IDLE:idle1");
 
     
-        return chr;
+        return goal;
     }
 };
 
@@ -84,17 +62,7 @@ struct Character
 {
     Entity entity;
     Sprite& sprite;
-    InputReceiver& inputR;
-    
-
-    static Character Get(Entity entity){
-        auto& reg = Engine::Registry();
-        auto& sprite = reg.get_or_emplace<Sprite>(entity);
-        auto& inputR = reg.get_or_emplace<InputReceiver>(entity);
-
-        return Character{entity, sprite, inputR};
-
-    }
+    InputReceiver& inputRcv;
 
     static Character Create(
         String input_ = "", 
@@ -103,28 +71,26 @@ struct Character
     
     {
         auto& reg = Engine::Registry();
-        auto entity = reg.create();
+        auto characterEntity = reg.create();
 
-        auto chr = Character::Get(entity);
+        auto& sprite = reg.get_or_emplace<Sprite>(characterEntity);
+        auto& inputRcv = reg.get_or_emplace<InputReceiver>(characterEntity);
 
-        chr.sprite.scale = { 1, 1 };
-        chr.sprite.position = { position_, 0.0f };
-        chr.sprite.color = { color_, 1.0f };
-        
+        auto character = Character{characterEntity, sprite, inputRcv};;
 
-        AssignSprite(chr.sprite, "souls_like_knight_character:IDLE:idle1");
+        character.sprite.scale = { 1, 1 };
+        character.sprite.position = { position_, 0.0f };
+        character.sprite.color = { color_, 1.0f };
 
-        if(input_ != "")
-            chr.inputR.contexts.push_back(input_);
+        AssignSprite(character.sprite, "souls_like_knight_character:IDLE:idle1");
 
+        if (input_ != "") 
+            character.inputRcv.contexts.push_back(input_);
 
-        return chr;
+        return character;
     }
 
 };
-
-
-
 
 void Glavonje::WorldSetup(){
     ShaderSystem::Use("standard");
@@ -136,12 +102,11 @@ void Glavonje::WorldSetup(){
     camera->position = { 0, 0, 0 };
     camera->Update();
 
-//field    
-
+    // Setting up the goal field    
     {
         auto& reg = Engine::Registry();
-        auto back = reg.create();
-        auto& sprite = reg.get_or_emplace<Sprite>(back);
+        auto goalFieldEntity = reg.create();
+        auto& sprite = reg.get_or_emplace<Sprite>(goalFieldEntity);
         
         AssignSprite(sprite, "EmptyWhitePixel");
         sprite.color = { 0, 1, 0, 1 };
@@ -150,13 +115,12 @@ void Glavonje::WorldSetup(){
         sprite.position = { 0, -125, 1 };
     }
 
-    auto mainChar = Character::Create("ASDW", { 1, 1, 1 }, { -100, 0 });
+    auto leftCharacter = Character::Create("ASDW", { 1, 1, 1 }, { -100, 0 });
+    auto rightCharacter = Character::Create("Arrows", { 1, 0, 0 }, { 100, 0 });
 
-    auto sndChar = Character::Create("Arrows", { 1, 0, 0 }, { 100, 0 });
 
-
-    auto leftGol = Gol::Create( {0,0,0}, {-390, 0});
-    auto rightGoal = Gol::Create( {0,0,0}, {390,0});
+    auto leftGoal = Goal::Create( {0,0,0}, {-390, 0});
+    auto rightGoal = Goal::Create( {0,0,0}, {390,0});
 
     CreateBall({1,1,1,1}, {5, 5, 0}, {0, 50, 0});
 }
