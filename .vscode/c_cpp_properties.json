@@ -3,7 +3,9 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/source/dagger",
+                "${workspaceFolder}/libs/spdlog/include"
             ],
             "defines": [],
             "macFrameworkPath": [
