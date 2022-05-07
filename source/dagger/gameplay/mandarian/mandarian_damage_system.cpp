@@ -11,11 +11,12 @@ Damaging Damaging::Get(Entity entity)
 {
     auto &reg = Engine::Registry();
     auto &data = reg.get_or_emplace<DamageData>(entity);
+    auto &transform = reg.get_or_emplace<Transform>(entity);
 
-    return Damaging{ entity, data};
+    return Damaging{ entity, data, transform };
 }
 
-Damaging Damaging::Create(Float32 damage_, Float32 radius_, Vector2 position_, Bool global_)
+Damaging Damaging::Create(Float32 damage_, Float32 radius_, Vector3 position_, Bool global_)
 {
     auto &reg = Engine::Registry();
     auto entity = reg.create();
@@ -24,18 +25,16 @@ Damaging Damaging::Create(Float32 damage_, Float32 radius_, Vector2 position_, B
 
     damaging.data.damage = damage_;
     damaging.data.radius = radius_;
-    damaging.data.position = position_;
     damaging.data.global = global_;
+    damaging.transform.position = position_;
     
     return damaging;
 }
 
 void MandarianDamageSystem::DealDamage(Enemy enemy, Damaging damaging) 
 {
-    std::cerr << abs(enemy.transform.position.x - damaging.data.position.x) << "Prva razlika" << std::endl;
-    std::cerr << abs(enemy.transform.position.y - damaging.data.position.y) << "Druga razlika" << std::endl;
-    if ((abs(enemy.transform.position.x - damaging.data.position.x) < damaging.data.radius 
-    &&  abs(enemy.transform.position.y - damaging.data.position.y) < damaging.data.radius)
+    if ((abs(enemy.transform.position.x - damaging.transform.position.x) < damaging.data.radius 
+    &&  abs(enemy.transform.position.y - damaging.transform.position.y) < damaging.data.radius)
     || damaging.data.global)
     {
         enemy.health.current -= damaging.data.damage;
@@ -58,22 +57,18 @@ void MandarianDamageSystem::Kill(Enemy enemy)
 
 void MandarianDamageSystem::Run()
 {
-    auto &eng = Engine::Registry();
+    auto &reg = Engine::Registry();
 
-    auto player_ent = eng.view<Player>()[0];
-    auto player = Character::Get(player_ent);
+    auto damaging_ent = reg.view<DamagingTag>()[0];
+    auto damaging = Damaging::Get(damaging_ent);
 
-    auto damaging = Damaging::Create(0.2f, 100.0f, player.transform.position, false);
-    
-    auto damaging_ent = eng.view<DamagingTag>()[0];
-
-    auto enemies = eng.view<EnemyTag>();
+    auto enemies = reg.view<EnemyTag>();
 	for (auto &enemy_ent : enemies) 
     {
         auto enemy = Enemy::Get(enemy_ent);   
         DealDamage(enemy, damaging);
 	} 
 
-    eng.destroy(damaging_ent);
+    reg.destroy(damaging_ent);
 }
 

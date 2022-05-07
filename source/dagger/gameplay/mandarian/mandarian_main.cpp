@@ -7,6 +7,7 @@
 #include "mandarian_enemy.h"
 #include "mandarian_camera_focus_system.h"
 #include "mandarian_damage_system.h"
+#include "mandarian_spell_system.h"
 
 using namespace mandarian;
 using namespace dagger;
@@ -66,6 +67,7 @@ void MandarianGame::GameplaySystemsSetup()
     engine.AddPausableSystem<SimplePhysicsSystem>();
     engine.AddPausableSystem<MandarianCameraFocusSystem>();
     engine.AddPausableSystem<EnemyMovementSystem>();
+    engine.AddPausableSystem<MandarianSpellSystem>();
     engine.AddPausableSystem<MandarianDamageSystem>();
 }
 

@@ -28,7 +28,6 @@ namespace mandarian
     {
         Float32 damage;
         Float32 radius;
-        Vector2 position;
         Bool global;
     };
 
@@ -36,9 +35,10 @@ namespace mandarian
     {
         Entity entity;
         DamageData &data;
+        Transform &transform;
 
         static Damaging Get(Entity entity);
-        static Damaging Create(Float32 damage, Float32 radius, Vector2 position, Bool global);
+        static Damaging Create(Float32 damage, Float32 radius, Vector3 position, Bool global);
     };
 
     class MandarianDamageSystem
