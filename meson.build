@@ -75,7 +75,7 @@ sources = [
 	'source/dagger/gameplay/matattack/knockbacksystem.cpp',
     'source/dagger/gameplay/matattack/attacksystem.cpp',
     'source/dagger/gameplay/matattack/specialabilitysystem.cpp',
-    'source/dagger/gameplay/matattack/special-doublejump.cpp',
+    'source/dagger/gameplay/matattack/special-upboost.cpp',
     'source/dagger/gameplay/matattack/special-dash.cpp',
     'source/dagger/gameplay/tiles_example/tiles_example_main.cpp',
     'source/dagger/tools/FileBrowser/imgui_demo.cpp',
