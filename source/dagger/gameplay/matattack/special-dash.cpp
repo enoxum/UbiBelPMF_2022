@@ -13,9 +13,47 @@
 
 using namespace matattack;
 
+void Dash::Init(const Entity& character)
+{
+	auto& special_info = Engine::Registry().get<SpecialInfo>(character);
+
+	special_info.max_charges = 2;
+	special_info.current_charges = 2;
+
+	special_info.duration = 0;
+	special_info.current_duration = 0;
+
+	special_info.cooldown = 0.1;
+	special_info.current_cooldown = 0;
+
+	special_info.current_chargetime = 0;
+	special_info.chargetime = 10;
+}
+
+void Dash::Start(const Entity& character)
+{
+	auto& special_info = Engine::Registry().get<SpecialInfo>(character);
+
+	if (special_info.current_charges > 0)
+	{
+		special_info.current_charges--;
+		special_info.current_cooldown = special_info.cooldown;
+		special_info.current_duration = special_info.duration;
+		dash_info.speed = dash_info.max_speed;
+	}
+}
+
 void Dash::Run(const Entity& character)
 {
-	auto&& [character_info, special_info] = Engine::Registry().get<CharacterInfo,SpecialInfo>(character);
-	Logger::critical(character_info.speed);
-	Logger::critical("Dash");
+	auto&& [special_info, transform, character_info] = Engine::Registry().get<SpecialInfo,Transform,CharacterInfo>(character);
+	
+	if (dash_info.speed > 0)
+	{
+		special_info.current_duration -= Engine::DeltaTime();
+		
+		transform.position.x += dash_info.speed * Engine::DeltaTime() * character_info.side;
+
+		dash_info.speed -= dash_info.speed_decrease;
+	}
+
 }

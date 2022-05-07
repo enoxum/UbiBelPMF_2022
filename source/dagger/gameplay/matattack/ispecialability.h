@@ -7,6 +7,8 @@ namespace matattack
     class ISpecialAbility
     {
     public:
-        virtual void Run(const Entity &character) = 0;
+        virtual void Run(const Entity& character) {};
+        virtual void Start(const Entity& character) {};
+        virtual void Init(const Entity& character) {};
     };
 }

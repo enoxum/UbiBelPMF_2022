@@ -14,7 +14,19 @@ enum SpecialAbilities
 namespace matattack
 {
     struct SpecialInfo {
-        SpecialAbilities special_name;
+        SpecialAbilities name;
+
+        Float32 duration = 0;
+        Float32 current_duration = 0;
+
+        Float32 cooldown = 0;
+        Float32 current_cooldown = 0;
+
+        SInt16 max_charges = 0;
+        SInt16 current_charges = 0;
+
+        Float32 chargetime = 0;
+        Float32 current_chargetime = 0;
     };
 
     class SpecialAbilitySystem : public System

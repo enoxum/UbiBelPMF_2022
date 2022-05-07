@@ -123,7 +123,8 @@ struct Character
         chr.knockback_info.horizontal_decrease = 10.0F;
         chr.knockback_info.base_vertical_speed = 300.0F;
 
-        chr.special_info.special_name = special_name;
+        chr.special_info.name = special_name;
+        Engine::GetDefaultResource<SpecialAbilitySystem>()->specialAbilities[special_name]->Init(chr.entity);
 
         return chr;
     }

@@ -15,7 +15,4 @@ using namespace matattack;
 
 void DoubleJump::Run(const Entity& character)
 {
-	auto&& [character_info, special_info] = Engine::Registry().get<CharacterInfo, SpecialInfo>(character);
-	Logger::critical(character_info.speed);
-	Logger::critical("DoubleJump");
 }

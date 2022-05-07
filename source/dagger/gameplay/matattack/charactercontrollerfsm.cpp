@@ -56,6 +56,7 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 	else
 	{
 		sprite.scale.x = run*1.5; // rotira dok trci sprite
+		character.side = run;
 		//sprite.scale.y = jump;
 
 		// zasto su ovde samo sprite menjali poziciju, a ne i od transform-a?

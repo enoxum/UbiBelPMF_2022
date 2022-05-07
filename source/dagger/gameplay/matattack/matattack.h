@@ -14,6 +14,7 @@ namespace matattack
     struct CharacterInfo
     {
         Float32 speed;
+        Float32 side;
     };
 
     void SetupWorld();
