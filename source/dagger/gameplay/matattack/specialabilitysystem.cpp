@@ -2,7 +2,7 @@
 #include "attacksystem.h"
 #include "matattack.h"
 #include "special-dash.h"
-#include "special-doublejump.h"
+#include "special-upboost.h"
 
 #include "core/core.h"
 #include "core/engine.h"
@@ -17,7 +17,7 @@ using namespace matattack;
 
 void SpecialAbilitySystem::SpinUp() {
 	specialAbilities.push_back(new Dash());
-	specialAbilities.push_back(new DoubleJump());
+	specialAbilities.push_back(new UpBoost());
 }
 
 void SpecialAbilitySystem::Run() {

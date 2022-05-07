@@ -1,6 +1,7 @@
-#include "special-dash.h"
-#include "specialabilitysystem.h"
+#include "special-upboost.h"
 #include "matattack.h"
+#include "specialabilitysystem.h"
+#include "gravitysystem.h"
 
 #include "core/core.h"
 #include "core/engine.h"
@@ -13,7 +14,7 @@
 
 using namespace matattack;
 
-void Dash::Init(const Entity& character)
+void UpBoost::Init(const Entity& character)
 {
 	auto& special_info = Engine::Registry().get<SpecialInfo>(character);
 
@@ -27,33 +28,22 @@ void Dash::Init(const Entity& character)
 	special_info.current_cooldown = 0;
 
 	special_info.current_chargetime = 0;
-	special_info.chargetime = 10;
+	special_info.chargetime = 2;
 }
 
-void Dash::Start(const Entity& character)
+void UpBoost::Start(const Entity& character)
 {
-	auto& special_info = Engine::Registry().get<SpecialInfo>(character);
+	auto&& [special_info,gravity] = Engine::Registry().get<SpecialInfo,Gravity>(character);
 
 	if (special_info.current_charges > 0)
 	{
 		special_info.current_charges--;
 		special_info.current_cooldown = special_info.cooldown;
-		special_info.current_duration = special_info.duration;
-		dash_info.speed = dash_info.max_speed;
+		gravity.speed = -upboost_info.speed;
+		Logger::critical("Boost");
 	}
 }
 
-void Dash::Run(const Entity& character)
+void UpBoost::Run(const Entity& character)
 {
-	auto&& [special_info, transform, character_info] = Engine::Registry().get<SpecialInfo,Transform,CharacterInfo>(character);
-	
-	if (dash_info.speed > 0)
-	{
-		special_info.current_duration -= Engine::DeltaTime();
-		
-		transform.position.x += dash_info.speed * Engine::DeltaTime() * character_info.side;
-
-		dash_info.speed -= dash_info.speed_decrease;
-	}
-
 }
