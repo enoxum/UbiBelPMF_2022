@@ -8,7 +8,9 @@ using namespace dagger;
 enum SpecialAbilities
 {
     DASH = 0,
-    UP_BOOST = 1
+    UP_BOOST = 1,
+    HEAL = 2,
+    ATTACK_BOOST = 3,
 };
 
 namespace matattack
