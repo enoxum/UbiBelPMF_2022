@@ -264,5 +264,5 @@ void matattack::SetupWorld()
     //setMap1(); 
     
     auto mainChar = Character::Create("ASDW", { -100, 250 }, "matattack:characters:chickboy:idle:idle1", SpecialAbilities::DASH);
-    auto sndChar = Character::Create("Arrows", { 100, 250 }, "matattack:characters:chickboy:idle:idle1", SpecialAbilities::HEAL);
+    auto sndChar = Character::Create("Arrows", { 100, 250 }, "matattack:characters:chickboy:idle:idle1", SpecialAbilities::ATTACK_BOOST);
 }

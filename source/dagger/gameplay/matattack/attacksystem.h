@@ -14,6 +14,7 @@ namespace matattack
         SInt32 base_imunity_duration = 100;
         SInt32 imunity_duration = 0;
         SInt32 attack_damage = 10;
+        SInt32 max_attack_damage = 10;
         SInt32 hp = 100;
         SInt32 max_hp = 100;
     };

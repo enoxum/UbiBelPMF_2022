@@ -89,6 +89,7 @@ void SimpleCollisionsSystem::Run()
             }
             it2++;
         }
+        collision.pos = transform.position;
         it++;
     }
 }

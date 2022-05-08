@@ -78,6 +78,7 @@ sources = [
     'source/dagger/gameplay/matattack/special-upboost.cpp',
     'source/dagger/gameplay/matattack/special-dash.cpp',
 	'source/dagger/gameplay/matattack/special-heal.cpp',
+	'source/dagger/gameplay/matattack/special-damage.cpp',
     'source/dagger/gameplay/tiles_example/tiles_example_main.cpp',
     'source/dagger/tools/FileBrowser/imgui_demo.cpp',
     'source/dagger/tools/FileBrowser/ImGuiFileBrowser.cpp',

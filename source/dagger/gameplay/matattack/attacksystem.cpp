@@ -69,7 +69,9 @@ void AttackSystem::Run()
 		auto& animator = view.get<Animator>(*it);
 		auto& attack_info = view.get<AttackInfo>(*it);
 
-		//Logger::critical(attack_info.hp);
+		Logger::critical(attack_info.hp);
+		Logger::critical(attack_info.attack_damage);
+
 		
 		if (EPSILON_NOT_ZERO(input.Get("attack")))
 		{

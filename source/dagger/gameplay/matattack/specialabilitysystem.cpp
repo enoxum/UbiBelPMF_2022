@@ -4,6 +4,7 @@
 #include "special-dash.h"
 #include "special-upboost.h"
 #include "special-heal.h"
+#include "special-damage.h"
 
 #include "core/core.h"
 #include "core/engine.h"
@@ -20,6 +21,7 @@ void SpecialAbilitySystem::SpinUp() {
 	specialAbilities.push_back(new Dash());
 	specialAbilities.push_back(new UpBoost());
 	specialAbilities.push_back(new Heal());
+	specialAbilities.push_back(new DamageBoost());
 }
 
 void SpecialAbilitySystem::Run() {
