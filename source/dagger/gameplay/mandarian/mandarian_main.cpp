@@ -6,6 +6,7 @@
 #include "mandarian_controller.h"
 #include "mandarian_enemy.h"
 #include "mandarian_camera_focus_system.h"
+#include "mandarian_movement_constraint_system.h"
 
 #include <fstream>
 #include <iostream>
@@ -13,7 +14,6 @@
 
 using namespace mandarian;
 using namespace dagger;
-
 
 void MandarianGame::SetupCamera()
 {
@@ -55,16 +55,20 @@ void MandarianGame::CreateMap()
     myfile.close();
 
    
-    int height = lines.size();
-    int width = lines[0].size();
+    float HEIGHT = lines.size();
+    float WIDTH = lines[0].size();
 
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
+    for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
             // add grass
-            AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Ground:TexturedGrass", width, height, i, j);
+            AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Ground:TexturedGrass", WIDTH, HEIGHT, i, j);
             // add mandarines
             if (lines[i][j] == 'M') {
-                AddSprite(scale * 0.5f, tileSize, zPos, Space, "MiniWorldSprites:tangerin", width, height, i, j);
+                AddSprite(scale * 0.5f, tileSize, zPos, Space, "MiniWorldSprites:tangerin", WIDTH, HEIGHT, i, j);
+            } 
+            // add border
+            if (lines[i][j] == 'B') {
+                AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Nature:DeadTrees", WIDTH, HEIGHT, i, j);
             }
         }
     }
@@ -89,6 +93,7 @@ void MandarianGame::GameplaySystemsSetup()
     engine.AddPausableSystem<MandarianControllerSystem>();
     engine.AddPausableSystem<SimplePhysicsSystem>();
     engine.AddPausableSystem<MandarianCameraFocusSystem>();
+    engine.AddPausableSystem<MandarianMovementConstraintSystem>();
     engine.AddPausableSystem<EnemyMovementSystem>();
 }
 
