@@ -39,7 +39,8 @@ void FSMCharacterJump::GoingUp::Enter(FSMCharacterJump::StateComponent& state_)
 {
 	auto&& [animator, upspeed, gravity] = Engine::Registry().get<Animator, UpSpeed, Gravity>(state_.entity);
 	gravity.speed = -upspeed.jumpSpeed;
-	AnimatorPlay(animator, "matattack:jump");
+	auto& char_info = Engine::Registry().get<matattack::CharacterInfo>(state_.entity);
+	AnimatorPlay(animator, "matattack:jump:" + char_info.animationName);
 }
 
 void FSMCharacterJump::GoingUp::Run(FSMCharacterJump::StateComponent& state_)
