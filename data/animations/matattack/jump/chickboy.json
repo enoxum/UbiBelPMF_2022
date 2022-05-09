@@ -1,0 +1,11 @@
+{
+	"animation-name": "matattack:jump:chickboy",
+	"animation-length-ms": 400,
+	"animation-frames": 
+	[
+		{ "texture-name": "matattack:characters:chickboy:run:run1" },
+        { "texture-name": "matattack:characters:chickboy:run:run2" },
+		{ "texture-name": "matattack:characters:chickboy:run:run3" },
+        { "texture-name": "matattack:characters:chickboy:run:run4" }
+	]
+}

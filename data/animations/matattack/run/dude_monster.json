@@ -1,0 +1,13 @@
+{
+	"animation-name": "matattack:run:dude_monster",
+	"animation-length-ms": 400,
+	"animation-frames": 
+	[
+		{ "texture-name": "matattack:characters:dude_monster:run:run1", "relative-length": 1 },
+		{ "texture-name": "matattack:characters:dude_monster:run:run2", "relative-length": 1 },
+		{ "texture-name": "matattack:characters:dude_monster:run:run3", "relative-length": 2 },
+		{ "texture-name": "matattack:characters:dude_monster:run:run4", "relative-length": 2 },
+		{ "texture-name": "matattack:characters:dude_monster:run:run5", "relative-length": 1 },
+		{ "texture-name": "matattack:characters:dude_monster:run:run6", "relative-length": 1 }
+	]
+}

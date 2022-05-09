@@ -1,0 +1,11 @@
+{
+	"animation-name": "matattack:jump:otter",
+	"animation-length-ms": 400,
+	"animation-frames": 
+	[
+		{ "texture-name": "matattack:characters:otter:jump:jump1" },
+        { "texture-name": "matattack:characters:otter:jump:jump2" },
+		{ "texture-name": "matattack:characters:otter:jump:jump3" },
+        { "texture-name": "matattack:characters:otter:jump:jump4" }
+	]
+}
