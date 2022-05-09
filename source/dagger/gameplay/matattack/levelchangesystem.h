@@ -21,9 +21,20 @@ public:
     void WindDown() override;
 
     bool isStarted = false;
+    bool isOnMouse = false;
+
+    int index = 0;
+    int countEnter = 0;
+
+    String fstCharSprite = "matattack:characters:fox:idle:idle1";
+    String sndCharSprite = "matattack:characters:fox:idle:idle1";
+
+    String fstCharAnimation = "fox";
+    String sndCharAnimation = "fox";
 
 protected:
     void LevelChooser(LevelChangeEvent lce);
     void OnKey(KeyboardEvent ke);
-    void OnMouse(MouseEvent me);
+    void CharacterSelect(KeyboardEvent ke);
+    void LevelSelect(MouseEvent me);
 };
