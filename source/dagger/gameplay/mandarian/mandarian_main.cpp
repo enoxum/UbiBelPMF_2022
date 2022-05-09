@@ -46,8 +46,11 @@ void MandarianGame::GenerateMap(String path, int map_height, int map_width, int 
 
     for (int i = 0; i < map_height; i++) {
         for (int j = 0; j < map_width; j++) {
-            if (i == (map_height - border_height) / 2 || i == (map_height + border_height) / 2 ||
-                j == (map_height - border_height) / 2 || j == (map_height + border_height) / 2 ) {
+            if (i < (map_height - border_height) / 2 || i > (map_height + border_height) / 2 ||
+                j < (map_width - border_width) / 2 || j > (map_width + border_width) / 2) {
+                myfile << "G";
+            } else if (i == (map_height - border_height) / 2 || i == (map_height + border_height) / 2 ||
+                j == (map_width - border_width) / 2 || j == (map_width + border_width) / 2 ) {
                 myfile << "B";
             } else {
                 double number = distribution(generator);
