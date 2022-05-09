@@ -16,11 +16,11 @@ void MandarianMovementConstraintSystem::Run()
     auto players = Engine::Registry().view<const Player, Transform>();
 	for (auto player : players) {
         auto &t = players.get<Transform>(player);
-		if (t.position.x <= - WIDTH / 2) {
+		if (t.position.x < - WIDTH / 2) {
             t.position.x = -WIDTH / 2;
         } else if (t.position.x >= WIDTH / 2) {
             t.position.x = WIDTH / 2;
-        } else if (t.position.y <= -HEIGHT / 2) {
+        } else if (t.position.y < -HEIGHT / 2) {
             t.position.y = -HEIGHT / 2;
         } else if (t.position.y >= HEIGHT / 2) {
             t.position.y = HEIGHT / 2;

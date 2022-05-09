@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <random>
 
 using namespace mandarian;
 using namespace dagger;
@@ -37,6 +38,31 @@ void AddSprite(Vector2 scale, float tileSize, float zPos, float Space, std::stri
     transform.position.z = zPos;
 }
 
+void MandarianGame::GenerateMap(String path, int map_height, int map_width, int border_height, int border_width) {
+    std::ofstream myfile;
+    myfile.open(path);
+    std::default_random_engine generator;
+    std::uniform_real_distribution<double> distribution(0.0,1.0);
+
+    for (int i = 0; i < map_height; i++) {
+        for (int j = 0; j < map_width; j++) {
+            if (i == (map_height - border_height) / 2 || i == (map_height + border_height) / 2 ||
+                j == (map_height - border_height) / 2 || j == (map_height + border_height) / 2 ) {
+                myfile << "B";
+            } else {
+                double number = distribution(generator);
+                if (number < 0.05) {
+                    myfile << "M";
+                } else {
+                    myfile << "G";
+                }
+            }
+        }
+        myfile << "\n";
+    }
+    myfile.close();
+}
+
 void MandarianGame::CreateMap() 
 {
     
@@ -55,26 +81,25 @@ void MandarianGame::CreateMap()
     myfile.close();
 
    
-    float HEIGHT = lines.size();
-    float WIDTH = lines[0].size();
+    float n = lines.size();
+    float m = lines[0].size();
 
-    for (int i = 0; i < HEIGHT; i++) {
-        for (int j = 0; j < WIDTH; j++) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
             // add grass
-            AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Ground:TexturedGrass", WIDTH, HEIGHT, i, j);
+            AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Ground:TexturedGrass", n, m, i, j);
             // add mandarines
             if (lines[i][j] == 'M') {
-                AddSprite(scale * 0.5f, tileSize, zPos, Space, "MiniWorldSprites:tangerin", WIDTH, HEIGHT, i, j);
+                AddSprite(scale * 0.5f, tileSize, zPos, Space, "MiniWorldSprites:tangerin", n, m, i, j);
             } 
             // add border
             if (lines[i][j] == 'B') {
-                AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Nature:DeadTrees", WIDTH, HEIGHT, i, j);
+                AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Nature:DeadTrees", n, m, i, j);
             }
         }
     }
     
 }
-
 
 void MandarianGame::CreateEnemies(Entity mandarian)
 {
@@ -102,6 +127,7 @@ void MandarianGame::WorldSetup()
     ShaderSystem::Use("standard");
 
     SetupCamera();
+    GenerateMap("../source/dagger/gameplay/mandarian/map.txt", 100, 100, 50, 50);
     CreateMap();
 
     auto character = Character::Create();

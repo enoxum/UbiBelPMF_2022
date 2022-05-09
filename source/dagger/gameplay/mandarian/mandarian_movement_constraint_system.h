@@ -10,8 +10,8 @@ namespace mandarian
     class MandarianMovementConstraintSystem
         : public System
     {
-        const float HEIGHT = 800.0f;
-        const float WIDTH = 600.0f;
+        const float HEIGHT = 1500.0f;
+        const float WIDTH = 1500.0f;
         inline String SystemName() override {
             return "Mandarian Movement Constraint System";
         };
