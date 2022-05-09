@@ -4,6 +4,10 @@
 #include "core/system.h"
 #include "core/game.h"
 #include "core/engine.h"
+#include "core/game/transforms.h"
+#include "core/graphics/sprite.h"
+
+
 
 using namespace dagger;
 
@@ -14,9 +18,17 @@ namespace matattack
     struct CharacterInfo
     {
         Float32 speed;
+        String animationName;
     };
 
-    void SetupWorld(int lvl);
+    struct ArrowInfo
+    {
+        Sprite& arrowSprite;
+        Transform& arrowTransform;
+    };
+
+    void SetupWorld(int lvl, String fstCharSprite, String sndCharSprite, String fstCharAnimation, String sndCharAnimation);
+    void SetLevelChooser();
     void CreateBackdrop(String background_path);
 
     class Matattack : public Game

@@ -70,7 +70,7 @@ struct Character
 		return Character{ entity, sprite, input, char_info, transform, simple_collision, anim, gravity, upspeed };
 	}
 
-	static Character Create(String input_ = "", Vector2 position_ = { 0, 0 }, String sprite_path = "matattack:characters:fox:idle:idle1")
+	static Character Create(String input_ = "", Vector2 position_ = { 0, 0 }, String sprite_path = "matattack:characters:fox:idle:idle1", String animation_name = "fox")
 	{
 		auto& reg = Engine::Registry();
 		auto entity = reg.create();
@@ -85,7 +85,7 @@ struct Character
 		chr.sprite.size = { 50, 50 };
 
 		AssignSprite(chr.sprite, sprite_path);
-		AnimatorPlay(chr.animator, "matattack:idle");
+		AnimatorPlay(chr.animator, "matattack:idle:" + animation_name);
 
 		if (input_ != "")
 			chr.input.contexts.push_back(input_);
@@ -98,6 +98,7 @@ struct Character
 		chr.simple_collision.is_moveable = true;
 
 		chr.char_info.speed = 200.0F;
+		chr.char_info.animationName = animation_name;
 
 		// up to debate (the value) 
 		chr.gravity.increase = 1200.0F;
@@ -245,21 +246,67 @@ void setLevel(int lvl) {
 
 }
 
-void setLevelChooser()
+//void setArrow(int x, int y, int z, String path_to_sprite, unsigned size_x, unsigned size_y)
+//{
+//	auto& engine = Engine::Instance();
+//	auto& reg = engine.Registry();
+//
+//	{
+//		auto arrow = reg.create();
+//	    auto& arrowSprite = reg.get_or_emplace<Sprite>(arrow);
+//		auto& arrowInfo = reg.get_or_emplace<ArrowInfo>(arrow);
+//
+//		AssignSprite(arrowSprite, path_to_sprite);
+//		arrowSprite.size = { size_x, size_y };
+//		arrowSprite.position = { x, y, z };
+//
+//		auto& arrowTransform = reg.emplace<Transform>(arrow);
+//		arrowTransform.position = arrowSprite.position;
+//	}
+//}
+
+void matattack::SetLevelChooser()
 {
-	setSingleBlock(-200, 50, 0, "matattack:background:sky", 175, 125, false, false);
-	setSingleBlock(-197, -50, 0, "matattack:items:sky_text", 85, 25, false, false);
+	auto& reg = Engine::Registry();
+	reg.clear();
 
-	setSingleBlock(0, 50, 0, "matattack:background:desert", 175, 125, false, false);
-	setSingleBlock(3, -50, 0, "matattack:items:desert_text", 125, 25, false, false);
-
-	setSingleBlock(200, 50, 0, "matattack:background:forest", 175, 125, false, false);
-	setSingleBlock(203, -50, 0, "matattack:items:forest_text", 125, 25, false, false);
-
-
+	setSingleBlock(-200, 50, 0, "matattack:items:sky_level", 175, 125, false, false);
+	setSingleBlock(0, 50, 0, "matattack:items:desert_level", 175, 125, false, false);
+	setSingleBlock(200, 50, 0, "matattack:items:forest_level", 175, 125, false, false);
 }
 
-void matattack::SetupWorld(int lvl)
+void setCharacterOption(int x, int y, int z, String path_to_sprite, String animation_name, unsigned size_x, unsigned size_y)
+{
+	auto& reg = Engine::Registry();
+	auto entity = reg.create();
+
+	auto block = reg.create();
+	auto& sprite = reg.get_or_emplace<Sprite>(block);
+
+	auto& animator = reg.get_or_emplace<Animator>(block);
+
+	sprite.size = { size_x, size_y };
+	sprite.position = { x, y, z };
+	sprite.scale = { 2, 2 };
+
+	AssignSprite(sprite, path_to_sprite);
+	AnimatorPlay(animator, "matattack:idle:" + animation_name);
+}
+
+void setCharacterSelect()
+{
+	setCharacterOption(-150, 0, 0, "matattack:characters:fox:idle:idle1", "fox", 50, 50);
+	setSingleBlock(-150, -50, 0, "matattack:items:fox_text", 60, 15, false, false);
+	//setArrow(-150, -75, 0, "matattack:items:selected", 25, 25);
+	setCharacterOption(-50, 0, 0, "matattack:characters:dude_monster:idle:idle1", "dude_monster", 50, 50);
+	setSingleBlock(-50, -50, 0, "matattack:items:dude_monster_text", 60, 25, false, false);
+	setCharacterOption(50, 0, 0, "matattack:characters:chickboy:idle:idle1", "chickboy", 50, 50);
+	setSingleBlock(50, -50, 0, "matattack:items:meowknight_text", 60, 20, false, false);
+	setCharacterOption(150, 0, 0, "matattack:characters:otter:idle:idle1", "otter", 50, 50);
+	setSingleBlock(150, -50, 0, "matattack:items:otter_text", 60, 15, false, false);
+}
+
+void matattack::SetupWorld(int lvl, String fstCharSprite = "matattack:characters:fox:idle:idle1", String sndCharSprite = "matattack:characters:fox:idle:idle1", String fstCharAnimation = "fox", String sndCharAnimation = "fox")
 {
 	auto& reg = Engine::Registry();
 	reg.clear();
@@ -267,15 +314,15 @@ void matattack::SetupWorld(int lvl)
 	setCamera();
 	setLevel(lvl);
 
-	auto fstChar = Character::Create("ASDW", { -100, 250 }, "matattack:characters:fox:idle:idle1");
-	auto sndChar = Character::Create("Arrows", { 100, 250 }, "matattack:characters:fox:idle:idle1");
-
+	auto fstChar = Character::Create("ASDW", { -100, 250 }, fstCharSprite, fstCharAnimation);
+	auto sndChar = Character::Create("Arrows", { 100, 250 }, sndCharSprite, sndCharAnimation);
 }
 
 void Matattack::WorldSetup()
 {
 	ShaderSystem::Use("standard");
-	setLevelChooser();
+	setCharacterSelect();
+	//SetLevelChooser();
 	//CreateBackdrop("matattack:items:press_enter");        
 }
 
