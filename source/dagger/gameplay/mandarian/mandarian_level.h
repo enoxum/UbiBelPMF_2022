@@ -15,6 +15,7 @@ using namespace dagger;
 
 namespace mandarian 
 {
+    struct CharacterStats;
 
     struct Experience
     {
@@ -65,6 +66,8 @@ namespace mandarian
     
     private:
         UInt16 CalculateMaxExp(UInt16 level);
+        
+        void Mutate(CharacterStats &mandarianStats);
 
         void RenderGUI();
         void UpdateTimer();

@@ -39,6 +39,48 @@ UInt16 LevelSystem::CalculateMaxExp(UInt16 level)
     return level * 10u + 50u;
 }
 
+void LevelSystem::Mutate(CharacterStats &mandarianStats)
+{
+    Float32 randomFactor = rand() / static_cast<Float32>(RAND_MAX);
+
+    if (randomFactor < 0.1)
+    {
+        mandarianStats.recovery += 5u;
+    }
+    else if (randomFactor < 0.2)
+    {
+        mandarianStats.armor += 5u;
+    }
+    else if (randomFactor < 0.3)
+    {
+        mandarianStats.might *= 1.2;
+    }
+    else if (randomFactor < 0.4)
+    {
+        mandarianStats.area *= 1.2;
+    }
+    else if (randomFactor < 0.5)
+    {
+        mandarianStats.speed *= 1.3;
+    }
+    else if (randomFactor < 0.6)
+    {
+        mandarianStats.duration *= 1.3;
+    }
+    else if (randomFactor < 0.7)
+    {
+        mandarianStats.cooldown *= 1.2;
+    }
+    else if (randomFactor < 0.8)
+    {
+        mandarianStats.growth *= 1.2;
+    }
+    else
+    {
+        mandarianStats.magnet += 10u;
+    }
+}
+
 void LevelSystem::RenderGUI()
 {
     const auto mandarianStats = Engine::Registry().get<CharacterStats>(mandarian);
@@ -207,6 +249,7 @@ void LevelSystem::UpdateExperience()
     const auto mandarianTransform = registry.get<Transform>(mandarian);
     auto &mandarianStats = registry.get<CharacterStats>(mandarian);
     auto &mandarianExperience = registry.get<CharacterExperience>(mandarian);
+    auto &mandarianHealth = registry.get<CharacterHealth>(mandarian);
 
     registry.view<Transform, Experience>().each(
         [&](auto entity, auto &transform, auto &experience) 
@@ -220,7 +263,15 @@ void LevelSystem::UpdateExperience()
                 {
                     mandarianExperience.points = 0u;
                     mandarianExperience.level++;
-                    // TODO: Update stats pause gameplay systems while choosing updates.
+                    
+                    mandarianStats.maxHealth += 2u;
+                   
+                    mandarianHealth.points += mandarianStats.recovery;
+                    if (mandarianHealth.points > mandarianStats.maxHealth) {
+                        mandarianHealth.points = mandarianStats.maxHealth;
+                    }
+
+                    Mutate(mandarianStats);
                 }
             
                 registry.destroy(entity);
@@ -254,5 +305,5 @@ void LevelSystem::Run()
 {
     UpdateTimer();
     UpdateExperience();
-//    SpawnEnemies();
+    SpawnEnemies();
 }
