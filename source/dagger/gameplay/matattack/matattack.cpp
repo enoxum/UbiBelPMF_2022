@@ -297,8 +297,8 @@ void matattack::SetLevelChooser()
 	reg.clear();
 
 	setSingleBlock(-200, 50, 0, "matattack:items:sky_level", 175, 125, false, false);
-	//setSingleBlock(0, 50, 0, "matattack:items:desert_level", 175, 125, false, false);
-	//setSingleBlock(200, 50, 0, "matattack:items:forest_level", 175, 125, false, false);
+	setSingleBlock(0, 50, 0, "matattack:items:desert_level", 175, 125, false, false);
+	setSingleBlock(200, 50, 0, "matattack:items:forest_level", 175, 125, false, false);
 }
 
 void setCharacterOption(int x, int y, int z, String path_to_sprite, String animation_name, unsigned size_x, unsigned size_y)
