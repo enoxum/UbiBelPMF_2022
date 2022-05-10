@@ -29,10 +29,15 @@ namespace mandarian
         UInt16 magnet { 30u };      // Radius of mandarin pickup
     };
 
+    struct CharacterHealth
+    {
+        UInt16 points { 100u };
+    };
+
     struct CharacterExperience
     {
-        UInt8 level { 0u };
-        UInt8 points { 0u };
+        UInt16 level { 0u };
+        UInt16 points { 0u };
     };
 
     struct Character
@@ -45,6 +50,7 @@ namespace mandarian
         InputReceiver &input;
         CharacterStats &stats;
         CharacterExperience &experience;
+        CharacterHealth &health;
 
         static Character Get(Entity);
 

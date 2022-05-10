@@ -34,10 +34,16 @@ Mandarin Mandarin::Create(UInt16 points_, Vector2 position_, Vector2 scale_)
     return mandarin;
 }
 
+UInt16 LevelSystem::CalculateMaxExp(UInt16 level)
+{
+    return level * 10u + 50u;
+}
+
 void LevelSystem::RenderGUI()
 {
     const auto mandarianStats = Engine::Registry().get<CharacterStats>(mandarian);
     const auto mandarianExperience = Engine::Registry().get<CharacterExperience>(mandarian);
+    const auto mandarianHealth = Engine::Registry().get<CharacterHealth>(mandarian);
 
     ImGui::SetNextWindowSize(ImVec2(200, 60), ImGuiCond_FirstUseEver);
     ImGui::Begin("Status");
@@ -49,6 +55,10 @@ void LevelSystem::RenderGUI()
 
     ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.0f, 1.0f), "Mandarian Experience:");
     ImGui::Text("Level%d: %dEXP", mandarianExperience.level, mandarianExperience.points);
+    ImGui::ProgressBar(mandarianExperience.points / (Float32) CalculateMaxExp(mandarianExperience.level));
+    ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.0f, 1.0f), "Mandarian Health:");
+    ImGui::Text("Health: %dHP", mandarianHealth.points);
+    ImGui::ProgressBar(mandarianHealth.points / (Float32) mandarianStats.maxHealth);
 
     ImGui::Separator();
 
@@ -206,7 +216,7 @@ void LevelSystem::UpdateExperience()
             if (distance < mandarianStats.magnet) 
             {
                 mandarianExperience.points += mandarianStats.growth * experience.points;            
-                if (mandarianExperience.level * 10u + 50u < mandarianExperience.points)
+                if (CalculateMaxExp(mandarianExperience.level) <= mandarianExperience.points)
                 {
                     mandarianExperience.points = 0u;
                     mandarianExperience.level++;

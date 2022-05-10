@@ -19,8 +19,9 @@ Character Character::Get(Entity entity)
     auto &input = reg.get_or_emplace<InputReceiver>(entity);
     auto &stats = reg.get_or_emplace<CharacterStats>(entity);
     auto &experience = reg.get_or_emplace<CharacterExperience>(entity);
+    auto &health = reg.get_or_emplace<CharacterHealth>(entity);
 
-    return Character{ entity, sprite, transform, body, collision, input, stats, experience };
+    return Character{ entity, sprite, transform, body, collision, input, stats, experience, health };
 }
 
 Character Character::Create(

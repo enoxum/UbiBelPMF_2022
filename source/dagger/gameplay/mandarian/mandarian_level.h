@@ -64,6 +64,8 @@ namespace mandarian
         inline void SetMandarian(Entity mandarian_) { mandarian = mandarian_; }
     
     private:
+        UInt16 CalculateMaxExp(UInt16 level);
+
         void RenderGUI();
         void UpdateTimer();
         void UpdateExperience();
