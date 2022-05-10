@@ -16,7 +16,7 @@ using namespace dagger;
 void FSMCharacterJump::OnGround::Enter(FSMCharacterJump::StateComponent& state_)
 {
 	auto& animator = Engine::Registry().get<Animator>(state_.entity);
-	//AnimatorPlay(animator, "matattack:idle");
+	//AnimatorPlay(animator, "matattack:idle"); sukobljava se sa run
 }
 
 void FSMCharacterJump::OnGround::Run(FSMCharacterJump::StateComponent& state_)
@@ -39,7 +39,8 @@ void FSMCharacterJump::GoingUp::Enter(FSMCharacterJump::StateComponent& state_)
 {
 	auto&& [animator, upspeed, gravity] = Engine::Registry().get<Animator, UpSpeed, Gravity>(state_.entity);
 	gravity.speed = -upspeed.jumpSpeed;
-	//AnimatorPlay(animator, "matattack:jumping");
+	auto& char_info = Engine::Registry().get<matattack::CharacterInfo>(state_.entity);
+	AnimatorPlay(animator, "matattack:jump:" + char_info.animationName);
 }
 
 void FSMCharacterJump::GoingUp::Run(FSMCharacterJump::StateComponent& state_)
@@ -73,7 +74,6 @@ void FSMCharacterJump::GoingDown::Enter(FSMCharacterJump::StateComponent& state_
 	{
 		gravity.speed /= upspeed.cutoff;
 	}
-	//AnimatorPlay(animator, "matattack:falling");
 }
 
 void FSMCharacterJump::GoingDown::Run(FSMCharacterJump::StateComponent& state_)

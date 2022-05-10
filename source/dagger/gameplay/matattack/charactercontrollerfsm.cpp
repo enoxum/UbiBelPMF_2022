@@ -15,7 +15,8 @@ using namespace dagger;
 void FSMCharacterController::Idle::Enter(FSMCharacterController::StateComponent& state_)
 {
 	auto& animator = Engine::Registry().get<Animator>(state_.entity);
-	AnimatorPlay(animator, "matattack:idle");
+	auto& char_info = Engine::Registry().get<matattack::CharacterInfo>(state_.entity);
+	AnimatorPlay(animator, "matattack:idle:" + char_info.animationName);
 }
 
 DEFAULT_EXIT(FSMCharacterController, Idle);
@@ -34,7 +35,8 @@ void FSMCharacterController::Idle::Run(FSMCharacterController::StateComponent& s
 void FSMCharacterController::Running::Enter(FSMCharacterController::StateComponent& state_)
 {
 	auto& animator = Engine::Registry().get<Animator>(state_.entity);
-	AnimatorPlay(animator, "matattack:run");
+	auto& char_info = Engine::Registry().get<matattack::CharacterInfo>(state_.entity);
+	AnimatorPlay(animator, "matattack:run:" + char_info.animationName);
 }
 
 // same as: DEFAULT_EXIT(CharacterControllerFSM, Running);

@@ -1,0 +1,9 @@
+{
+	"animation-name": "matattack:jump:fox",
+	"animation-length-ms": 300,
+	"animation-frames": 
+	[
+		{ "texture-name": "matattack:characters:fox:jump:jump1" },
+        { "texture-name": "matattack:characters:fox:jump:jump2" }
+	]
+}

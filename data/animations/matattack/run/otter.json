@@ -1,0 +1,10 @@
+{
+	"animation-name": "matattack:run:otter",
+	"animation-length-ms": 200,
+	"animation-frames": 
+	[
+		{ "texture-name": "matattack:characters:otter:run:run1", "relative-length": 1 },
+		{ "texture-name": "matattack:characters:otter:run:run2", "relative-length": 1 },
+		{ "texture-name": "matattack:characters:otter:run:run3", "relative-length": 2 }
+	]
+}

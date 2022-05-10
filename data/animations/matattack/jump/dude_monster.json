@@ -1,0 +1,15 @@
+{
+	"animation-name": "matattack:jump:dude_monster",
+	"animation-length-ms": 600,
+	"animation-frames": 
+	[
+		{ "texture-name": "matattack:characters:dude_monster:jump:jump1" },
+        { "texture-name": "matattack:characters:dude_monster:jump:jump2" },
+		{ "texture-name": "matattack:characters:dude_monster:jump:jump3" },
+        { "texture-name": "matattack:characters:dude_monster:jump:jump4" },
+		{ "texture-name": "matattack:characters:dude_monster:jump:jump5" },
+        { "texture-name": "matattack:characters:dude_monster:jump:jump6" },
+		{ "texture-name": "matattack:characters:dude_monster:jump:jump7" },
+        { "texture-name": "matattack:characters:dude_monster:jump:jump8" }
+	]
+}
