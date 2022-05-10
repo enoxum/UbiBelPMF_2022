@@ -5,7 +5,11 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/source/dagger",
-                "${workspaceFolder}/libs/spdlog/include"
+                "${workspaceFolder}/libs/spdlog/include",
+                "${workspaceFolder}/libs/sparse-map/include",
+                "${workspaceFolder}/libs/entt/single_include",
+                "${workspaceFolder}/libs/json/include",
+                "${workspaceFolder}/libs/simpleini"
             ],
             "defines": [],
             "macFrameworkPath": [

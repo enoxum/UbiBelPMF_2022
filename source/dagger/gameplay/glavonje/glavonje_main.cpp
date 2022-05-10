@@ -9,11 +9,18 @@
 #include "core/graphics/window.h"
 #include "core/game/transforms.h"
 
+
+#include "gameplay/common/simple_collisions.h"
+#include "gameplay/glavonje/gravity.h"
+
+
 using namespace dagger;
 using namespace glavonje;
 
 void Glavonje::GameplaySystemsSetup(){
-
+    auto& engine = Engine::Instance();
+    engine.AddSystem<SimpleCollisionsSystem>();
+    engine.AddSystem<GravitySystem>();
 }
 
 void glavonje::CreateBall(ColorRGBA ballColor_, Vector3 ballSpeed_, Vector3 ballPosition_){
