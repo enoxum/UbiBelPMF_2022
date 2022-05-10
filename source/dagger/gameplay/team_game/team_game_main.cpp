@@ -2,6 +2,7 @@
 
 #include "core/core.h"
 #include "core/engine.h"
+#include "core/audio.h"
 #include "core/input/inputs.h"
 #include "core/graphics/sprite.h"
 #include "core/graphics/animation.h"
@@ -33,9 +34,11 @@ void TeamGame::WorldSetup()
 {
     ShaderSystem::Use("standard");
 
+    Engine::GetDefaultResource<Audio>()->PlayLoop("escape");
+
     auto* camera = Engine::GetDefaultResource<Camera>();
     camera->mode = ECameraMode::FixedResolution;
-    camera->size = { 800, 600 };
+    camera->size = { 1200, 900 };
     camera->zoom = 1;
     camera->position = { 0, 0, 0 };
     camera->Update();

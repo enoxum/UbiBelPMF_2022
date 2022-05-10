@@ -29,20 +29,20 @@ void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
         auto& pos = ents.get<Transform>(ent);
 
         if (kEvent_.key == EDaggerKeyboard::KeyLeft && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-            step = -0.2;
+            step = -0.7;
         }
         else if (kEvent_.key == EDaggerKeyboard::KeyLeft && kEvent_.action == EDaggerInputState::Released) {
             step = 0.0;
         }
         else if (kEvent_.key == EDaggerKeyboard::KeyRight && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-            step = 0.2;
+            step = 0.7;
         }
         else if (kEvent_.key == EDaggerKeyboard::KeyRight && kEvent_.action == EDaggerInputState::Released) {
             step = 0.0;
         }
         else if (!player.jumping && kEvent_.key == EDaggerKeyboard::KeyUp && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
             player.jumping = true;
-            jumpVelocity = 1.5f;
+            jumpVelocity = 3.5f;
             pos.position.y += jumpVelocity;
         }
 
@@ -61,11 +61,11 @@ void PlayerControlSystem::Run() {
 
         if (player.jumping) {
             ent.position.y += jumpVelocity;
-            jumpVelocity -= 0.008f;
+            jumpVelocity -= 0.05f;
             if (jumpVelocity <= 0.1)
             {
                 player.jumping = false;
-                jumpVelocity = 0;
+                jumpVelocity = 0;           
             }
             
         }
