@@ -53,6 +53,7 @@ sources = [
     'source/dagger/gameplay/common/simple_physics.cpp',
     'source/dagger/gameplay/mandarian/mandarian_main.cpp',
     'source/dagger/gameplay/mandarian/mandarian_enemy.cpp',
+    'source/dagger/gameplay/mandarian/mandarian_level.cpp',
     'source/dagger/gameplay/mandarian/mandarian_controller_fsm.cpp',
     'source/dagger/gameplay/mandarian/mandarian_controller.cpp',
     'source/dagger/gameplay/mandarian/mandarian_camera_focus_system.cpp',
