@@ -129,8 +129,10 @@ struct Character
 
 
         auto chr = Character::Get(entity);
-
-        chr.sprite.scale = { 1.5, 1.5 };
+		if (animation_name == "otter")
+			chr.sprite.scale = { 0.5, 0.5 };
+        else
+			chr.sprite.scale = { 1.5, 1.5 };
         chr.sprite.position = { position_, 0.0f };
         chr.sprite.size = { 50, 50 };
 
@@ -329,7 +331,10 @@ void setCharacterOption(int x, int y, int z, String path_to_sprite, String anima
 
 	sprite.size = { size_x, size_y };
 	sprite.position = { x, y, z };
-	sprite.scale = { 2, 2 };
+	if (animation_name == "otter")
+		sprite.scale = { 0.6, 0.6 };
+	else 
+		sprite.scale = { 2, 2 };
 
 	AssignSprite(sprite, path_to_sprite);
 	AnimatorPlay(animator, "matattack:idle:" + animation_name);
@@ -337,15 +342,15 @@ void setCharacterOption(int x, int y, int z, String path_to_sprite, String anima
 
 void setCharacterSelect()
 {
-	setCharacterOption(-150, 0, 0, "matattack:characters:fox:idle:idle1", "fox", 50, 50);
-	setSingleBlock(-150, -50, 0, "matattack:items:fox_text", 60, 15, false, false);
-	auto arrow = Arrow::Create({-150,-100});
-	setCharacterOption(-50, 0, 0, "matattack:characters:dude_monster:idle:idle1", "dude_monster", 50, 50);
-	setSingleBlock(-50, -50, 0, "matattack:items:dude_monster_text", 60, 25, false, false);
-	setCharacterOption(50, 0, 0, "matattack:characters:chickboy:idle:idle1", "chickboy", 50, 50);
-	setSingleBlock(50, -50, 0, "matattack:items:meowknight_text", 60, 20, false, false);
-	setCharacterOption(150, 0, 0, "matattack:characters:otter:idle:idle1", "otter", 50, 50);
-	setSingleBlock(150, -50, 0, "matattack:items:otter_text", 60, 15, false, false);
+	setCharacterOption(-150, 25, 0, "matattack:characters:fox:idle:idle1", "fox", 50, 50);
+	setSingleBlock(-150, -25, 0, "matattack:items:fox_text", 60, 15, false, false);
+	auto arrow = Arrow::Create({-150,-75});
+	setCharacterOption(-50, 25, 0, "matattack:characters:dude_monster:idle:idle1", "dude_monster", 50, 50);
+	setSingleBlock(-50, -25, 0, "matattack:items:dude_monster_text", 60, 25, false, false);
+	setCharacterOption(50, 25, 0, "matattack:characters:chickboy:idle:idle1", "chickboy", 50, 50);
+	setSingleBlock(50, -25, 0, "matattack:items:meowknight_text", 60, 20, false, false);
+	setCharacterOption(150, 25, 0, "matattack:characters:otter:idle:idle1", "otter", 50, 50);
+	setSingleBlock(150, -25, 0, "matattack:items:otter_text", 60, 15, false, false);
 }
 
 void matattack::SetupWorld(int lvl, String fstCharSprite = "matattack:characters:fox:idle:idle1", String sndCharSprite = "matattack:characters:fox:idle:idle1", String fstCharAnimation = "fox", String sndCharAnimation = "fox")

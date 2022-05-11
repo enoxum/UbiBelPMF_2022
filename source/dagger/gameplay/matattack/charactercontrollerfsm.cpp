@@ -57,22 +57,12 @@ void FSMCharacterController::Running::Run(FSMCharacterController::StateComponent
 	}
 	else
 	{
-		sprite.scale.x = run*1.5; // rotira dok trci sprite
+		auto& char_info = Engine::Registry().get<matattack::CharacterInfo>(state_.entity);
+		if (char_info.animationName == "otter")
+			sprite.scale.x = run * 0.5;
+		else
+			sprite.scale.x = run*1.5; 
 		character.side = run;
-		//sprite.scale.y = jump;
-
-		// zasto su ovde samo sprite menjali poziciju, a ne i od transform-a?
-		//sprite.position.x = transform.position.x;
-		//sprite.position.x += character.speed * run * Engine::DeltaTime();
 		sprite.position = transform.position;
-
-		//transform.position.x += character.speed * run * Engine::DeltaTime();
-
-		// trebalo bi specijalno stanje, kad je jump, pa u njega da idemo, ali neka ostane ovde za sad
-		// => isto spec stanje za padanje tj gravitacija
-		//sprite.position.y = transform.position.y;
-		//transform.position.y += character.speed * jump * Engine::DeltaTime();
-
-		// ovde bi ubacili gravitaciju, da uvek pada => ili bi bio sistem??
 	}
 }
