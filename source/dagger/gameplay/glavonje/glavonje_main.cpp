@@ -12,6 +12,7 @@
 
 #include "gameplay/common/simple_collisions.h"
 #include "gameplay/glavonje/gravity.h"
+#include "gameplay/glavonje/player_controller.h"
 
 
 using namespace dagger;
@@ -19,23 +20,30 @@ using namespace glavonje;
 
 void Glavonje::GameplaySystemsSetup(){
     auto& engine = Engine::Instance();
+
+    engine.AddSystem<PlayerControllerSystem>();
     engine.AddSystem<SimpleCollisionsSystem>();
     engine.AddSystem<GravitySystem>();
 }
+
+// dodas SimpleCollison kao komponentu za loptu i pod
 
 void glavonje::CreateBall(ColorRGBA ballColor_, Vector3 ballSpeed_, Vector3 ballPosition_){
     auto& reg = Engine::Registry();
     auto ballEntity = reg.create();
     auto& sprite = reg.emplace<Sprite>(ballEntity);
 
-    AssignSprite(sprite, "PingPong:ball");
-    sprite.size = Vector2(10, 10);
+    AssignSprite(sprite, "HeadBall:ball");
+    sprite.size = Vector2(25, 25);
     sprite.color = ballColor_;
 
     auto& transform = reg.emplace<Transform>(ballEntity);
     transform.position = ballPosition_;
     auto& velocity = reg.emplace<Velocity>(ballEntity);
     velocity.speed = ballSpeed_;
+
+    auto& collision = reg.emplace<SimpleCollision>(ballEntity);
+    collision.size = sprite.size;
 }
 
 struct Goal
@@ -58,7 +66,7 @@ struct Goal
         goal.sprite.position = { position_, 0.0f };
         goal.sprite.color = { color_, 1.0f };
         goal.sprite.size = Vector2(100,100);
-        AssignSprite(goal.sprite, "souls_like_knight_character:IDLE:idle1");
+        AssignSprite(goal.sprite, "HeadBall:goal");
 
     
         return goal;
@@ -69,7 +77,9 @@ struct Character
 {
     Entity entity;
     Sprite& sprite;
+    Animator& animator;
     InputReceiver& inputRcv;
+    PlayerCharacter& playerCharacter;
 
     static Character Create(
         String input_ = "", 
@@ -80,19 +90,26 @@ struct Character
         auto& reg = Engine::Registry();
         auto characterEntity = reg.create();
 
-        auto& sprite = reg.get_or_emplace<Sprite>(characterEntity);
-        auto& inputRcv = reg.get_or_emplace<InputReceiver>(characterEntity);
+        ATTACH_TO_FSM(FSMPlayerController, characterEntity);
 
-        auto character = Character{characterEntity, sprite, inputRcv};;
+        auto& sprite = reg.get_or_emplace<Sprite>(characterEntity);
+        auto& animator = reg.get_or_emplace<Animator>(characterEntity);
+        auto& inputRcv = reg.get_or_emplace<InputReceiver>(characterEntity);
+        auto& playerCharacter = reg.get_or_emplace<PlayerCharacter>(characterEntity);
+
+        auto character = Character{characterEntity, sprite, animator ,inputRcv, playerCharacter};
 
         character.sprite.scale = { 1, 1 };
         character.sprite.position = { position_, 0.0f };
         character.sprite.color = { color_, 1.0f };
 
-        AssignSprite(character.sprite, "souls_like_knight_character:IDLE:idle1");
+        AssignSprite(character.sprite, "HeadBall:girlHead");
+        //AnimatorPlay(character.animator, "souls_like_knight_character:IDLE");
 
         if (input_ != "") 
             character.inputRcv.contexts.push_back(input_);
+        
+        character.playerCharacter.speed = 40;
 
         return character;
     }
@@ -117,9 +134,12 @@ void Glavonje::WorldSetup(){
         
         AssignSprite(sprite, "EmptyWhitePixel");
         sprite.color = { 0, 1, 0, 1 };
-        sprite.size = { 100, 200 };
+        sprite.size = { 100, 345 };
         sprite.scale = { 10, 1 };
-        sprite.position = { 0, -125, 1 };
+        sprite.position = { 0, -200, 1 };
+
+        auto& collision = reg.emplace<SimpleCollision>(goalFieldEntity);
+        collision.size = sprite.size;
     }
 
     auto leftCharacter = Character::Create("ASDW", { 1, 1, 1 }, { -100, 0 });
@@ -127,7 +147,7 @@ void Glavonje::WorldSetup(){
 
 
     auto leftGoal = Goal::Create( {0,0,0}, {-390, 0});
-    auto rightGoal = Goal::Create( {0,0,0}, {390,0});
+    auto rightGoal = Goal::Create( {0,0,0}, {380,0});
 
     CreateBall({1,1,1,1}, {5, 5, 0}, {0, 50, 0});
 }

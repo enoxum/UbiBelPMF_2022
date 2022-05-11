@@ -8,21 +8,18 @@
 using namespace dagger;
 
 namespace glavonje{
-
-    struct Gravity{
-        char s;
-    };
-
     class GravitySystem : public System {
 
     public:
         static const double gravityForce;
 
-        inline String SystemName() { return "Gravity control system"; }
+        inline String SystemName() { return "Gravity System"; }
         void Run() override;
 
         void SpinUp() override;
         void WindDown() override;
+
+        virtual ~GravitySystem() = default;
 
     };
 }

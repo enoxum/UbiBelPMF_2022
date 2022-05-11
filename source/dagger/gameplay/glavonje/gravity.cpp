@@ -2,6 +2,7 @@
 
 #include "gameplay/common/simple_collisions.h"
 #include "core/game/transforms.h"
+#include "gameplay/glavonje/glavonje_main.h"
 
 using namespace dagger;
 using namespace glavonje;
@@ -21,11 +22,11 @@ void GravitySystem::WindDown()
 void GravitySystem::Run(){
     auto& reg = Engine::Registry();
 
-    auto ents = reg.view<Transform, const Gravity>();
+    auto ents = reg.view<Transform, Velocity>();
 
     for (const auto ent: ents) 
     {
-        Transform& pos = ents.get<Transform>(ent);
-        pos.position.y -= (GravitySystem::gravityForce) * 1.2f;
+        Transform& posit = ents.get<Transform>(ent);
+        posit.position.y -= (GravitySystem::gravityForce) * 1.2f;
     }
 }
