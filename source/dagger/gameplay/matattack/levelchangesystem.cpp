@@ -86,9 +86,10 @@ void LevelChangeSystem::CharacterSelect(KeyboardEvent ke)
 {
     if (!isOnMouse)
     {
-        auto view = Engine::Registry().view<ArrowInfo, Transform>();
+        auto view = Engine::Registry().view<ArrowInfo, Transform, Sprite>();
         auto it = view.front();
         auto& arrow_transform = view.get<Transform>(it);
+        auto& arrow_sprite = view.get<Sprite>(it);
 
         if (ke.action == EDaggerInputState::Pressed && ke.key == EDaggerKeyboard::KeyLeft)
         {
@@ -121,6 +122,7 @@ void LevelChangeSystem::CharacterSelect(KeyboardEvent ke)
         {
             if (countEnter == 0)
             {
+                AssignSprite(arrow_sprite, "matattack:items:32px");
                 countEnter++;
                 switch (index)
                 {

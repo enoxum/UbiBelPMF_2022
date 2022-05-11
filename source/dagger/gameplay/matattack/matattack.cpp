@@ -77,7 +77,6 @@ struct Arrow
 		arrow.sprite.position = { position_, 0.0f };
 		arrow.sprite.size = { 50, 50 };
 		arrow.transform.position = { position_, 0.0f };
-
 		AssignSprite(arrow.sprite, "matattack:items:arrow");
 
 		return arrow;
@@ -279,15 +278,15 @@ void setMap3() {
 
 }
 
-void setLevel(int lvl) {
+void setLevel(int lvl, String fstCharAnimation, String sndCharAnimation) {
 
-	setSingleBlock(-730, 380, 10, "matattack:items:hp_text2", 40, 40, false, false);
+	setSingleBlock(-730, 380, 10, "matattack:characters:" + fstCharAnimation + ":idle:idle1", 100, 100, false, false);
 	setSingleBlock(-680, 380, 10, "matattack:items:heart", 50, 50, false, false);
 	setSingleBlock(-640, 380, 10, "matattack:items:heart", 50, 50, false, false);
 	setSingleBlock(-600, 380, 10, "matattack:items:heart", 50, 50, false, false);
 	setSingleBlock(-670, 340, 10, "matattack:items:health_bar", 180, 30, false, false);
 
-	setSingleBlock(590, 380, 10, "matattack:items:hp_text3", 40, 40, false, false);
+	setSingleBlock(590, 380, 10, "matattack:characters:" + sndCharAnimation + ":idle:idle1", 100, 100, false, false);
 	setSingleBlock(720, 380, 10, "matattack:items:heart", 50, 50, false, false);
 	setSingleBlock(680, 380, 10, "matattack:items:heart", 50, 50, false, false);
 	setSingleBlock(640, 380, 10, "matattack:items:heart", 50, 50, false, false);
@@ -313,6 +312,7 @@ void matattack::SetLevelChooser()
 	auto& reg = Engine::Registry();
 	reg.clear();
 	auto arrow = Arrow::Create({-200, -100});
+	createBackdrop("matattack:background:select_screen");
 	setSingleBlock(-200, 50, 0, "matattack:items:sky_level", 175, 125, false, false);
 	setSingleBlock(0, 50, 0, "matattack:items:desert_level", 175, 125, false, false);
 	setSingleBlock(200, 50, 0, "matattack:items:forest_level", 175, 125, false, false);
@@ -342,6 +342,7 @@ void setCharacterOption(int x, int y, int z, String path_to_sprite, String anima
 
 void setCharacterSelect()
 {
+	createBackdrop("matattack:background:select_screen");
 	setCharacterOption(-150, 25, 0, "matattack:characters:fox:idle:idle1", "fox", 50, 50);
 	setSingleBlock(-150, -25, 0, "matattack:items:fox_text", 60, 15, false, false);
 	auto arrow = Arrow::Create({-150,-75});
@@ -359,7 +360,7 @@ void matattack::SetupWorld(int lvl, String fstCharSprite = "matattack:characters
 	reg.clear();
 
 	setCamera();
-	setLevel(lvl);
+	setLevel(lvl, fstCharAnimation, sndCharAnimation);
 
 	auto fstChar = Character::Create("ASDW", { -100, 250 }, SpecialAbilities::DASH, fstCharSprite, fstCharAnimation);
 	auto sndChar = Character::Create("Arrows", { 100, 250 }, SpecialAbilities::ATTACK_BOOST, sndCharSprite, sndCharAnimation);
