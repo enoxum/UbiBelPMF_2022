@@ -47,6 +47,10 @@ sources = [
     'source/dagger/core/audio_linux.cpp',
     'source/dagger/core/engine.cpp',
     'source/dagger/core/game.cpp',
+
+    'source/dagger/core/net/message.cpp',
+    'source/dagger/gameplay/net_test/net_test_main.cpp',
+
     'source/dagger/gameplay/glavonje/glavonje_main.cpp',
     'source/dagger/gameplay/common/jiggle.cpp',
     'source/dagger/gameplay/common/particles.cpp',

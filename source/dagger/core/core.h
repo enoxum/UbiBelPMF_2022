@@ -34,6 +34,9 @@ using Entity = entt::entity;
 // handy template for crashing if y is not the superclass of x
 #define IS_A(x, y) class = typename std::enable_if<std::is_base_of<y, x>::value>::type
 
+// handy template for crashing if x is not trivially copyable
+#define IS_TRIVIALLY_COPYABLE(x) class = typename std::enable_if<std::is_standard_layout<x>::value>::type
+
 #define EPSILON 0.00001f
 #define EPSILON_EQUAL(a, b)     glm::epsilonEqual((a), (b), EPSILON)
 #define EPSILON_NOT_EQUAL(a, b) glm::epsilonNotEqual((a), (b), EPSILON)
