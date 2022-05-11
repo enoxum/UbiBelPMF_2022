@@ -20,6 +20,7 @@
 #include <fstream>
 #include <chrono>
 #include <bitset>
+#include <queue>
 
 #include <SimpleIni.h>
 
@@ -47,6 +48,9 @@ using Entity = entt::entity;
 template<typename Archetype>
 using OwningPtr = std::unique_ptr<Archetype>;
 
+template<typename Archetype>
+using SharedPtr = std::shared_ptr<Archetype>;
+
 // ViewPtr<T>: the pointer is not owned or managed by whoever holds this instance.
 // It just views the object through this. Can be used anywhere a raw pointer could be used.
 template<typename Archetype>
@@ -73,6 +77,11 @@ using Map = tsl::sparse_map<K, V>;
 // Set<E>: a quick set of elements of type E
 template<typename K>
 using Set = tsl::sparse_set<K>;
+
+// TODO
+// TSQueue<T>: a thread safe queue
+template<typename Archetype>
+using TSQueue = std::queue<Archetype>;
 
 // BitSet<N>: a contiguous bitset with N elements. Can be used for quick membership checks.
 // Basically the same as a compile-time Sequence<Bool> with fixed size N.

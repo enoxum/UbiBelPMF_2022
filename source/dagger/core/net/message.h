@@ -1,5 +1,5 @@
 #pragma once
-#include "core/engine.h"
+#include "core/core.h"
 
 namespace dagger {
     namespace net {
@@ -40,6 +40,16 @@ namespace dagger {
                 msg.header.size = msg.Size();
                 return msg;
             }
+        };
+
+        template<typename T>
+        class Connection;
+    
+        template <typename T>
+        struct OwnedMessage 
+        {
+            SharedPtr<Connection<T>> remote = nullptr;
+            Message<T> msg;
         };
     }
 }
