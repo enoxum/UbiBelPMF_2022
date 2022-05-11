@@ -8,6 +8,8 @@
 #include "core/graphics/shaders.h"
 #include "core/graphics/window.h"
 #include "core/game/transforms.h"
+#include "core/net/client.h"
+#include "core/net/server.h"
 
 using namespace dagger;
 using namespace net_test;
@@ -41,6 +43,23 @@ void test_message_io() {
     msg >> pts >> d >> b >> x;
 }
 
+class GlavonjeClient : public dagger::net::IClient<EMsgType> 
+{
+public:
+    bool Jump(UInt32 id)
+    {
+        Message<EMsgType> msg;
+        msg.header.id = EMsgType::Jump;
+        msg << id;
+        Send(msg);
+    }
+};
+
+class GlovanjeServer : public dagger::net::IServer<EMsgType>
+{
+
+};
+
 void NetTest::GameplaySystemsSetup(){
     test_message_io();
 }
@@ -54,5 +73,9 @@ void NetTest::WorldSetup(){
     camera->zoom = 1;
     camera->position = { 0, 0, 0 };
     camera->Update();
+
+    GlavonjeClient client;
+    client.Connect("127.0.0.1", 3030);
+    client.Jump(0);
 }
 
