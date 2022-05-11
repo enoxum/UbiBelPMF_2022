@@ -38,27 +38,22 @@ void AddSprite(Vector2 scale, float tileSize, float zPos, float Space, std::stri
     transform.position.z = zPos;
 }
 
-void MandarianGame::GenerateMap(String path, int map_height, int map_width, int border_height, int border_width) {
+void MandarianGame::GenerateMap(String path, int mapHeight, int mapWidth, int borderHeight, int borderWidth) {
     std::ofstream myfile;
     myfile.open(path);
     std::default_random_engine generator;
     std::uniform_real_distribution<double> distribution(0.0,1.0);
 
-    for (int i = 0; i < map_height; i++) {
-        for (int j = 0; j < map_width; j++) {
-            if (i < (map_height - border_height) / 2 || i > (map_height + border_height) / 2 ||
-                j < (map_width - border_width) / 2 || j > (map_width + border_width) / 2) {
+    for (int i = 0; i < mapHeight; i++) {
+        for (int j = 0; j < mapWidth; j++) {
+            if (i < (mapHeight - borderHeight) / 2 || i > (mapHeight + borderHeight) / 2 ||
+                j < (mapWidth - borderWidth) / 2 || j > (mapWidth + borderWidth) / 2) {
                 myfile << "G";
-            } else if (i == (map_height - border_height) / 2 || i == (map_height + border_height) / 2 ||
-                j == (map_width - border_width) / 2 || j == (map_width + border_width) / 2 ) {
+            } else if (i == (mapHeight - borderHeight) / 2 || i == (mapHeight + borderHeight) / 2 ||
+                j == (mapWidth - borderWidth) / 2 || j == (mapWidth + borderWidth) / 2 ) {
                 myfile << "B";
             } else {
-                double number = distribution(generator);
-                if (number < 0.05) {
-                    myfile << "M";
-                } else {
-                    myfile << "G";
-                }
+                myfile << "G";
             }
         }
         myfile << "\n";
@@ -91,10 +86,6 @@ void MandarianGame::CreateMap()
         for (int j = 0; j < m; j++) {
             // add grass
             AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Ground:TexturedGrass", n, m, i, j);
-            // add mandarines
-            if (lines[i][j] == 'M') {
-                AddSprite(scale * 0.5f, tileSize, zPos, Space, "MiniWorldSprites:tangerin", n, m, i, j);
-            } 
             // add border
             if (lines[i][j] == 'B') {
                 AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Nature:DeadTrees", n, m, i, j);
