@@ -7,13 +7,15 @@
 #include "gameplay/tiles_example/tiles_example_main.h"
 #include "gameplay/editor/editor_main.h"
 #include "gameplay/glavonje/glavonje_main.h"
+#include "gameplay/net_test/net_test_main.h"
 
 int main(int argc_, char** argv_)
 {
 	dagger::Engine engine;
 //	return engine.Run<tiles_example::TilesExampleMain>();
 //	return engine.Run<team_game::TeamGame>();
-	return engine.Run<glavonje::Glavonje>();
+	// return engine.Run<glavonje::Glavonje>();
+	return engine.Run<net_test::NetTest>();
 //	return engine.Run<ping_pong::PingPongGame>();
 //	return engine.Run<racing_game::RacingGame>();
 //	return engine.Run<platformer::Platformer>();
