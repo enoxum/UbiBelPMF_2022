@@ -9,6 +9,10 @@ struct LevelChangeEvent {
     int lvl;
 };
 
+struct ArrowInfo
+{
+    bool move = false;
+};
 
 class LevelChangeSystem : public System
 {
@@ -24,6 +28,7 @@ public:
     bool isOnMouse = false;
 
     int index = 0;
+    int index2 = 0;
     int countEnter = 0;
 
     String fstCharSprite = "matattack:characters:fox:idle:idle1";

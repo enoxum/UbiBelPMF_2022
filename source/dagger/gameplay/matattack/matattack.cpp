@@ -50,6 +50,40 @@ void setCamera()
 	camera->Update();
 }
 
+struct Arrow
+{
+	Entity entity;
+	ArrowInfo& arrow_info;
+	Sprite& sprite;
+	Transform& transform;
+
+	static Arrow Get(Entity entity)
+	{
+		auto& reg = Engine::Registry();
+		auto& arrow_info = reg.get_or_emplace<ArrowInfo>(entity);
+		auto& sprite = reg.get_or_emplace<Sprite>(entity);
+		auto& transform = reg.get_or_emplace<Transform>(entity);
+
+		return Arrow{ entity, arrow_info, sprite, transform };
+	}
+
+	static Arrow Create(Vector2 position_ = { 0, 0 })
+	{
+		auto& reg = Engine::Registry();
+		auto entity = reg.create();
+		auto arrow = Arrow::Get(entity);
+
+		arrow.sprite.scale = { 1.5, 1.5 };
+		arrow.sprite.position = { position_, 0.0f };
+		arrow.sprite.size = { 50, 50 };
+		arrow.transform.position = { position_, 0.0f };
+
+		AssignSprite(arrow.sprite, "matattack:items:arrow");
+
+		return arrow;
+	}
+};
+
 struct Character
 {
     Entity entity;
@@ -170,7 +204,7 @@ void setPlatform(int start_x, int start_y, int start_z, unsigned num_of_iteratio
 	}
 }
 
-void matattack::CreateBackdrop(String background_path)
+void createBackdrop(String background_path)
 {
 
 	auto& engine = Engine::Instance();
@@ -190,7 +224,7 @@ void matattack::CreateBackdrop(String background_path)
 
 void setMap1() {
 
-	CreateBackdrop("matattack:background:sky");
+	createBackdrop("matattack:background:sky");
 
 	// setting the trees (the trees need to be behind the player and the platforms, whats why they have a greater z value)
 	setSingleBlock(-300, -225, 10, "matattack:tiles:tree", 100, 100, false, false);
@@ -214,7 +248,7 @@ void setMap1() {
 
 void setMap2() {
 
-	CreateBackdrop("matattack:background:desert");
+	createBackdrop("matattack:background:desert");
 
 	setSingleBlock(-300, -250, 10, "matattack:tiles:skeleton", 100, 50, false, false);
 	setSingleBlock(300, -225, 10, "matattack:tiles:cactus", 80, 100, false, false);
@@ -230,7 +264,7 @@ void setMap2() {
 
 void setMap3() {
 
-	CreateBackdrop("matattack:background:forest");
+	createBackdrop("matattack:background:forest");
 
 	setSingleBlock(-250, -200, 10, "matattack:tiles:tree_forest", 125, 150, false, false);
 	setSingleBlock(300, 175, 10, "matattack:tiles:tree_forest", 125, 150, false, false);
@@ -272,33 +306,15 @@ void setLevel(int lvl) {
 
 }
 
-//void setArrow(int x, int y, int z, String path_to_sprite, unsigned size_x, unsigned size_y)
-//{
-//	auto& engine = Engine::Instance();
-//	auto& reg = engine.Registry();
-//
-//	{
-//		auto arrow = reg.create();
-//	    auto& arrowSprite = reg.get_or_emplace<Sprite>(arrow);
-//		auto& arrowInfo = reg.get_or_emplace<ArrowInfo>(arrow);
-//
-//		AssignSprite(arrowSprite, path_to_sprite);
-//		arrowSprite.size = { size_x, size_y };
-//		arrowSprite.position = { x, y, z };
-//
-//		auto& arrowTransform = reg.emplace<Transform>(arrow);
-//		arrowTransform.position = arrowSprite.position;
-//	}
-//}
-
 void matattack::SetLevelChooser()
 {
 	auto& reg = Engine::Registry();
 	reg.clear();
-
+	auto arrow = Arrow::Create({-200, -100});
 	setSingleBlock(-200, 50, 0, "matattack:items:sky_level", 175, 125, false, false);
 	setSingleBlock(0, 50, 0, "matattack:items:desert_level", 175, 125, false, false);
 	setSingleBlock(200, 50, 0, "matattack:items:forest_level", 175, 125, false, false);
+	
 }
 
 void setCharacterOption(int x, int y, int z, String path_to_sprite, String animation_name, unsigned size_x, unsigned size_y)
@@ -323,7 +339,7 @@ void setCharacterSelect()
 {
 	setCharacterOption(-150, 0, 0, "matattack:characters:fox:idle:idle1", "fox", 50, 50);
 	setSingleBlock(-150, -50, 0, "matattack:items:fox_text", 60, 15, false, false);
-	//setArrow(-150, -75, 0, "matattack:items:selected", 25, 25);
+	auto arrow = Arrow::Create({-150,-100});
 	setCharacterOption(-50, 0, 0, "matattack:characters:dude_monster:idle:idle1", "dude_monster", 50, 50);
 	setSingleBlock(-50, -50, 0, "matattack:items:dude_monster_text", 60, 25, false, false);
 	setCharacterOption(50, 0, 0, "matattack:characters:chickboy:idle:idle1", "chickboy", 50, 50);

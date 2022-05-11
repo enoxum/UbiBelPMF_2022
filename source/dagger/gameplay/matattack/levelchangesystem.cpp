@@ -10,14 +10,17 @@ using namespace dagger;
 void LevelChangeSystem::SpinUp()
 {
     Engine::Dispatcher().sink<LevelChangeEvent>().connect<&LevelChangeSystem::LevelChooser>(this);
-    //Engine::Dispatcher().sink<KeyboardEvent>().connect<&LevelChangeSystem::OnKey>(this);
+    Engine::Dispatcher().sink<KeyboardEvent>().connect<&LevelChangeSystem::OnKey>(this);
     Engine::Dispatcher().sink<KeyboardEvent>().connect<&LevelChangeSystem::CharacterSelect>(this);
-    Engine::Dispatcher().sink<MouseEvent>().connect<&LevelChangeSystem::LevelSelect>(this);
+    //Engine::Dispatcher().sink<MouseEvent>().connect<&LevelChangeSystem::LevelSelect>(this);
 }
 
 void LevelChangeSystem::WindDown()
 {
     Engine::Dispatcher().sink<LevelChangeEvent>().disconnect<&LevelChangeSystem::LevelChooser>(this);
+    Engine::Dispatcher().sink<KeyboardEvent>().disconnect<&LevelChangeSystem::OnKey>(this);
+    Engine::Dispatcher().sink<KeyboardEvent>().disconnect<&LevelChangeSystem::CharacterSelect>(this);
+    Engine::Dispatcher().sink<MouseEvent>().disconnect<&LevelChangeSystem::LevelSelect>(this);
 }
 
 void LevelChangeSystem::LevelChooser(LevelChangeEvent lce)
@@ -28,105 +31,97 @@ void LevelChangeSystem::LevelChooser(LevelChangeEvent lce)
 
 void LevelChangeSystem::OnKey(KeyboardEvent ke) 
 {
-    if (ke.key == EDaggerKeyboard::KeyEnter && ke.action == EDaggerInputState::Pressed && !LevelChangeSystem::isStarted)
+    if (isOnMouse && !LevelChangeSystem::isStarted)
     {
-        LevelChangeSystem::isStarted = true;
-        int lvl = std::rand() % 3 + 1;
-        matattack::SetupWorld(lvl, "matattack:characters:fox:idle:idle1", "matattack:characters:fox:idle:idle1", "matattack:idle:fox", "matattack:idle:fox");
-    }
-    Logger::critical(ke.key);
-}
-
-//void LevelChangeSystem::CharacterSelect(MouseEvent me)
-//{
-//    ImVec2 ce = ImGui::GetMousePos();
-//
-//    if (me.action == EDaggerInputState::Pressed && me.button == EDaggerMouse::MouseButton1)
-//    {
-//        if (ce.x >= 504 && ce.x <= 695 && ce.y <= 609 && ce.y >= 442)
-//        {
-//            fstCharSprite = "matattack:characters:fox:idle:idle1";
-//        }
-//        if (ce.x >= 744 && ce.x <= 935 && ce.y <= 609 && ce.y >= 442)
-//        {
-//            fstCharSprite = "matattack:characters:fox:idle:idle1";
-//        }
-//        if (ce.x >= 982 && ce.x <= 1173 && ce.y <= 609 && ce.y >= 442)
-//        {
-//            fstCharSprite = "matattack:characters:fox:idle:idle1";
-//        }
-//        if (ce.x >= 1223 && ce.x <= 1414 && ce.y <= 609 && ce.y >= 442)
-//        {
-//            fstCharSprite = "matattack:characters:fox:idle:idle1";
-//        }
-//    }
-//    else if (me.action == EDaggerInputState::Pressed && me.button == EDaggerMouse::MouseButton2)
-//    {
-//        if (ce.x >= 504 && ce.x <= 695 && ce.y <= 609 && ce.y >= 442)
-//        {
-//            sndCharSprite = "matattack:characters:fox:idle:idle1";
-//        }
-//        if (ce.x >= 744 && ce.x <= 935 && ce.y <= 609 && ce.y >= 442)
-//        {
-//            sndCharSprite = "matattack:characters:fox:idle:idle1";
-//        }
-//        if (ce.x >= 982 && ce.x <= 1173 && ce.y <= 609 && ce.y >= 442)
-//        {
-//            sndCharSprite = "matattack:characters:fox:idle:idle1";
-//        }
-//        if (ce.x >= 1223 && ce.x <= 1414 && ce.y <= 609 && ce.y >= 442)
-//        {
-//            sndCharSprite = "matattack:characters:fox:idle:idle1";
-//        }
-//    }
-//
-//    Logger::critical(ce.x);
-//    Logger::critical(ce.y);
-//}
-
-void LevelChangeSystem::CharacterSelect(KeyboardEvent ke)
-{
-    auto& engine = Engine::Instance();
-    auto& reg = engine.Registry();
-
-    if (!isOnMouse)
-    {
+        auto view = Engine::Registry().view<ArrowInfo, Transform>();
+        auto it = view.front();
+        auto& arrow_transform = view.get<Transform>(it);
 
         if (ke.action == EDaggerInputState::Pressed && ke.key == EDaggerKeyboard::KeyLeft)
         {
-            index--;
-            if (index < 0)
-                index = 3;
-
-            //auto view = Engine::Registry().view<matattack::ArrowInfo>();
-
-            //auto it = view.begin();
-            //while (it != view.end())
-            //{
-            //    // data of the first entity
-            //    auto& arrow = view.get<matattack::ArrowInfo>(*it);
-            //    arrow.arrowSprite.position = { arrow.arrowSprite.position.x - 50, -75, 0 };
-            //    arrow.arrowTransform.position = arrow.arrowSprite.position;
-            //    it++;
-            //}
+            index2--;
+            arrow_transform.position.x = arrow_transform.position.x - 200;
+            if (index2 < 0)
+            {
+                index2 = 2;
+                arrow_transform.position.x = 200;
+            }
 
         }
 
         if (ke.action == EDaggerInputState::Pressed && ke.key == EDaggerKeyboard::KeyRight)
         {
+            if (index2 == 2)
+            {
+                arrow_transform.position.x = -200;
+            }
+            else
+            {
+                arrow_transform.position.x = arrow_transform.position.x + 200;
+            }
+            index2 = (index2 + 1) % 3;
+
+
+        }
+
+        if (ke.action == EDaggerInputState::Pressed && ke.key == EDaggerKeyboard::KeyEnter)
+        {
+           
+                switch (index2)
+                {
+                case 0:
+                    LevelChangeSystem::isStarted = true;
+                    matattack::SetupWorld(1, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation);
+                    break;
+                case 1:
+                    LevelChangeSystem::isStarted = true;
+                    matattack::SetupWorld(2, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation);
+                    break;
+                case 2:
+                    LevelChangeSystem::isStarted = true;
+                    matattack::SetupWorld(3, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation);
+                    break;
+                default:
+                    break;
+                }
+
+        }
+    }
+}
+
+void LevelChangeSystem::CharacterSelect(KeyboardEvent ke)
+{
+    if (!isOnMouse)
+    {
+        auto view = Engine::Registry().view<ArrowInfo, Transform>();
+        auto it = view.front();
+        auto& arrow_transform = view.get<Transform>(it);
+
+        if (ke.action == EDaggerInputState::Pressed && ke.key == EDaggerKeyboard::KeyLeft)
+        {
+            index--;
+            arrow_transform.position.x = arrow_transform.position.x - 100;
+            if (index < 0) 
+            {
+                index = 3;
+                arrow_transform.position.x = 150;
+            }
+            
+        }
+
+        if (ke.action == EDaggerInputState::Pressed && ke.key == EDaggerKeyboard::KeyRight)
+        {
+            if (index == 3)
+            {
+                arrow_transform.position.x = -150;
+            }
+            else
+            {
+                arrow_transform.position.x = arrow_transform.position.x + 100;
+            }
             index = (index + 1) % 4;
-
-            //auto view = Engine::Registry().view<matattack::ArrowInfo>();
-
-            //auto it = view.begin();
-            //while (it != view.end())
-            //{
-            //    // data of the first entity
-            //    auto& arrow = view.get<matattack::ArrowInfo>(*it);
-            //    arrow.arrowSprite.position = { arrow.arrowSprite.position.x + 50, -75, 0 };
-            //    arrow.arrowTransform.position = arrow.arrowSprite.position;
-            //    it++;
-            //}
+            
+            
         }
 
         if (ke.action == EDaggerInputState::Pressed && ke.key == EDaggerKeyboard::KeyEnter)
@@ -192,9 +187,8 @@ void LevelChangeSystem::CharacterSelect(KeyboardEvent ke)
 
 void LevelChangeSystem::LevelSelect(MouseEvent me)
 {
-    //auto& reg = Engine::Registry();
-    //reg.clear();
 
+    //Engine::Dispatcher().sink<KeyboardEvent>().disconnect<&LevelChangeSystem::CharacterSelect>(this);
     if (isOnMouse) 
     {
         ImVec2 ce = ImGui::GetMousePos();

@@ -22,15 +22,8 @@ namespace matattack
         String animationName;
     };
 
-    struct ArrowInfo
-    {
-        Sprite& arrowSprite;
-        Transform& arrowTransform;
-    };
-
     void SetupWorld(int lvl, String fstCharSprite, String sndCharSprite, String fstCharAnimation, String sndCharAnimation);
     void SetLevelChooser();
-    void CreateBackdrop(String background_path);
 
     class Matattack : public Game
     {
