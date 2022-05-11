@@ -59,6 +59,6 @@ void MandarianControllerFSM::Running::Run(MandarianControllerFSM::StateComponent
 			runningForce = NORMALIZE(runningForce);
 
 
-		body.applyForce(100.0f * runningForce);
+		body.applyForce(10.0f * runningForce);
 	}
 }

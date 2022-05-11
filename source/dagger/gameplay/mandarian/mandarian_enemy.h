@@ -15,7 +15,8 @@ using namespace dagger;
 
 namespace mandarian 
 {
-    struct EnemyTag {
+    struct EnemyTag 
+    {
         Bool tag;
     };
 
@@ -29,9 +30,10 @@ namespace mandarian
 
         static Enemy Get(Entity entity);
         static Enemy Create(
+            UInt8 tier_ = 1u,
             Vector2 position_ = {0.0f, 0.0f},
-            ColorRGB color_ = {1.0f, 0.0f, 0.0f},
-            Vector2 scale_ = {10.0f, 10.0f},
+            Vector2 scale_ = {1.0f, 1.0f},
+            ColorRGB color_ = {1.0f, 1.0f, 1.0f},
             Float32 radius_ = 10.0f);
     };
 

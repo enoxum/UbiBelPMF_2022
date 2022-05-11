@@ -6,6 +6,7 @@
 #include "mandarian_controller.h"
 #include "mandarian_enemy.h"
 #include "mandarian_camera_focus_system.h"
+#include "mandarian_level.h"
 
 using namespace mandarian;
 using namespace dagger;
@@ -48,16 +49,6 @@ void MandarianGame::CreateMap()
 
 }
 
-void MandarianGame::CreateEnemies(Entity mandarian)
-{
-    Enemy::Create({ -200.0f, -200.0f });
-    Enemy::Create({ -200.0f,  200.0f });
-    Enemy::Create({  200.0f, -200.0f });
-    Enemy::Create({  200.0f,  200.0f });
-
-    Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(mandarian);
-}
-
 void MandarianGame::GameplaySystemsSetup() 
 {
     auto &engine = Engine::Instance();
@@ -67,6 +58,7 @@ void MandarianGame::GameplaySystemsSetup()
     engine.AddPausableSystem<MandarianControllerSystem>();
     engine.AddPausableSystem<SimplePhysicsSystem>();
     engine.AddPausableSystem<MandarianCameraFocusSystem>();
+    engine.AddPausableSystem<LevelSystem>();
 }
 
 void MandarianGame::WorldSetup()
@@ -77,5 +69,14 @@ void MandarianGame::WorldSetup()
     CreateMap();
 
     auto character = Character::Create();
-    CreateEnemies(character.entity);    
+
+    Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(character.entity);
+    Engine::GetDefaultResource<LevelSystem>()->SetMandarian(character.entity);
+
+    for (int i = 0; i < 100; i++)
+    {
+        Float32 xPos = 1000 * (rand() / static_cast<Float32>(RAND_MAX));
+        Float32 yPos = 1000 * (rand() / static_cast<Float32>(RAND_MAX));
+        Mandarin::Create(10u, { xPos, yPos });
+    }
 }

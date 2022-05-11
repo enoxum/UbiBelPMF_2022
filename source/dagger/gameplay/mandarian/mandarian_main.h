@@ -23,7 +23,6 @@ namespace mandarian
     private:
         void SetupCamera();
         void CreateMap();
-        void CreateEnemies(Entity mandarian);
     };
 
 };
