@@ -10,17 +10,15 @@ using namespace dagger;
 void LevelChangeSystem::SpinUp()
 {
     Engine::Dispatcher().sink<LevelChangeEvent>().connect<&LevelChangeSystem::LevelChooser>(this);
-    Engine::Dispatcher().sink<KeyboardEvent>().connect<&LevelChangeSystem::OnKey>(this);
+    Engine::Dispatcher().sink<KeyboardEvent>().connect<&LevelChangeSystem::LevelSelect>(this);
     Engine::Dispatcher().sink<KeyboardEvent>().connect<&LevelChangeSystem::CharacterSelect>(this);
-    //Engine::Dispatcher().sink<MouseEvent>().connect<&LevelChangeSystem::LevelSelect>(this);
 }
 
 void LevelChangeSystem::WindDown()
 {
     Engine::Dispatcher().sink<LevelChangeEvent>().disconnect<&LevelChangeSystem::LevelChooser>(this);
-    Engine::Dispatcher().sink<KeyboardEvent>().disconnect<&LevelChangeSystem::OnKey>(this);
+    Engine::Dispatcher().sink<KeyboardEvent>().disconnect<&LevelChangeSystem::LevelSelect>(this);
     Engine::Dispatcher().sink<KeyboardEvent>().disconnect<&LevelChangeSystem::CharacterSelect>(this);
-    Engine::Dispatcher().sink<MouseEvent>().disconnect<&LevelChangeSystem::LevelSelect>(this);
 }
 
 void LevelChangeSystem::LevelChooser(LevelChangeEvent lce)
@@ -29,7 +27,7 @@ void LevelChangeSystem::LevelChooser(LevelChangeEvent lce)
     matattack::SetupWorld(lvl, "matattack:characters:fox:idle:idle1", "matattack:characters:fox:idle:idle1", "matattack:idle:fox", "matattack:idle:fox");
 }
 
-void LevelChangeSystem::OnKey(KeyboardEvent ke) 
+void LevelChangeSystem::LevelSelect(KeyboardEvent ke) 
 {
     if (isOnMouse && !LevelChangeSystem::isStarted)
     {
@@ -46,9 +44,7 @@ void LevelChangeSystem::OnKey(KeyboardEvent ke)
                 index2 = 2;
                 arrow_transform.position.x = 200;
             }
-
         }
-
         if (ke.action == EDaggerInputState::Pressed && ke.key == EDaggerKeyboard::KeyRight)
         {
             if (index2 == 2)
@@ -60,10 +56,7 @@ void LevelChangeSystem::OnKey(KeyboardEvent ke)
                 arrow_transform.position.x = arrow_transform.position.x + 200;
             }
             index2 = (index2 + 1) % 3;
-
-
         }
-
         if (ke.action == EDaggerInputState::Pressed && ke.key == EDaggerKeyboard::KeyEnter)
         {
            
@@ -183,34 +176,4 @@ void LevelChangeSystem::CharacterSelect(KeyboardEvent ke)
     }
 
 
-}
-
-void LevelChangeSystem::LevelSelect(MouseEvent me)
-{
-
-    //Engine::Dispatcher().sink<KeyboardEvent>().disconnect<&LevelChangeSystem::CharacterSelect>(this);
-    if (isOnMouse) 
-    {
-        ImVec2 ce = ImGui::GetMousePos();
-        if (me.action == EDaggerInputState::Pressed && me.button == EDaggerMouse::MouseButton1 && !LevelChangeSystem::isStarted)
-        {
-            if (ce.x >= 269 && ce.x <= 690 && ce.y <= 547 && ce.y >= 328)
-            {
-                LevelChangeSystem::isStarted = true;
-                matattack::SetupWorld(1, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation);
-            }
-            if (ce.x >= 751 && ce.x <= 1169 && ce.y <= 547 && ce.y >= 328)
-            {
-                LevelChangeSystem::isStarted = true;
-                matattack::SetupWorld(2, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation);
-            }
-            if (ce.x >= 1230 && ce.x <= 1649 && ce.y <= 547 && ce.y >= 328)
-            {
-                LevelChangeSystem::isStarted = true;
-                matattack::SetupWorld(3, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation);
-            }
-        }
-        Logger::critical(ce.x);
-        Logger::critical(ce.y);
-    }
 }

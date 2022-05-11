@@ -365,9 +365,7 @@ void Matattack::WorldSetup()
 {
 
 	ShaderSystem::Use("standard");
-	setCharacterSelect();
-	//SetLevelChooser();
-	//CreateBackdrop("matattack:items:press_enter");        
+	setCharacterSelect();       
 }
 
 

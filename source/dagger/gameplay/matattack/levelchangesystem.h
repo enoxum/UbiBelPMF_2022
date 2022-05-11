@@ -17,7 +17,6 @@ struct ArrowInfo
 class LevelChangeSystem : public System
 {
 
-
 public:
     inline String SystemName() { return "Matattack Tools System"; }
 
@@ -39,7 +38,6 @@ public:
 
 protected:
     void LevelChooser(LevelChangeEvent lce);
-    void OnKey(KeyboardEvent ke);
+    void LevelSelect(KeyboardEvent ke);
     void CharacterSelect(KeyboardEvent ke);
-    void LevelSelect(MouseEvent me);
 };
