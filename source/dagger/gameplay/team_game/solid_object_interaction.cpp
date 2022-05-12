@@ -54,14 +54,16 @@ void SolidObjectInteractionSystem::Run()
             if (collisionSides.y > 0 && playerPosition.position.y + playerHeight > (solidObjectPosition.position.y - platformHeight))
             {
                 col.colided = false;
-                playerPosition.position[1] = solidObjectPosition.position.y - platformHeight - playerHeight - 5;
+                playerPosition.position.y = solidObjectPosition.position.y - platformHeight - playerHeight;
             }
 
             if (collisionSides.y < 0)
             {
-                playerPosition.position.y = solidObjectPosition.position.y + platformHeight + playerHeight  
-                                            + GravitySystem::gravityForce;
+                playerPosition.position.y = solidObjectPosition.position.y + platformHeight + playerHeight;
                 p.jumping = false;
+            }
+            else {
+                p.jumping = true;
             }
 
             if (collisionSides.x < 0)
