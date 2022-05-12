@@ -18,6 +18,8 @@
 
 #include "gameplay/platformer/camera_focus.h"
 #include <gameplay/team_game/storage.h>
+#include <core/graphics/text.h>
+#include <gameplay/team_game/timer.h>
 
 
 using namespace dagger;
@@ -32,6 +34,7 @@ void TeamGame::GameplaySystemsSetup()
     engine.AddPausableSystem<ItemCollectionSystem>();
     engine.AddPausableSystem<GravitySystem>();
     engine.AddPausableSystem<StorageSystem>();
+    engine.AddPausableSystem<TimerSystem>();
 
     engine.AddSystem<platformer::CameraFollowSystem>();
 }
@@ -182,4 +185,13 @@ void team_game::SetupWorld()
         Platform& i = reg.emplace<Platform>(entity);
         i.id = "PLTTop";
     }
+
+    {
+        auto timer = reg.create();
+        auto& text = reg.emplace<Text>(timer);
+        text.spacing = 0.6f;
+        reg.emplace<Time>(timer);
+    }
+
+
 }
