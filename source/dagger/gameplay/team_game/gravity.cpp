@@ -9,7 +9,7 @@
 using namespace dagger;
 using namespace team_game;
 
-const double GravitySystem::gravityForce = 0.35f;
+const double GravitySystem::gravityForce = 1.0f;
 
 void GravitySystem::SpinUp()
 {
@@ -29,7 +29,7 @@ void GravitySystem::Run()
     for (const auto ent: ents) 
     {
         Transform& pos = ents.get<Transform>(ent);
-        pos.position.y -= GravitySystem::gravityForce;
+        pos.position.y -= GravitySystem::gravityForce * Engine::DeltaTime() * 300;
     }
     
 }
