@@ -72,139 +72,139 @@ void team_game::SetupWorld()
     float zPos = 1.f;
     std::string fileName = "level_loader.txt";
 
-    // team_game::initPlayer(zPos);   
-    // team_game::initMap(zPos, fileName);
+    team_game::initPlayer(zPos);   
+    team_game::initMap(zPos, fileName);
     
-    {
-        auto entity = reg.create();
-        auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "logos:character");
-        float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 100 / ratio, 100  };
+    // {
+    //     auto entity = reg.create();
+    //     auto& sprite = reg.emplace<Sprite>(entity);
+    //     AssignSprite(sprite, "logos:character");
+    //     float ratio = sprite.size.y / sprite.size.x;
+    //     sprite.size = { 100 / ratio, 100  };
 
-        auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { 0, 0, zPos };
+    //     auto& transform = reg.emplace<Transform>(entity);
+    //     transform.position = { 0, 0, zPos };
 
-        auto& col = reg.emplace<SimpleCollision>(entity);
-        col.size = sprite.size;
+    //     auto& col = reg.emplace<SimpleCollision>(entity);
+    //     col.size = sprite.size;
 
-        reg.emplace<Player>(entity);
-        reg.emplace<Gravity>(entity);
+    //     reg.emplace<Player>(entity);
+    //     reg.emplace<Gravity>(entity);
 
-        reg.emplace<platformer::CameraFollowFocus>(entity);
-    }
+    //     reg.emplace<platformer::CameraFollowFocus>(entity);
+    // }
 
-    {
-        auto entity = reg.create();
-        auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "logos:dagger");
-        float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 100 / ratio, 100  };
+    // {
+    //     auto entity = reg.create();
+    //     auto& sprite = reg.emplace<Sprite>(entity);
+    //     AssignSprite(sprite, "logos:dagger");
+    //     float ratio = sprite.size.y / sprite.size.x;
+    //     sprite.size = { 100 / ratio, 100  };
 
-        auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { 330 , 100, zPos };
+    //     auto& transform = reg.emplace<Transform>(entity);
+    //     transform.position = { 330 , 100, zPos };
 
-        auto& col = reg.emplace<SimpleCollision>(entity);
-        col.size = sprite.size;
+    //     auto& col = reg.emplace<SimpleCollision>(entity);
+    //     col.size = sprite.size;
 
-        Item& i = reg.emplace<Item>(entity);
-        i.id = "Dagger 1";
-    }
+    //     Item& i = reg.emplace<Item>(entity);
+    //     i.id = "Dagger 1";
+    // }
 
-    {
-        auto entity = reg.create();
-        auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "logos:ubisoft");
-        float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 100 / ratio, 100 };
+    // {
+    //     auto entity = reg.create();
+    //     auto& sprite = reg.emplace<Sprite>(entity);
+    //     AssignSprite(sprite, "logos:ubisoft");
+    //     float ratio = sprite.size.y / sprite.size.x;
+    //     sprite.size = { 100 / ratio, 100 };
 
-        auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { -200 , 100, zPos };
+    //     auto& transform = reg.emplace<Transform>(entity);
+    //     transform.position = { -200 , 100, zPos };
 
-        auto& col = reg.emplace<SimpleCollision>(entity);
-        col.size = sprite.size;
+    //     auto& col = reg.emplace<SimpleCollision>(entity);
+    //     col.size = sprite.size;
 
-        Item& i = reg.emplace<Item>(entity);
-        i.id = "Ubisoft";
+    //     Item& i = reg.emplace<Item>(entity);
+    //     i.id = "Ubisoft";
 
-    }
+    // }
 
 
-    {
-        auto entity = reg.create();
-        auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
-        float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 180, 30  };
+    // {
+    //     auto entity = reg.create();
+    //     auto& sprite = reg.emplace<Sprite>(entity);
+    //     AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
+    //     float ratio = sprite.size.y / sprite.size.x;
+    //     sprite.size = { 180, 30  };
 
-        auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { -200 , 0, zPos };
+    //     auto& transform = reg.emplace<Transform>(entity);
+    //     transform.position = { -200 , 0, zPos };
 
-        auto& col = reg.emplace<SimpleCollision>(entity);
-        col.size = sprite.size;
+    //     auto& col = reg.emplace<SimpleCollision>(entity);
+    //     col.size = sprite.size;
         
-        Platform& i = reg.emplace<Platform>(entity);
-        i.id = "PLTLeft";
-    }
+    //     Platform& i = reg.emplace<Platform>(entity);
+    //     i.id = "PLTLeft";
+    // }
 
 
-    {
-        auto entity = reg.create();
-        auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
-        float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 120, 30  };
+    // {
+    //     auto entity = reg.create();
+    //     auto& sprite = reg.emplace<Sprite>(entity);
+    //     AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
+    //     float ratio = sprite.size.y / sprite.size.x;
+    //     sprite.size = { 120, 30  };
 
-        auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { 330 , 0, zPos };
+    //     auto& transform = reg.emplace<Transform>(entity);
+    //     transform.position = { 330 , 0, zPos };
 
-        auto& col = reg.emplace<SimpleCollision>(entity);
-        col.size = sprite.size;
+    //     auto& col = reg.emplace<SimpleCollision>(entity);
+    //     col.size = sprite.size;
         
-        Platform& i = reg.emplace<Platform>(entity);
-        i.id = "PLTRight";
-    }
+    //     Platform& i = reg.emplace<Platform>(entity);
+    //     i.id = "PLTRight";
+    // }
 
-    {
-        auto entity = reg.create();
-        auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
-        float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 500, 30  };
+    // {
+    //     auto entity = reg.create();
+    //     auto& sprite = reg.emplace<Sprite>(entity);
+    //     AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
+    //     float ratio = sprite.size.y / sprite.size.x;
+    //     sprite.size = { 500, 30  };
 
-        auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { 0 , -80, zPos };
+    //     auto& transform = reg.emplace<Transform>(entity);
+    //     transform.position = { 0 , -80, zPos };
 
-        auto& col = reg.emplace<SimpleCollision>(entity);
-        col.size = sprite.size;
+    //     auto& col = reg.emplace<SimpleCollision>(entity);
+    //     col.size = sprite.size;
         
-        Platform& i = reg.emplace<Platform>(entity);
-        i.id = "PLTBottom";
-    }
+    //     Platform& i = reg.emplace<Platform>(entity);
+    //     i.id = "PLTBottom";
+    // }
 
-    {
-        auto entity = reg.create();
-        auto& sprite = reg.emplace<Sprite>(entity);
-        AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
-        float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 300, 30  };
+    // {
+    //     auto entity = reg.create();
+    //     auto& sprite = reg.emplace<Sprite>(entity);
+    //     AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
+    //     float ratio = sprite.size.y / sprite.size.x;
+    //     sprite.size = { 300, 30  };
 
-        auto& transform = reg.emplace<Transform>(entity);
-        transform.position = { 0 , 150, zPos };
+    //     auto& transform = reg.emplace<Transform>(entity);
+    //     transform.position = { 0 , 150, zPos };
 
-        auto& col = reg.emplace<SimpleCollision>(entity);
-        col.size = sprite.size;
+    //     auto& col = reg.emplace<SimpleCollision>(entity);
+    //     col.size = sprite.size;
         
-        Platform& i = reg.emplace<Platform>(entity);
-        i.id = "PLTTop";
-    }
+    //     Platform& i = reg.emplace<Platform>(entity);
+    //     i.id = "PLTTop";
+    // }
 
-    {
-        auto timer = reg.create();
-        auto& text = reg.emplace<Text>(timer);
-        text.spacing = 0.6f;
-        reg.emplace<Time>(timer);
-    }
+    // {
+    //     auto timer = reg.create();
+    //     auto& text = reg.emplace<Text>(timer);
+    //     text.spacing = 0.6f;
+    //     reg.emplace<Time>(timer);
+    // }
 
 
 }

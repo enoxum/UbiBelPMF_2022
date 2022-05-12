@@ -34,6 +34,8 @@ sources = [
     'source/dagger/gameplay/team_game/Utilities/string_utility.cpp',
     'source/dagger/gameplay/team_game/Utilities/map_generator_utility.cpp',
     'source/dagger/gameplay/team_game/gravity.cpp',
+    'source/dagger/gameplay/team_game/storage.cpp',
+    'source/dagger/gameplay/team_game/timer.cpp',
     'source/dagger/gameplay/team_game/solid_object_interaction.cpp',
     'source/dagger/gameplay/team_game/player_controller.cpp',
     'source/dagger/gameplay/team_game/item_collection.cpp',

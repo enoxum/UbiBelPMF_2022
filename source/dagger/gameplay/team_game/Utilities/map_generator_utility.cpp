@@ -99,7 +99,7 @@ void team_game::initMap(double zPos, std::string file) {
             // skip first 6 parameters because we parse them before
             for (unsigned i = 6; i < numberOfParameters; i++)
             {
-                team_game::assignEntity(entity, reg, type, id); 
+                team_game::assignEntity(entity, reg, parameters[i], id); 
             }
         }
     }
