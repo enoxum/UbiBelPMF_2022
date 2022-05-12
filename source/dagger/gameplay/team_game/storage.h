@@ -12,7 +12,9 @@ namespace team_game
     class StorageSystem : public System {
 
     private:
-        Vector2 screenSize;
+        Vector2 screenSize = { 0.0, 0.0 };
+        int selectedItem = 0;
+        void OnKeyboardEvent(KeyboardEvent kEvent_);
 
     public:
 
