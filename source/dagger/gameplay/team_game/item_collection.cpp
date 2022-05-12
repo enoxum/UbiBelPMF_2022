@@ -36,10 +36,13 @@ void ItemCollectionSystem::Run()
         {
             // move item to "invisible place"
             Transform& transform = viewCollisions.get<Transform>(col.colidedWith);
-            transform.position = { INFINITY, INFINITY, INFINITY};
+            transform.position = { INFINITY, INFINITY, INFINITY };
+
+            Item& collected = viewCollisions.get<Item>(col.colidedWith);
 
             // set that item is collected
-            reg.emplace<CollectedItem>(col.colidedWith);
+            CollectedItem& i = reg.emplace<CollectedItem>(col.colidedWith);
+            i.id = collected.id;
 
             // prevent entering this if statment again
             col.colided = false;
