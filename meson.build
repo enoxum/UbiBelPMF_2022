@@ -31,6 +31,8 @@ includes = [
 ]
 
 sources = [
+    'source/dagger/gameplay/team_game/Utilities/string_utility.cpp',
+    'source/dagger/gameplay/team_game/Utilities/map_generator_utility.cpp',
     'source/dagger/gameplay/team_game/gravity.cpp',
     'source/dagger/gameplay/team_game/solid_object_interaction.cpp',
     'source/dagger/gameplay/team_game/player_controller.cpp',

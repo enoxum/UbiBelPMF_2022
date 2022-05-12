@@ -42,7 +42,7 @@ void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
         }
         else if (!player.jumping && kEvent_.key == EDaggerKeyboard::KeyUp && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
             player.jumping = true;
-            jumpVelocity = 3.5f;
+            jumpVelocity = 3.7f;
             pos.position.y += jumpVelocity;
         }
 
@@ -57,12 +57,12 @@ void PlayerControlSystem::Run() {
 
     ents.each([this](Transform& ent, Player player) {
 
-        ent.position.x += step;
+        ent.position.x += step * Engine::DeltaTime() * 300;
 
         if (player.jumping) {
-            ent.position.y += jumpVelocity;
-            jumpVelocity -= 0.05f;
-            if (jumpVelocity <= 0.1)
+            ent.position.y += jumpVelocity / Engine::DeltaTime() * 300;
+            jumpVelocity -= 0.03f;
+            if (jumpVelocity <= 0.0)
             {
                 player.jumping = false;
                 jumpVelocity = 0;           

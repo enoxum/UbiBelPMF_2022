@@ -1,0 +1,7 @@
+# id | type | x | y | width | height | list of entities
+Dagger1 dagger 330 100 100 100 Item
+Dagger1 dagger -330 100 100 100 Item
+PLTLeft SimpleRockPlatform -200 0 100 30 Platform
+PLTRight SimpleRockPlatform 330 0 100 30 Platform 
+PLTBottom SimpleRockPlatform 0 -80 200 30 Platform
+PLTTop SimpleRockPlatform 0 180 20 20 Platform 
