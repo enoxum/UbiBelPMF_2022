@@ -16,6 +16,9 @@
 #include "solid_object_interaction.h"
 #include "gravity.h"
 
+#include "gameplay/platformer/camera_focus.h"
+#include <gameplay/team_game/storage.h>
+
 
 using namespace dagger;
 using namespace team_game;
@@ -28,6 +31,9 @@ void TeamGame::GameplaySystemsSetup()
     engine.AddPausableSystem<SolidObjectInteractionSystem>();
     engine.AddPausableSystem<ItemCollectionSystem>();
     engine.AddPausableSystem<GravitySystem>();
+    engine.AddPausableSystem<StorageSystem>();
+
+    engine.AddSystem<platformer::CameraFollowSystem>();
 }
 
 void TeamGame::WorldSetup()
@@ -38,8 +44,8 @@ void TeamGame::WorldSetup()
 
     auto* camera = Engine::GetDefaultResource<Camera>();
     camera->mode = ECameraMode::FixedResolution;
-    camera->size = { 1200, 900 };
-    camera->zoom = 1;
+    camera->size = { 800, 600 };
+    camera->zoom = 0.5;
     camera->position = { 0, 0, 0 };
     camera->Update();
 
@@ -68,6 +74,8 @@ void team_game::SetupWorld()
 
         reg.emplace<Player>(entity);
         reg.emplace<Gravity>(entity);
+
+        reg.emplace<platformer::CameraFollowFocus>(entity);
     }
 
     {
@@ -82,10 +90,29 @@ void team_game::SetupWorld()
 
         auto& col = reg.emplace<SimpleCollision>(entity);
         col.size = sprite.size;
-        
+
         Item& i = reg.emplace<Item>(entity);
         i.id = "Dagger 1";
     }
+
+    {
+        auto entity = reg.create();
+        auto& sprite = reg.emplace<Sprite>(entity);
+        AssignSprite(sprite, "logos:ubisoft");
+        float ratio = sprite.size.y / sprite.size.x;
+        sprite.size = { 100 / ratio, 100 };
+
+        auto& transform = reg.emplace<Transform>(entity);
+        transform.position = { -200 , 100, zPos };
+
+        auto& col = reg.emplace<SimpleCollision>(entity);
+        col.size = sprite.size;
+
+        Item& i = reg.emplace<Item>(entity);
+        i.id = "Ubisoft";
+
+    }
+
 
     {
         auto entity = reg.create();
