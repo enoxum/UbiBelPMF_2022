@@ -10,8 +10,9 @@ Enemy Enemy::Get(Entity entity)
     auto &transform = reg.get_or_emplace<Transform>(entity);
     auto &body = reg.get_or_emplace<Body>(entity);
     auto &collision = reg.get_or_emplace<CircleCollision>(entity);
+    auto &health = reg.get_or_emplace<Health>(entity);
 
-    return Enemy{ entity, sprite, transform, body, collision };
+    return Enemy{ entity, sprite, transform, body, collision, health };
 }
 
 Enemy Enemy::Create(
@@ -32,6 +33,10 @@ Enemy Enemy::Create(
     enemy.transform.position = { position_, 0.0f };
 
     enemy.collision.radius = radius_;
+
+    enemy.health.current = 100;
+    enemy.health.max = 100;
+    enemy.health.min = 0;
 
     return enemy;
 }

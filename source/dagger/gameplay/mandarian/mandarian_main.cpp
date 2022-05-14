@@ -6,6 +6,9 @@
 #include "mandarian_controller.h"
 #include "mandarian_enemy.h"
 #include "mandarian_camera_focus_system.h"
+#include "mandarian_spell_system.h"
+
+#include "core/graphics/animation.h"
 
 using namespace mandarian;
 using namespace dagger;
@@ -67,6 +70,7 @@ void MandarianGame::GameplaySystemsSetup()
     engine.AddPausableSystem<MandarianControllerSystem>();
     engine.AddPausableSystem<SimplePhysicsSystem>();
     engine.AddPausableSystem<MandarianCameraFocusSystem>();
+    engine.AddPausableSystem<MandarianSpellSystem>();
 }
 
 void MandarianGame::WorldSetup()
@@ -77,5 +81,8 @@ void MandarianGame::WorldSetup()
     CreateMap();
 
     auto character = Character::Create();
-    CreateEnemies(character.entity);    
+    CreateEnemies(character.entity);  
+
+    Engine::GetDefaultResource<MandarianSpellSystem>()->SetMandarian(character.entity); 
+    Spell::Create("Aura of Mandarian", 5.0f, true, true); 
 }

@@ -15,8 +15,16 @@ using namespace dagger;
 
 namespace mandarian 
 {
-    struct EnemyTag {
+    struct EnemyTag 
+    {
         Bool tag;
+    };
+
+    struct Health
+    {
+        SInt16 current;
+        SInt16 min;
+        SInt16 max;
     };
 
     struct Enemy
@@ -26,6 +34,7 @@ namespace mandarian
         Transform &transform;
         Body &body;
         CircleCollision &collision;
+        Health &health;
 
         static Enemy Get(Entity entity);
         static Enemy Create(

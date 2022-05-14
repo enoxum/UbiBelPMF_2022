@@ -1,0 +1,10 @@
+{
+	"animation-name": "aura:CAST",
+	"animation-length-ms": 200,
+	"animation-frames": 
+	[
+		{ "texture-name": "aura:CAST:aura1" },
+		{ "texture-name": "aura:CAST:aura2" },
+        { "texture-name": "aura:CAST:aura3" }
+	]
+}
