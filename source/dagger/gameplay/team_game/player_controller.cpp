@@ -61,7 +61,9 @@ void PlayerControlSystem::Run() {
 
         if (player.jumping) {
             ent.position.y += jumpVelocity * Engine::DeltaTime() * 300;
+            
             jumpVelocity -= 0.04 * Engine::DeltaTime() * 300;
+
             if (jumpVelocity <= 0.0)
             {
                 player.jumping = false;

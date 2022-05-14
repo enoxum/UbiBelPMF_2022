@@ -21,7 +21,8 @@
 
 #include <iostream>
 #include <fstream>
-#include <unistd.h>
+//#include <unistd.h>
+#include <windows.h>
 #include <vector>
 #include <map>
 
@@ -199,12 +200,12 @@ void team_game::SetupWorld()
     //     i.id = "PLTTop";
     // }
 
-    // {
-    //     auto timer = reg.create();
-    //     auto& text = reg.emplace<Text>(timer);
-    //     text.spacing = 0.6f;
-    //     reg.emplace<Time>(timer);
-    // }
+     {
+         auto timer = reg.create();
+         auto& text = reg.emplace<Text>(timer);
+         text.spacing = 0.6f;
+         reg.emplace<Time>(timer);
+     }
 
 
 }

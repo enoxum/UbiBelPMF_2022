@@ -27,8 +27,12 @@ using namespace dagger;
 void team_game::assignSprite(Sprite &sprite, const std::string type, const int width, const int height) {
     if (type == "SimpleRockPlatform"){
         AssignSprite(sprite, "platformerRocks:SimpleRockPlatform");
-    } else {
-        AssignSprite(sprite, "logos:" + type);
+    }
+    else if (type == "background") {
+        AssignSprite(sprite, "Background:background");
+    }
+    else {
+        AssignSprite(sprite, "EscapeRoom:" + type);
     }
     
     float ratio = sprite.size.y / sprite.size.x;
@@ -116,7 +120,7 @@ void team_game::initPlayer(double zPos) {
     auto& sprite = reg.emplace<Sprite>(entity);
     AssignSprite(sprite, "logos:character");
     float ratio = sprite.size.y / sprite.size.x;
-    sprite.size = { 100 / ratio, 100  };
+    sprite.size = { 150 / ratio, 150  };
 
     auto& transform = reg.emplace<Transform>(entity);
     transform.position = { 30, 30, zPos };
