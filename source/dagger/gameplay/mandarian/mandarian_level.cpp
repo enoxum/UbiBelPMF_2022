@@ -24,7 +24,7 @@ Mandarin Mandarin::Create(UInt16 points_, Vector2 position_, Vector2 scale_)
     auto entity = Engine::Registry().create();
     auto mandarin = Mandarin::Get(entity);
 
-    AssignSprite(mandarin.sprite, "EmptyWhitePixel");
+    AssignSprite(mandarin.sprite, "mandarian:tangerin");
     mandarin.sprite.scale = { scale_ };
 
     mandarin.transform.position = { position_, 0.0f };

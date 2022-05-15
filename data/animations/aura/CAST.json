@@ -1,0 +1,19 @@
+{
+	"animation-name": "aura:CAST",
+	"animation-length-ms": 500,
+	"animation-frames": 
+	[
+		{ "texture-name": "aura:CAST:aura1" },
+		{ "texture-name": "aura:CAST:aura2" },
+        { "texture-name": "aura:CAST:aura3" },
+		{ "texture-name": "aura:CAST:aura4" },
+		{ "texture-name": "aura:CAST:aura5" },
+        { "texture-name": "aura:CAST:aura6" },
+		{ "texture-name": "aura:CAST:aura7" },
+		{ "texture-name": "aura:CAST:aura8" },
+        { "texture-name": "aura:CAST:aura9" },
+		{ "texture-name": "aura:CAST:aura10" },
+		{ "texture-name": "aura:CAST:aura11" },
+        { "texture-name": "aura:CAST:aura12" }
+	]
+}

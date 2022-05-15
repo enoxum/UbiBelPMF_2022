@@ -2,10 +2,13 @@
 
 #include "core/graphics/shaders.h"
 #include "core/graphics/window.h"
+#include "core/graphics/animation.h"
 
 #include "mandarian_controller.h"
 #include "mandarian_enemy.h"
 #include "mandarian_camera_focus_system.h"
+#include "mandarian_spell_system.h"
+
 #include "mandarian_level.h"
 #include "mandarian_movement_constraint_system.h"
 
@@ -105,8 +108,10 @@ void MandarianGame::GameplaySystemsSetup()
     engine.AddPausableSystem<MandarianControllerSystem>();
     engine.AddPausableSystem<SimplePhysicsSystem>();
     engine.AddPausableSystem<MandarianCameraFocusSystem>();
+    engine.AddPausableSystem<MandarianSpellSystem>();
     engine.AddPausableSystem<MandarianMovementConstraintSystem>();
     engine.AddPausableSystem<LevelSystem>();
+    engine.AddPausableSystem<EnemyDeathSystem>();
 }
 
 void MandarianGame::WorldSetup()
@@ -119,13 +124,9 @@ void MandarianGame::WorldSetup()
 
     auto character = Character::Create();
 
+    Engine::GetDefaultResource<MandarianSpellSystem>()->SetMandarian(character.entity); 
+    Spell::Create("Aura of Mandarian", 1.0f, "aura:CAST:aura1", "aura:CAST").AddEffects(new FixTo(character.entity), new Aura(200.0f, 100.0f, character.entity)); 
+
     Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(character.entity);
     Engine::GetDefaultResource<LevelSystem>()->SetMandarian(character.entity);
-
-    for (int i = 0; i < 100; i++)
-    {
-        Float32 xPos = 1000 * (rand() / static_cast<Float32>(RAND_MAX));
-        Float32 yPos = 1000 * (rand() / static_cast<Float32>(RAND_MAX));
-        Mandarin::Create(10u, { xPos, yPos });
-    }
 }
