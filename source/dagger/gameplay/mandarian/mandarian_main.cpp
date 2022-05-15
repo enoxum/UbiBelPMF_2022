@@ -84,5 +84,5 @@ void MandarianGame::WorldSetup()
     CreateEnemies(character.entity);  
 
     Engine::GetDefaultResource<MandarianSpellSystem>()->SetMandarian(character.entity); 
-    Spell::Create("Aura of Mandarian", 5.0f, true, true); 
+    Spell::Create("Aura of Mandarian", 1.0f, "aura:CAST:aura1", "aura:CAST").AddEffects(new FixTo(character.entity), new Aura(50.0f, 100.0f)); 
 }

@@ -22,9 +22,9 @@ namespace mandarian
 
     struct Health
     {
-        SInt16 current;
-        SInt16 min;
-        SInt16 max;
+        Float32 current;
+        Float32 min;
+        Float32 max;
     };
 
     struct Enemy

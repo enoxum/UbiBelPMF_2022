@@ -20,27 +20,28 @@ Spell Spell::Get( Entity entity )
 
 Spell Spell::Create( const String &name
                    , Float32 cooldown
-                   , Bool ready
-                   , Bool active
-                   /*, std::vector<IEffect*> &effects*/ )
-{
+                   , String spritePath
+                   , String animatorPath)
+{   
     auto &reg = Engine::Registry();
     auto entity = reg.create();
-    reg.emplace<SpellTag>(entity);
     auto spell = Spell::Get(entity);
 
-    spell.sprite.color = {1.0f, 1.0f, 1.0f, 0.8f};
-
-    AssignSprite(spell.sprite, "aura:CAST:aura1");
-    AnimatorPlay(spell.animator, "aura:CAST");
+    spell.sprite.color = {1.0f, 1.0f, 1.0f, 0.0f};
+    AssignSprite(spell.sprite, spritePath);
     spell.sprite.scale = {1.0f, 1.0f };
-
+    
     spell.common.name = name;
-    spell.common.ready = ready;
-    spell.common.active = active;
+    spell.common.ready = true;
+    spell.common.active = false;
     spell.common.cooldown = cooldown;
     spell.common.timer = cooldown;
-    spell.common.effects.push_back(new Aura(50, 100.0f));
+    spell.common.spritePath = spritePath;
+    spell.common.animatorPath = animatorPath;
+    //spell.common.effects.push_back(new Aura(50.0f, 100.0f));
+
+    auto *animation = Engine::Res<Animation>()[animatorPath];
+    spell.common.duration = animation->absoluteLength;
 
     return spell;
 }
@@ -63,15 +64,28 @@ void MandarianSpellSystem::UpdateCooldowns()
     );
 }
 
-void MandarianSpellSystem::UpdateSpellPositions()
+void MandarianSpellSystem::UpdateSpellActiveness()
 {
-    auto &reg = Engine::Registry();
-    reg.view<SpellTag, Transform>().each(
-        [&](auto &spellTag, auto &transform)
+    Engine::Registry().view<CommonSpell, Sprite, Animator>().each(
+        [&](CommonSpell &commonSpell, Sprite &sprite, Animator &animator)
         {
-            auto mandarian = GetMandarian();
-            auto &mandarianTransform = reg.get<Transform>(mandarian);
-            transform.position = mandarianTransform.position;
+            if (commonSpell.ready)
+            {
+                commonSpell.ready = false;
+                sprite.color = {1.0f, 1.0f, 1.0f, 0.8f};
+                AnimatorPlay(animator, commonSpell.animatorPath);
+                commonSpell.active = true;
+                Logger::trace("Start animation!");
+            }
+
+            if ( commonSpell.active 
+              && commonSpell.cooldown - commonSpell.duration > commonSpell.timer)
+            {
+                sprite.color = {1.0f, 1.0f, 1.0f, 0.0f};
+                AnimatorStop(animator);
+                commonSpell.active = false;
+                Logger::trace("Stop animation!");
+            }
         }
     );
 }
@@ -81,56 +95,55 @@ void MandarianSpellSystem::CastSpells()
     Engine::Registry().view<CommonSpell>().each(
         [&](auto spellEntity, auto &commonSpell)
         {
-            for(auto *effect : commonSpell.effects)
+            if (commonSpell.active)
+            {
+                for(auto *effect : commonSpell.effects)
                 {
-                    effect->Apply(GetMandarian(), spellEntity);
+                    effect->Apply(spellEntity);
                 }
+            }
         }
     );
 }
 
-Aura::Aura(UInt16 damage_, Float32 radius_)
-    : damage(damage_), radius(radius_)
-    {};
-
-void Aura::Apply(Entity mandarian, Entity spell)
+void Aura::Apply(Entity spell)
 {
     auto &reg = Engine::Registry();
-    
-    auto &transform = reg.get<Transform>(mandarian);
-
     auto &transformSpell = reg.get<Transform>(spell);
     auto &commonSpell = reg.get<CommonSpell>(spell);
 
-    if(commonSpell.active && commonSpell.ready)
+    reg.view<Transform, Health, EnemyTag>().each(
+    [&](auto enemyEntity, auto &enemyTransform, auto &enemyHealth, auto &enemyTag)
     {
-        commonSpell.ready = false;
+        auto x0 = transformSpell.position.x;
+        auto y0 = transformSpell.position.y;
+        auto x = enemyTransform.position.x;
+        auto y = enemyTransform.position.y;
+        auto r = radius;
 
-        reg.view<Transform, Health, EnemyTag>().each(
-        [&](auto enemyEntity, auto &enemyTransform, auto &enemyHealth, auto &enemyTag)
+        if((x-x0)*(x-x0)+(y-y0)*(y-y0) <= r*r)
         {
-            auto x0 = transform.position.x;
-            auto y0 = transform.position.y;
-            auto x = enemyTransform.position.x;
-            auto y = enemyTransform.position.y;
-            auto r = radius;
-
-            if((x-x0)*(x-x0)+(y-y0)*(y-y0) <= r*r)
+            enemyHealth.current -= damage * Engine::DeltaTime();
+            // Logger::trace("{0:d}", enemyHealth.current);
+            if(enemyHealth.current <= enemyHealth.min)
             {
-                enemyHealth.current -= damage;
-                // Logger::trace("{0:d}", enemyHealth.current);
-                if(enemyHealth.current <= enemyHealth.min)
-                {
-                    reg.destroy(enemyEntity);
-                }
+                reg.destroy(enemyEntity);
             }
-        });
-    }
+        }
+    });
+}
+
+void FixTo::Apply(Entity spell)
+{
+    auto &targetTransform = Engine::Registry().get<Transform>(target);
+    auto &spellTransform = Engine::Registry().get<Transform>(spell);
+
+    spellTransform.position = targetTransform.position;
 }
 
 void MandarianSpellSystem::Run()
 {
     UpdateCooldowns();
-    UpdateSpellPositions();
+    UpdateSpellActiveness();
     CastSpells();
 }

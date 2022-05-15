@@ -16,7 +16,7 @@ namespace mandarian
     class IEffect
     {
         public:
-        virtual void Apply(Entity source, Entity spell) = 0;
+        virtual void Apply(Entity spell) = 0;
     };
 
     class Aura
@@ -24,16 +24,25 @@ namespace mandarian
     {
         public:
 
-        void Apply(Entity source, Entity spell) override;
-        Aura(UInt16 damage_, Float32 radius_);
+        void Apply(Entity spell) override;
+        Aura(Float32 damage_, Float32 radius_)
+            : damage(damage_), radius(radius_){};
 
-        UInt16 damage;
+        Float32 damage;
         Float32 radius;
     };
 
-    struct SpellTag
+    class FixTo
+        : public IEffect
     {
-        Bool tag;
+        public:
+
+        void Apply(Entity spell) override;
+        FixTo(Entity target_) 
+            : target(target_){};
+
+        private:
+        Entity target;
     };
 
     struct CommonSpell
@@ -44,6 +53,8 @@ namespace mandarian
         Bool ready;
         Bool active;
         Float32 duration;
+        String spritePath;
+        String animatorPath;
         std::vector<IEffect*> effects;
     };
 
@@ -57,11 +68,20 @@ namespace mandarian
 
         static Spell Create ( const String &name
                             , Float32 cooldown
-                            , Bool ready
-                            , Bool active
-                            /*, std::vector<IEffect*> &effects*/ );
-
+                            , String spritePath
+                            , String animatorPath
+                            );
         static Spell Get (Entity entity);
+
+        void AddEffects(){}
+
+        template<typename Effect, typename... Effects> 
+        void AddEffects(Effect effect_, Effects... effects_)
+        {   
+            common.effects.push_back(dynamic_cast<IEffect*>(effect_));
+            AddEffects(effects_...);
+        }
+
     };
 
     class MandarianSpellSystem
@@ -76,10 +96,9 @@ namespace mandarian
 		}
 
         void SetMandarian(Entity mandarian_) { mandarian = mandarian_; };
-        Entity GetMandarian() { return mandarian; }
         void UpdateCooldowns();
         void UpdateSpellPositions();
-        void UpdateAnimations();
+        void UpdateSpellActiveness();
         void CastSpells();
 
         void Run() override;
