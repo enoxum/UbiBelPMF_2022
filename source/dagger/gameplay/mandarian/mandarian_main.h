@@ -22,8 +22,8 @@ namespace mandarian
 
     private:
         void SetupCamera();
+        void GenerateMap(String path, int mapHeight, int mapWidth, int borderHeight, int borderWidth);
         void CreateMap();
-        void CreateEnemies(Entity mandarian);
     };
 
 };
