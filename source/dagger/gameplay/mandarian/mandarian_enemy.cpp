@@ -54,7 +54,6 @@ Enemy Enemy::Create(
 
     enemy.health.current = 100;
     enemy.health.max = 100;
-    enemy.health.min = 0;
 
     return enemy;
 }

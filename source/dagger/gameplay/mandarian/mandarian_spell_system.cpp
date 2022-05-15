@@ -38,14 +38,12 @@ Spell Spell::Create( const String &name
     spell.common.timer = cooldown;
     spell.common.spritePath = spritePath;
     spell.common.animatorPath = animatorPath;
-    //spell.common.effects.push_back(new Aura(50.0f, 100.0f));
 
     auto *animation = Engine::Res<Animation>()[animatorPath];
     spell.common.duration = animation->absoluteLength;
 
     return spell;
 }
-
 
 void MandarianSpellSystem::UpdateCooldowns()
 {
@@ -75,7 +73,6 @@ void MandarianSpellSystem::UpdateSpellActiveness()
                 sprite.color = {1.0f, 1.0f, 1.0f, 0.8f};
                 AnimatorPlay(animator, commonSpell.animatorPath);
                 commonSpell.active = true;
-                Logger::trace("Start animation!");
             }
 
             if ( commonSpell.active 
@@ -84,7 +81,6 @@ void MandarianSpellSystem::UpdateSpellActiveness()
                 sprite.color = {1.0f, 1.0f, 1.0f, 0.0f};
                 AnimatorStop(animator);
                 commonSpell.active = false;
-                Logger::trace("Stop animation!");
             }
         }
     );
@@ -115,16 +111,10 @@ void Aura::Apply(Entity spell)
     reg.view<Transform, Health, EnemyTag>().each(
     [&](auto enemyEntity, auto &enemyTransform, auto &enemyHealth, auto &enemyTag)
     {
-        auto x0 = transformSpell.position.x;
-        auto y0 = transformSpell.position.y;
-        auto x = enemyTransform.position.x;
-        auto y = enemyTransform.position.y;
-        auto r = radius;
-
-        if((x-x0)*(x-x0)+(y-y0)*(y-y0) <= r*r)
+        if(glm::distance(transformSpell.position, enemyTransform.position) <= radius)
         {
             enemyHealth.current -= damage * Engine::DeltaTime();
-            // Logger::trace("{0:d}", enemyHealth.current);
+           
             if(enemyHealth.current <= enemyHealth.min)
             {
                 reg.destroy(enemyEntity);

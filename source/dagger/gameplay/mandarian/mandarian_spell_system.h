@@ -97,7 +97,6 @@ namespace mandarian
 
         void SetMandarian(Entity mandarian_) { mandarian = mandarian_; };
         void UpdateCooldowns();
-        void UpdateSpellPositions();
         void UpdateSpellActiveness();
         void CastSpells();
 
