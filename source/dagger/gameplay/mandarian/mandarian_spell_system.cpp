@@ -3,6 +3,8 @@
 #include "core/engine.h"
 #include "mandarian_enemy.h"
 
+#include "mandarian_controller.h"
+
 using namespace dagger;
 using namespace mandarian;
 
@@ -108,17 +110,14 @@ void Aura::Apply(Entity spell)
     auto &transformSpell = reg.get<Transform>(spell);
     auto &commonSpell = reg.get<CommonSpell>(spell);
 
+    auto &mandarianStats = reg.get<CharacterStats>(mandarian);
+
     reg.view<Transform, Health, EnemyTag>().each(
     [&](auto enemyEntity, auto &enemyTransform, auto &enemyHealth, auto &enemyTag)
     {
         if(glm::distance(transformSpell.position, enemyTransform.position) <= radius)
         {
-            enemyHealth.current -= damage * Engine::DeltaTime();
-           
-            if(enemyHealth.current <= enemyHealth.min)
-            {
-                reg.destroy(enemyEntity);
-            }
+            enemyHealth.current -= damage * mandarianStats.might  * Engine::DeltaTime();
         }
     });
 }

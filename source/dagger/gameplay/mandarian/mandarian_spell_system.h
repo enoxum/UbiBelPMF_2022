@@ -25,11 +25,13 @@ namespace mandarian
         public:
 
         void Apply(Entity spell) override;
-        Aura(Float32 damage_, Float32 radius_)
-            : damage(damage_), radius(radius_){};
+        Aura(Float32 damage_, Float32 radius_, Entity mandarian_)
+            : damage(damage_), radius(radius_), mandarian(mandarian_) {};
 
         Float32 damage;
         Float32 radius;
+
+        Entity mandarian;
     };
 
     class FixTo

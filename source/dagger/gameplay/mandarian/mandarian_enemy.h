@@ -60,4 +60,15 @@ namespace mandarian
 		void Run() override;
 	};
 
+    class EnemyDeathSystem
+        : public System
+    {
+    
+    public:
+        String SystemName() override {
+            return "Mandarian Spell System";
+        }
+
+        void Run() override;
+    };
 };

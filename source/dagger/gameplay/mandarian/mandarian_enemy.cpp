@@ -1,4 +1,5 @@
 #include "mandarian_enemy.h"
+#include "mandarian_level.h"
 
 using namespace dagger;
 using namespace mandarian;
@@ -72,6 +73,20 @@ void EnemyMovementSystem::Run()
             direction = NORMALIZE(direction);
 
             body.applyForce(7.0f * direction);
+        }
+    );
+}
+
+void EnemyDeathSystem::Run()
+{
+    Engine::Registry().view<EnemyTag, Health, Transform>().each(
+        [&](auto entity, auto &enemyTag, auto &health, auto &transform)
+        {
+            if (health.current <= 0.0f)
+            {
+                Mandarin::Create(10u, transform.position);
+                Engine::Registry().destroy(entity);
+            }
         }
     );
 }
