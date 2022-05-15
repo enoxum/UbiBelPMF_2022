@@ -20,6 +20,13 @@ namespace mandarian
         Bool tag;
     };
 
+    struct Health
+    {
+        Float32 current;
+        Float32 min;
+        Float32 max;
+    };
+
     struct Enemy
     {
         Entity entity;
@@ -27,6 +34,7 @@ namespace mandarian
         Transform &transform;
         Body &body;
         CircleCollision &collision;
+        Health &health;
 
         static Enemy Get(Entity entity);
         static Enemy Create(
@@ -52,4 +60,15 @@ namespace mandarian
 		void Run() override;
 	};
 
+    class EnemyDeathSystem
+        : public System
+    {
+    
+    public:
+        String SystemName() override {
+            return "Mandarian Spell System";
+        }
+
+        void Run() override;
+    };
 };

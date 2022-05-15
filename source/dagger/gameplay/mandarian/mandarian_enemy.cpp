@@ -1,4 +1,5 @@
 #include "mandarian_enemy.h"
+#include "mandarian_level.h"
 
 using namespace dagger;
 using namespace mandarian;
@@ -10,8 +11,9 @@ Enemy Enemy::Get(Entity entity)
     auto &transform = reg.get_or_emplace<Transform>(entity);
     auto &body = reg.get_or_emplace<Body>(entity);
     auto &collision = reg.get_or_emplace<CircleCollision>(entity);
+    auto &health = reg.get_or_emplace<Health>(entity);
 
-    return Enemy{ entity, sprite, transform, body, collision };
+    return Enemy{ entity, sprite, transform, body, collision, health };
 }
 
 Enemy Enemy::Create(
@@ -51,6 +53,9 @@ Enemy Enemy::Create(
 
     enemy.collision.radius = radius_;
 
+    enemy.health.current = 100;
+    enemy.health.max = 100;
+
     return enemy;
 }
 
@@ -68,6 +73,20 @@ void EnemyMovementSystem::Run()
             direction = NORMALIZE(direction);
 
             body.setVelocity(30.0f * direction);
+        }
+    );
+}
+
+void EnemyDeathSystem::Run()
+{
+    Engine::Registry().view<EnemyTag, Health, Transform>().each(
+        [&](auto entity, auto &enemyTag, auto &health, auto &transform)
+        {
+            if (health.current <= 0.0f)
+            {
+                Mandarin::Create(10u, transform.position);
+                Engine::Registry().destroy(entity);
+            }
         }
     );
 }
