@@ -1,12 +1,13 @@
 # id | type | x | y | width | height | list of entities
-Key key 330 100 100 100 Item
-Mirror mirror 460 400 250 250 Item
-Hammer hammer -560 100 100 100 Item
-Door door 690 16 72 72 Item
+1 mirror 460 400 250 250 Obstacle 
+1 hammer -560 100 100 100 Item
+2 door 690 16 72 72 Obstacle
+2 key 330 100 100 100 Item
 PLTLeft2 SimpleRockPlatform -200 0 100 30 Platform
 PLTLeft1 SimpleRockPlatform -500 40 70 30 Platform
-PLTRight SimpleRockPlatform 330 0 100 30 Platform 
+PLTRight1 SimpleRockPlatform 330 0 100 30 Platform
+PLTRight2 SimpleRockPlatform 550 -25 90 30 Platform
 PLTBottom SimpleRockPlatform 0 -80 200 30 Platform
-PLTTop2 SimpleRockPlatform 0 180 20 20 Platform 
-PLTTop1 SimpleRockPlatform 400 300 100 20 Platform 
+PLTTop2 SimpleRockPlatform 0 150 160 20 Platform
+PLTTop1 SimpleRockPlatform 400 270 100 20 Platform 
 Background background 0 0 1200 1200 Sprite

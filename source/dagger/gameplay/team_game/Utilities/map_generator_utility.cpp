@@ -17,6 +17,7 @@
 #include "gameplay/team_game/gravity.h"
 #include "gameplay/team_game/Utilities/string_utility.h"
 #include "gameplay/team_game/Utilities/map_generator_utility.h"
+#include "gameplay/team_game/obstacle.h"
 
 #include "core/core.h"
 #include "core/system.h"
@@ -59,6 +60,11 @@ void team_game::assignEntity(Entity entity, entt::registry& reg, std::string typ
         Item& i = reg.emplace<Item>(entity);
         i.id = id;
     }  
+
+    if (type == "Obstacle") {
+        Obstacle& i = reg.emplace<Obstacle>(entity);
+        i.id = id;
+    }
 }
 
 void team_game::initMap(double zPos, std::string file) {
