@@ -67,7 +67,7 @@ void EnemyMovementSystem::Run()
 
             direction = NORMALIZE(direction);
 
-            body.applyForce(7.0f * direction);
+            body.setVelocity(30.0f * direction);
         }
     );
 }

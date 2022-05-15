@@ -44,6 +44,7 @@ void MandarianControllerFSM::Running::Run(MandarianControllerFSM::StateComponent
 		EPSILON_ZERO(runLeft) &&
 		EPSILON_ZERO(runRight))
 	{
+		body.setVelocity({ 0.0f, 0.0f });
 		GoTo(EMandarianStates::Idle, state_);
 	}
 	else
@@ -59,6 +60,6 @@ void MandarianControllerFSM::Running::Run(MandarianControllerFSM::StateComponent
 			runningForce = NORMALIZE(runningForce);
 
 
-		body.applyForce(10.0f * runningForce);
+		body.setVelocity(50.0f * runningForce);
 	}
 }

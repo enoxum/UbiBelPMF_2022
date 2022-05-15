@@ -12,6 +12,7 @@ struct Body
     Float32 mass{ 1.0f };
 
     void applyForce(Vector2);
+    void setVelocity(Vector2);
 };
 
 class SimplePhysicsSystem : public System
