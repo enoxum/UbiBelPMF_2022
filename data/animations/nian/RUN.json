@@ -1,0 +1,9 @@
+{
+	"animation-name": "nian:RUN",
+	"animation-length-ms": 600,
+	"animation-frames": 
+	[
+		{ "texture-name": "mandarian:nian1" },
+        { "texture-name": "mandarian:nian2" }
+	]
+}
