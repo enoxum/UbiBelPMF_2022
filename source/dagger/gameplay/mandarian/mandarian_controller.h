@@ -17,21 +17,22 @@ namespace mandarian
 {
     struct CharacterStats
     {
-        UInt16 maxHealth { 100u };  // Maximum amount of HP
-        UInt16 recovery { 0u };     // HP generated for new Lvl
-        UInt16 armor { 0u };        // Amount of reduced incoming damage
-        Float32 might { 1.0f };     // Multiplicator for demage
-        Float32 area { 1.0f };      // Multiplicator for area of attacks
-        Float32 speed { 1.0f };     // Movement speed of all projectiles
-        Float32 duration { 1.0f };  // Multiplicator for duration of spells
-        Float32 cooldown { 1.0f };  // Multiplicator for cooldown of spells 
-        Float32 growth { 1.0f };    // Multiplicator for experiance gained
-        UInt16 magnet { 30u };      // Radius of mandarin pickup
+        Float32 maxHealth { 100.0f };   // Maximum amount of HP
+        Float32 recovery { 0.0f };      // HP generated for new Lvl
+        Float32 armor { 0.0f };         // Amount of reduced incoming damage
+        Float32 might { 1.0f };         // Multiplicator for demage
+        Float32 area { 1.0f };          // Multiplicator for area of attacks
+        Float32 speed { 1.0f };         // Movement speed of all projectiles
+        Float32 duration { 1.0f };      // Multiplicator for duration of spells
+        Float32 cooldown { 1.0f };      // Multiplicator for cooldown of spells 
+        Float32 growth { 1.0f };        // Multiplicator for experiance gained
+        Float32 danger { 20.0f };       // Radius of enemy demage deal
+        Float32 magnet { 20.0f };         // Radius of mandarin pickup
     };
 
     struct CharacterHealth
     {
-        UInt16 points { 100u };
+        Float32 points { 100u };
     };
 
     struct CharacterExperience
@@ -58,7 +59,7 @@ namespace mandarian
                 ColorRGB color_ = { 0.0f, 0.0f, 0.0f }, 
                 Vector2 position_ = { 0.0f, 0.0f },
                 Vector2 scale_ = { 10.0f, 10.0f },
-                Float32 radius_ = 10.0f,
+                Float32 radius_ = 2.0f,
                 String input_ = String{ "mandarian" });
     };
 

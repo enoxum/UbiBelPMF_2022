@@ -112,6 +112,7 @@ void MandarianGame::GameplaySystemsSetup()
     engine.AddPausableSystem<MandarianMovementConstraintSystem>();
     engine.AddPausableSystem<LevelSystem>();
     engine.AddPausableSystem<EnemyDeathSystem>();
+    engine.AddPausableSystem<EnemyDemageSystem>();
 }
 
 void MandarianGame::WorldSetup()
@@ -125,8 +126,9 @@ void MandarianGame::WorldSetup()
     auto character = Character::Create();
 
     Engine::GetDefaultResource<MandarianSpellSystem>()->SetMandarian(character.entity); 
-    Spell::Create("Aura of Mandarian", 1.0f, "aura:CAST:aura1", "aura:CAST").AddEffects(new FixTo(character.entity), new Aura(200.0f, 100.0f, character.entity)); 
+    Spell::Create("Aura of Mandarian", 1.0f, "aura:CAST:aura1", "aura:CAST").AddEffects(new FixTo(character.entity), new Aura(100.0f, 100.0f, character.entity)); 
 
+    Engine::GetDefaultResource<EnemyDemageSystem>()->SetMandarian(character.entity);
     Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(character.entity);
     Engine::GetDefaultResource<LevelSystem>()->SetMandarian(character.entity);
 }

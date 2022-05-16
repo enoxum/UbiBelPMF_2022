@@ -45,11 +45,11 @@ void LevelSystem::Mutate(CharacterStats &mandarianStats)
 
     if (randomFactor < 0.1)
     {
-        mandarianStats.recovery += 5u;
+        mandarianStats.recovery += 5.0f;
     }
     else if (randomFactor < 0.2)
     {
-        mandarianStats.armor += 5u;
+        mandarianStats.armor += 5.0f;
     }
     else if (randomFactor < 0.3)
     {
@@ -75,9 +75,13 @@ void LevelSystem::Mutate(CharacterStats &mandarianStats)
     {
         mandarianStats.growth *= 1.2;
     }
+    else if (randomFactor < 0.9)
+    {
+        mandarianStats.danger -= 0.1f;    
+    } 
     else
     {
-        mandarianStats.magnet += 10u;
+        mandarianStats.magnet += 10.0f;
     }
 }
 
@@ -99,22 +103,23 @@ void LevelSystem::RenderGUI()
     ImGui::Text("Level%d: %dEXP", mandarianExperience.level, mandarianExperience.points);
     ImGui::ProgressBar(mandarianExperience.points / (Float32) CalculateMaxExp(mandarianExperience.level));
     ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.0f, 1.0f), "Mandarian Health:");
-    ImGui::Text("Health: %dHP", mandarianHealth.points);
-    ImGui::ProgressBar(mandarianHealth.points / (Float32) mandarianStats.maxHealth);
+    ImGui::Text("Health: %.2fHP", mandarianHealth.points);
+    ImGui::ProgressBar(mandarianHealth.points / mandarianStats.maxHealth);
 
     ImGui::Separator();
 
     ImGui::TextColored(ImVec4(1.0f, 0.5f, 0.0f, 1.0f), "Mandarian Stats:");
-    ImGui::Text("Max Health: %dHP",         mandarianStats.maxHealth);
-    ImGui::Text("Recovery:   %dHP/Level",   mandarianStats.recovery);
-    ImGui::Text("Armor:      %d",           mandarianStats.armor);
+    ImGui::Text("Max Health: %.2fHP",       mandarianStats.maxHealth);
+    ImGui::Text("Recovery:   %.2fHP/Level", mandarianStats.recovery);
+    ImGui::Text("Armor:      %.2f",         mandarianStats.armor);
     ImGui::Text("Might:      %.0f%%", 100 * mandarianStats.might);
     ImGui::Text("Area:       %.0f%%", 100 * mandarianStats.area);
     ImGui::Text("Speed:      %.0f%%", 100 * mandarianStats.speed);
     ImGui::Text("Duration:   %.0f%%", 100 * mandarianStats.duration);
     ImGui::Text("Cooldown:   %.0f%%", 100 * mandarianStats.cooldown);
     ImGui::Text("Growth:     %.0f%%", 100 * mandarianStats.growth);
-    ImGui::Text("Magnet:     %d",           mandarianStats.magnet);
+    ImGui::Text("Danger:     %.2f",         mandarianStats.danger);
+    ImGui::Text("Magnet:     %.2f",         mandarianStats.magnet);
 
     ImGui::Separator();
     ImGui::End();

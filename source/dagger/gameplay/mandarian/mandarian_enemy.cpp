@@ -1,5 +1,10 @@
 #include "mandarian_enemy.h"
 #include "mandarian_level.h"
+#include "mandarian_controller.h"
+#include "mandarian_spell_system.h"
+
+#include "core/graphics/text.h"
+#include "core/graphics/animations.h"
 
 using namespace dagger;
 using namespace mandarian;
@@ -12,8 +17,9 @@ Enemy Enemy::Get(Entity entity)
     auto &body = reg.get_or_emplace<Body>(entity);
     auto &collision = reg.get_or_emplace<CircleCollision>(entity);
     auto &health = reg.get_or_emplace<Health>(entity);
+    auto &demage = reg.get_or_emplace<Demage>(entity);
 
-    return Enemy{ entity, sprite, transform, body, collision, health };
+    return Enemy{ entity, sprite, transform, body, collision, health, demage };
 }
 
 Enemy Enemy::Create(
@@ -21,7 +27,8 @@ Enemy Enemy::Create(
             Vector2 position_,
             Vector2 scale_,
             ColorRGB color_,
-            Float32 radius_)
+            Float32 radius_,
+            Float32 demage_)
 {
     auto &reg = Engine::Registry();
     auto entity = reg.create();
@@ -56,6 +63,8 @@ Enemy Enemy::Create(
     enemy.health.current = 100;
     enemy.health.max = 100;
 
+    enemy.demage.points = demage_;
+
     return enemy;
 }
 
@@ -73,6 +82,45 @@ void EnemyMovementSystem::Run()
             direction = NORMALIZE(direction);
 
             body.setVelocity(30.0f * direction);
+        }
+    );
+}
+
+void EnemyDemageSystem::Run()
+{
+    auto &mandarianTransform = Engine::Registry().get<Transform>(mandarian);
+    auto &mandarianHealth = Engine::Registry().get<CharacterHealth>(mandarian);
+    auto &mandarianStats = Engine::Registry().get<CharacterStats>(mandarian);
+
+    Engine::Registry().view<Transform, Demage>().each(
+        [&](const auto enemy, auto &transform, auto &demage)
+        {
+            if (glm::distance(mandarianTransform.position, transform.position) < mandarianStats.danger) 
+            {
+                auto demageSum = demage.points - mandarianStats.armor;
+                if (demageSum < 0.0f) {
+                    demageSum = 0.0f;
+                }
+
+                mandarianHealth.points -= demageSum * Engine::DeltaTime();
+
+                if (mandarianHealth.points < 0.0f) {
+                    // TODO: Restart game!
+                    Engine::GetDefaultResource<SimpleCollisionsSystem>()->Pause();
+                    Engine::GetDefaultResource<EnemyMovementSystem>()->Pause();
+                    Engine::GetDefaultResource<SimplePhysicsSystem>()->Pause();
+                    Engine::GetDefaultResource<MandarianSpellSystem>()->Pause();
+                    Engine::GetDefaultResource<LevelSystem>()->Pause();
+                    Engine::GetDefaultResource<EnemyDeathSystem>()->Pause();
+                    Engine::GetDefaultResource<EnemyDemageSystem>()->Pause();
+                    Engine::GetDefaultResource<AnimationSystem>()->Pause();
+
+                    auto entity = Engine::Registry().create();
+                    auto &gameover = Engine::Registry().emplace<Text>(entity);
+                    gameover.spacing = 0.6f;
+                    gameover.Set("pixel-font", "Game Over");
+                }         
+            }
         }
     );
 }
