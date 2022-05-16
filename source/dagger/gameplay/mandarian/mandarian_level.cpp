@@ -295,21 +295,23 @@ void LevelSystem::SpawnEnemies()
         unsigned numOfEnemies = timer.minutes == 0u ? 10u : 20u;
         SpawnTier1Enemies(numOfEnemies);
     }
-    else if (timer.seconds > 20 && timer.seconds % 7u == 0u)
+    else if ((timer.minutes == 0u && timer.seconds > 20 && timer.seconds % 7u == 0u) || 
+             (timer.minutes > 0u && timer.seconds % 7u == 0u)) 
     {
         SpawnTier2Enemies();
     }
-    else if (timer.seconds > 50 && timer.seconds % 13u == 0u)
+    else if ((timer.minutes == 0u && timer.seconds > 50 && timer.seconds % 13u == 0u) || 
+             (timer.minutes > 0u && timer.seconds % 13u == 0u))
     {
         unsigned numOfEnemies = timer.minutes == 0u ? 20u : 50u;
         SpawnTier3Enemies(numOfEnemies);
     } 
-    else if (timer.seconds > 80 && timer.seconds % 17u == 0u) 
+    else if (timer.minutes > 0u && timer.seconds % 17u == 0u) 
     { 
         SpawnTier1Enemies(50u);
         // SpawnTier4Enemies();
     } 
-    else if (timer.seconds > 90 && timer.seconds % 19u == 0u) 
+    else if (timer.minutes > 0u && timer.seconds % 19u == 0u) 
     {
         SpawnTier3Enemies(100u); 
         // SpawnTier5Enemies();
