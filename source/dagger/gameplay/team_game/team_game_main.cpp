@@ -21,8 +21,8 @@
 
 #include <iostream>
 #include <fstream>
-//#include <unistd.h>
-#include <windows.h>
+#include <unistd.h>
+// #include <windows.h>
 #include <vector>
 #include <map>
 
@@ -73,7 +73,7 @@ void team_game::SetupWorld()
     float zPos = 1.f;
     std::string fileName = "level_loader.txt";
 
-    team_game::initPlayer(zPos);   
+    team_game::initPlayer(zPos - 0.1f);   
     team_game::initMap(zPos, fileName);
     
     // {

@@ -29,22 +29,23 @@ void SolidObjectInteractionSystem::Run()
 
     auto viewCollisions = Engine::Registry().view<Platform, Transform, SimpleCollision, Sprite>();
     auto view = Engine::Registry().view<Player, Transform, SimpleCollision, Sprite>();
+    
 
-    for(const auto player: view) 
+    for(const auto plt: viewCollisions) 
     {
-        auto &col = view.get<SimpleCollision>(player);
-        auto &p = view.get<Player>(player);
+        auto &col = viewCollisions.get<SimpleCollision>(plt);
+        Transform& solidObjectPosition = viewCollisions.get<Transform>(plt);
         
-        if (col.colided && Engine::Registry().valid(col.colidedWith) && viewCollisions.contains(col.colidedWith))
+        if (col.colided && Engine::Registry().valid(col.colidedWith) && view.contains(col.colidedWith))
         {
-            SimpleCollision& collision = viewCollisions.get<SimpleCollision>(col.colidedWith);
-            Transform& solidObjectPosition = viewCollisions.get<Transform>(col.colidedWith);
-            Transform& playerPosition = view.get<Transform>(player);
+            SimpleCollision& collision = view.get<SimpleCollision>(col.colidedWith);
+            Transform& playerPosition = view.get<Transform>(col.colidedWith);
+            Player& p = view.get<Player>(col.colidedWith);
           
             Vector2 collisionSides = col.GetCollisionSides(playerPosition.position, collision, solidObjectPosition.position);
 
-            Sprite& platformSpriteSize = viewCollisions.get<Sprite>(col.colidedWith);
-            Sprite& playerSpriteSize = view.get<Sprite>(player);
+            Sprite& platformSpriteSize = viewCollisions.get<Sprite>(plt);
+            Sprite& playerSpriteSize = view.get<Sprite>(col.colidedWith);
 
             auto platformHeight = platformSpriteSize.size.y / 2;
             auto playerHeight = playerSpriteSize.size.y / 2;

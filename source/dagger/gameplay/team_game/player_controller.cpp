@@ -42,7 +42,7 @@ void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
         }
         else if (!player.jumping && kEvent_.key == EDaggerKeyboard::KeyUp && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
             player.jumping = true;
-            jumpVelocity = 4.0f;
+            jumpVelocity = 5.5f;
             pos.position.y += jumpVelocity;
         }
 

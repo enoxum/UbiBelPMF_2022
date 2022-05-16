@@ -20,4 +20,4 @@ PLTFinalBottom SimpleRockPlatform 0 -1200 2400 30 Platform
 PLT1 SimpleRockPlatform 1000 -1050 100 20 Platform
 PLT1 SimpleRockPlatform 800 -900 50 20 Platform
 PLTRight1 SimpleRockPlatform 450 -800 100 20 Platform
-Background background 0 0 2400 2400 Sprite
+# Background background 0 0 2400 2400 Sprite
