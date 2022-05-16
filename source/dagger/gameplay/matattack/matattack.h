@@ -13,8 +13,6 @@ using namespace dagger;
 
 namespace matattack
 {
-
-    // ovu komponentu pravimo, da bismo razlikovali one koje slusaju input, i na njega se pomeraju!
     struct CharacterInfo
     {
         Float32 speed;

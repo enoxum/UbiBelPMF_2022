@@ -50,8 +50,6 @@ void FSMCharacterJump::GoingUp::Run(FSMCharacterJump::StateComponent& state_)
 
 	Float32 jump = input.Get("jump");
 
-	// Vukan dodao => zelimo da mozemo da prestanemo da moze da drzi w, kad skace 
-	// => dodamo 
 	if (!EPSILON_NOT_ZERO(jump) || gravity.speed >= 0 || (simple_collision.colided && simple_collision.side_y == 1))
 	{
 		GoTo(EJumpStates::GoingDown, state_);

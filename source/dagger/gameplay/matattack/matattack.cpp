@@ -83,6 +83,72 @@ struct Arrow
 	}
 };
 
+struct Heart
+{
+	Entity entity;
+	HeartInfo& heart_info;
+	Sprite& sprite;
+	Transform& transform;
+
+	static Heart Get(Entity entity)
+	{
+		auto& reg = Engine::Registry();
+		auto& heart_info = reg.get_or_emplace<HeartInfo>(entity);
+		auto& sprite = reg.get_or_emplace<Sprite>(entity);
+		auto& transform = reg.get_or_emplace<Transform>(entity);
+
+		return Heart{ entity, heart_info, sprite, transform };
+	}
+
+	static Heart Create(Vector3 position_ = { 0, 0, 0 }, String sprite_ = "matattack:items:6")
+	{
+		auto& reg = Engine::Registry();
+		auto entity = reg.create();
+		auto hearts = Heart::Get(entity);
+
+		hearts.sprite.scale = { 1.8, 1.8 };
+		hearts.sprite.position = { position_ };
+		hearts.sprite.size = { 150, 50 };
+		hearts.transform.position = { position_ };
+		AssignSprite(hearts.sprite, sprite_);
+
+		return hearts;
+	}
+};
+
+struct HealthBar
+{
+	Entity entity;
+	HealthInfo& health_info;
+	Sprite& sprite;
+	Transform& transform;
+
+	static HealthBar Get(Entity entity)
+	{
+		auto& reg = Engine::Registry();
+		auto& health_info = reg.get_or_emplace<HealthInfo>(entity);
+		auto& sprite = reg.get_or_emplace<Sprite>(entity);
+		auto& transform = reg.get_or_emplace<Transform>(entity);
+
+		return HealthBar{ entity, health_info, sprite, transform };
+	}
+
+	static HealthBar Create(Vector3 position_ = { 0, 0, 0 }, String sprite_ = "matattack:items:health_bar")
+	{
+		auto& reg = Engine::Registry();
+		auto entity = reg.create();
+		auto healthbar = HealthBar::Get(entity);
+
+		healthbar.sprite.scale = { 0.65, 0.65 };
+		healthbar.sprite.position = { position_ };
+		healthbar.sprite.size = { 180, 30 };
+		healthbar.transform.position = { position_ };
+		AssignSprite(healthbar.sprite, sprite_);
+
+		return healthbar;
+	}
+};
+
 struct Character
 {
     Entity entity;
@@ -280,19 +346,16 @@ void setMap3() {
 
 void setLevel(int lvl, String fstCharAnimation, String sndCharAnimation) {
 
+
 	setSingleBlock(-730, 380, 10, "matattack:characters:" + fstCharAnimation + ":idle:idle1", 100, 100, false, false);
-	setSingleBlock(-680, 380, 10, "matattack:items:heart", 50, 50, false, false);
-	setSingleBlock(-640, 380, 10, "matattack:items:heart", 50, 50, false, false);
-	setSingleBlock(-600, 380, 10, "matattack:items:heart", 50, 50, false, false);
-	setSingleBlock(-670, 340, 10, "matattack:items:health_bar", 180, 30, false, false);
-
+	auto heathbar1 = HealthBar::Create({-670, 340, 10}, "matattack:items:health_bar");
+	auto hearts1 = Heart::Create({-640, 380, 10}, "matattack:items:3");
+	
 	setSingleBlock(590, 380, 10, "matattack:characters:" + sndCharAnimation + ":idle:idle1", 100, 100, false, false);
-	setSingleBlock(720, 380, 10, "matattack:items:heart", 50, 50, false, false);
-	setSingleBlock(680, 380, 10, "matattack:items:heart", 50, 50, false, false);
-	setSingleBlock(640, 380, 10, "matattack:items:heart", 50, 50, false, false);
-	setSingleBlock(650, 340, 10, "matattack:items:health_bar", 180, 30, false, false);
+	auto heathbar2 = HealthBar::Create({650, 340, 10 }, "matattack:items:health_bar");
+	auto hearts2 = Heart::Create({ 680, 380, 10 }, "matattack:items:3");
+	
 
-	//int lvl = std::rand() % 3 + 1;
 	switch (lvl)
 	{
 	case 1:

@@ -19,6 +19,14 @@ namespace matattack
         SInt32 max_hp = 100;
     };
 
+    struct HealthInfo {
+        SInt32 num_of_hearts = 3;
+    };
+
+    struct HeartInfo {
+        bool active = true;
+    };
+
     class AttackSystem : public System
     {
     public:
@@ -27,7 +35,7 @@ namespace matattack
         }
 
         void DetectPlayerCollision();
-        void DealDamage(AttackInfo& attacker_info, AttackInfo& victim_info);
+        void DealDamage(AttackInfo& attacker_info, AttackInfo& victim_info, SInt32 num);
         void KnockPlayer(KnockbackInfo& knockback_info,SInt16& direction);
 
         void SpinUp() override;
