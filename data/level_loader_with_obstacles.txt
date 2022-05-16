@@ -1,4 +1,6 @@
 # id | type | x | y | width | height | list of entities
-1 broken_mirror1 460 400 120 190
+1 old_mirror_broken 900 530 400 500
 1 SimpleRockPlatform -500 250 100 30 Platform
 2 congratulation 690 16 72 72
+3 candle_with_fire -350 -50 300 300
+4 paper_unroll -650 -100 100 100
