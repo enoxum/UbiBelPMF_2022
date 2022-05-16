@@ -135,13 +135,13 @@ void LevelSystem::UpdateTimer()
     timer.seconds = (UInt8) (seconds % 60);
 }
 
-void LevelSystem::SpawnTier1Enemies()
+void LevelSystem::SpawnTier1Enemies(unsigned numberOfEnemies)
 {
     if (flag)
     {
         auto transform = Engine::Registry().get<Transform>(mandarian);
         
-        for (UInt8 i = 0; i < 10u; i++) 
+        for (UInt8 i = 0; i < numberOfEnemies; i++) 
         {
             Float32 xDirection = rand() / static_cast<Float32>(RAND_MAX);
             Float32 yDirection = rand() / static_cast<Float32>(RAND_MAX);
@@ -195,7 +195,7 @@ void LevelSystem::SpawnTier2Enemies()
     }
 }
 
-void LevelSystem::SpawnTier3Enemies()
+void LevelSystem::SpawnTier3Enemies(unsigned numberOfEnemies)
 {
     if (flag)
     {
@@ -218,7 +218,7 @@ void LevelSystem::SpawnTier3Enemies()
 
         Vector2 position { transform.position.x + direction.x, transform.position.y + direction.y };
 
-        for (UInt8 i = 0u; i < 20u; i++) 
+        for (UInt8 i = 0u; i < numberOfEnemies; i++) 
         {
             Float32 xOffset = rand() / static_cast<Float32>(RAND_MAX);
             Float32 yOffset = rand() / static_cast<Float32>(RAND_MAX);
@@ -287,19 +287,33 @@ void LevelSystem::UpdateExperience()
 
 void LevelSystem::SpawnEnemies()
 {
-    if (timer.minutes == 0u && timer.seconds % 5u == 0u)
+    const auto mandarianStats = Engine::Registry().get<CharacterStats>(mandarian);
+    const auto mandarianExperience = Engine::Registry().get<CharacterExperience>(mandarian);
+    const auto mandarianHealth = Engine::Registry().get<CharacterHealth>(mandarian);
+    if (timer.seconds % 5u == 0u)
     {
-        SpawnTier1Enemies();
+        unsigned numOfEnemies = timer.minutes == 0u ? 10u : 20u;
+        SpawnTier1Enemies(numOfEnemies);
     }
-    else if (timer.minutes == 0u && timer.seconds > 20 && timer.seconds % 7u == 0u)
+    else if (timer.seconds > 20 && timer.seconds % 7u == 0u)
     {
         SpawnTier2Enemies();
     }
-    else if (timer.minutes == 0u && timer.seconds > 50 && timer.seconds % 13u == 0u)
+    else if (timer.seconds > 50 && timer.seconds % 13u == 0u)
     {
-        SpawnTier3Enemies();   
+        unsigned numOfEnemies = timer.minutes == 0u ? 20u : 50u;
+        SpawnTier3Enemies(numOfEnemies);
+    } 
+    else if (timer.seconds > 80 && timer.seconds % 17u == 0u) 
+    { 
+        SpawnTier1Enemies(50u);
+        // SpawnTier4Enemies();
+    } 
+    else if (timer.seconds > 90 && timer.seconds % 19u == 0u) 
+    {
+        SpawnTier3Enemies(100u); 
+        // SpawnTier5Enemies();
     }
-    // TODO: Implement other minutes of the game.
     else
     {
         flag = true;

@@ -40,13 +40,19 @@ Enemy Enemy::Create(
     case 1u:
         AssignSprite(enemy.sprite, "mandarian:tier1enemy");
         enemy.body.mass = 1.0f;
+        enemy.health.current = 100;
+        enemy.health.max = 100;
         break;
     case 2u:
         AssignSprite(enemy.sprite, "mandarian:tier2enemy");
         enemy.body.mass = 3.0f;
+        enemy.health.current = 125;
+        enemy.health.max = 125;
         break;
     case 3u:
         AssignSprite(enemy.sprite, "mandarian:tier3enemy");
+        enemy.health.current = 250;
+        enemy.health.max = 250;
         break;
     default:
         AssignSprite(enemy.sprite, "EmptyWhitePixel");
@@ -59,9 +65,6 @@ Enemy Enemy::Create(
     enemy.transform.position = { position_, 0.0f };
 
     enemy.collision.radius = radius_;
-
-    enemy.health.current = 100;
-    enemy.health.max = 100;
 
     enemy.demage.points = demage_;
 

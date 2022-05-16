@@ -74,9 +74,9 @@ namespace mandarian
         void UpdateExperience();
         void SpawnEnemies();
 
-        void SpawnTier1Enemies();
+        void SpawnTier1Enemies(unsigned numberOfEnemies);
         void SpawnTier2Enemies();
-        void SpawnTier3Enemies();
+        void SpawnTier3Enemies(unsigned numberOfEnemies);
     };
 
 };
