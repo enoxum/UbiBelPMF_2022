@@ -226,8 +226,7 @@ void LevelSystem::SpawnTier3Enemies(unsigned numberOfEnemies)
 
             Enemy::Create(
                 3u,
-                { position.x + xOffset, position.y + yOffset },
-                { 1.5f, 1.5f }
+                { position.x + xOffset, position.y + yOffset }
             );         
         }
 

@@ -89,7 +89,7 @@ void MandarianGame::CreateMap()
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             // add grass
-            AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Ground:TexturedGrass", n, m, i, j);
+            AddSprite(scale, tileSize, zPos, Space, "mandarian:ground", n, m, i, j);
             // add border
             if (lines[i][j] == 'B') {
                 AddSprite(scale, tileSize, zPos, Space, "MiniWorldSprites:Nature:DeadTrees", n, m, i, j);
