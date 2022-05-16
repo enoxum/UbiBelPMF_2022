@@ -30,6 +30,7 @@
 #include <gameplay/team_game/storage.h>
 #include <core/graphics/text.h>
 #include <gameplay/team_game/timer.h>
+#include "mainmenu.h"
 
 
 using namespace dagger;
@@ -45,6 +46,8 @@ void TeamGame::GameplaySystemsSetup()
     engine.AddPausableSystem<GravitySystem>();
     engine.AddPausableSystem<StorageSystem>();
     engine.AddPausableSystem<TimerSystem>();
+    engine.AddSystem<mainmenu>();
+
 
     engine.AddSystem<platformer::CameraFollowSystem>();
 }
@@ -76,6 +79,23 @@ void team_game::SetupWorld()
     team_game::initPlayer(zPos - 0.1f);   
     team_game::initMap(zPos, fileName);
     
+    {
+        auto menu = reg.create();
+        auto& sprite = reg.emplace<Sprite>(menu);
+        AssignSprite(sprite, "Background:menu");
+        sprite.size = { 2500, 2500 };
+        auto mm = reg.emplace<MainMenu_>(menu);
+        auto& text = reg.emplace<Text>(menu);
+        text.spacing = 0.6f;
+        String msg = "Press Enter to start the game!";
+        text.Set("pixel-font", msg, { 0, 0 ,0 });
+    }
+
+    {
+        team_game::initPlayer(zPos);
+        team_game::initMap(zPos, fileName);
+        engine.ToggleSystemsPause(true);
+    }
     // {
     //     auto entity = reg.create();
     //     auto& sprite = reg.emplace<Sprite>(entity);
