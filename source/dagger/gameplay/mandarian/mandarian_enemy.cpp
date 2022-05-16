@@ -49,6 +49,7 @@ Enemy Enemy::Create(
         AnimatorPlay(enemy.animator, "nian:RUN");
         enemy.health.current = 125;
         enemy.health.max = 125;
+        enemy.body.speed = 0.5f;
         break;
     case 3u:
         AssignSprite(enemy.sprite, "mandarian:tier3enemy");
