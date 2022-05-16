@@ -25,8 +25,9 @@ void StorageSystem::Run()
         Sprite& sprite = ents.get<Sprite>(ent);
         sprite.UseAsUI();
         sprite.position = { - screenSize.x / 2 * 0.9 + offset * 0.1 * screenSize.x, - screenSize.y / 2 * 0.9, 0 };
-        float ratio = sprite.size.y / sprite.size.x;
-        sprite.size = { 25 / ratio, 25};
+        //float ratio = sprite.size.y / sprite.size.x;
+        //sprite.size = { 40 / ratio, 40};
+        sprite.size = { 40 , 40};
 
        
         if (offset == selectedItem - 1) {
