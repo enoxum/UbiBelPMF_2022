@@ -67,7 +67,7 @@ struct Arrow
 		return Arrow{ entity, arrow_info, sprite, transform };
 	}
 
-	static Arrow Create(Vector2 position_ = { 0, 0 })
+	static Arrow Create(Vector2 position_ = { 0, 0 }, String sprite_ = "matattack:items:arrow")
 	{
 		auto& reg = Engine::Registry();
 		auto entity = reg.create();
@@ -77,7 +77,7 @@ struct Arrow
 		arrow.sprite.position = { position_, 0.0f };
 		arrow.sprite.size = { 50, 50 };
 		arrow.transform.position = { position_, 0.0f };
-		AssignSprite(arrow.sprite, "matattack:items:arrow");
+		AssignSprite(arrow.sprite, sprite_);
 
 		return arrow;
 	}
@@ -311,7 +311,7 @@ void matattack::SetLevelChooser()
 {
 	auto& reg = Engine::Registry();
 	reg.clear();
-	auto arrow = Arrow::Create({-200, -100});
+	auto arrow = Arrow::Create({-200, -100}, "matattack:items:arrow");
 	createBackdrop("matattack:background:select_screen");
 	setSingleBlock(-200, 50, 0, "matattack:items:sky_level", 175, 125, false, false);
 	setSingleBlock(0, 50, 0, "matattack:items:desert_level", 175, 125, false, false);
@@ -345,7 +345,7 @@ void setCharacterSelect()
 	createBackdrop("matattack:background:select_screen");
 	setCharacterOption(-150, 25, 0, "matattack:characters:fox:idle:idle1", "fox", 50, 50);
 	setSingleBlock(-150, -25, 0, "matattack:items:fox_text", 60, 15, false, false);
-	auto arrow = Arrow::Create({-150,-75});
+	auto arrow = Arrow::Create({-150,-75}, "matattack:items:arrow1");
 	setCharacterOption(-50, 25, 0, "matattack:characters:dude_monster:idle:idle1", "dude_monster", 50, 50);
 	setSingleBlock(-50, -25, 0, "matattack:items:dude_monster_text", 60, 25, false, false);
 	setCharacterOption(50, 25, 0, "matattack:characters:chickboy:idle:idle1", "chickboy", 50, 50);
