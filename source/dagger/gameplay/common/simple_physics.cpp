@@ -62,8 +62,8 @@ void SimplePhysicsSystem::Run()
                 collision.colided = false;
             }
  
-            transform.position.x += body.velocity.x * Engine::DeltaTime();
-            transform.position.y += body.velocity.y * Engine::DeltaTime();
+            transform.position.x += body.speed * body.velocity.x * Engine::DeltaTime();
+            transform.position.y += body.speed * body.velocity.y * Engine::DeltaTime();
         }
     );
 } 

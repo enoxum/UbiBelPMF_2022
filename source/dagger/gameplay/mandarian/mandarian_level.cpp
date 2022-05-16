@@ -185,8 +185,7 @@ void LevelSystem::SpawnTier2Enemies()
 
             Enemy::Create(
                 2u, 
-                { transform.position.x + offset.x, transform.position.y + offset.y },
-                { 2.0f, 2.0f }
+                { transform.position.x + offset.x, transform.position.y + offset.y }
             );         
         }
 
