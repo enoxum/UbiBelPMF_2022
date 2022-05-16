@@ -6,6 +6,7 @@
 #include "core/engine.h"
 
 #include "core/graphics/sprite.h"
+#include "core/graphics/animation.h"
 #include "core/game/transforms.h"
 
 #include "gameplay/common/simple_collisions.h"
@@ -35,6 +36,7 @@ namespace mandarian
     {
         Entity entity;
         Sprite &sprite;
+        Animator &animator;
         Transform &transform;
         Body &body;
         CircleCollision &collision;

@@ -24,10 +24,10 @@ Mandarin Mandarin::Create(UInt16 points_, Vector2 position_, Vector2 scale_)
     auto entity = Engine::Registry().create();
     auto mandarin = Mandarin::Get(entity);
 
-    AssignSprite(mandarin.sprite, "mandarian:tangerin");
+    AssignSprite(mandarin.sprite, "mandarian:tangerine");
     mandarin.sprite.scale = { scale_ };
 
-    mandarin.transform.position = { position_, 0.0f };
+    mandarin.transform.position = { position_, 1.0f };
 
     mandarin.experience.points = points_;
 
@@ -160,8 +160,7 @@ void LevelSystem::SpawnTier1Enemies(unsigned numberOfEnemies)
 
             Enemy::Create(
                 1u, 
-                { transform.position.x + direction.x, transform.position.y + direction.y },
-                { 1.5f, 1.5f }
+                { transform.position.x + direction.x, transform.position.y + direction.y }
             );
         }
 

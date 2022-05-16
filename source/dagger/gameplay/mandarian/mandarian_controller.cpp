@@ -2,8 +2,6 @@
 
 #include "core/engine.h"
 #include "core/input/inputs.h"
-#include "core/graphics/sprite.h"
-#include "core/graphics/animation.h"
 #include "core/graphics/shaders.h"
 #include "core/graphics/window.h"
 
@@ -13,6 +11,7 @@ Character Character::Get(Entity entity)
 {
     auto &reg = Engine::Registry();
     auto &sprite = reg.get_or_emplace<Sprite>(entity);
+    auto &animator = reg.get_or_emplace<Animator>(entity);
     auto &transform = reg.get_or_emplace<Transform>(entity);
     auto &body = reg.get_or_emplace<Body>(entity);
     auto &collision = reg.get_or_emplace<CircleCollision>(entity);
@@ -21,7 +20,7 @@ Character Character::Get(Entity entity)
     auto &experience = reg.get_or_emplace<CharacterExperience>(entity);
     auto &health = reg.get_or_emplace<CharacterHealth>(entity);
 
-    return Character{ entity, sprite, transform, body, collision, input, stats, experience, health };
+    return Character{ entity, sprite, animator, transform, body, collision, input, stats, experience, health };
 }
 
 Character Character::Create(
@@ -38,9 +37,11 @@ Character Character::Create(
 
     ATTACH_TO_FSM(MandarianControllerFSM, entity); 
 
-    AssignSprite(character.sprite, "EmptyWhitePixel");
+    AssignSprite(character.sprite, "mandarian:mandarian1");
     character.sprite.scale = { scale_ };
     character.sprite.color = { color_, 1.0f };
+
+    AnimatorPlay(character.animator, "mandarian:IDLE");
 
     character.transform.position = { position_, 0.0f };
 

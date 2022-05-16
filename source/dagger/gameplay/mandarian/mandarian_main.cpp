@@ -70,7 +70,7 @@ void MandarianGame::CreateMap()
     
     Vector2 scale(1, 1);
     constexpr float tileSize = 30.f;
-    float zPos = 1.f;
+    float zPos = 2.f;
     float Space = 0.0f;
 
     std::string line;

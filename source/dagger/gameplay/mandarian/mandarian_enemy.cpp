@@ -13,13 +13,14 @@ Enemy Enemy::Get(Entity entity)
 {
     auto &reg = Engine::Registry();
     auto &sprite = reg.get_or_emplace<Sprite>(entity);
+    auto &animator = reg.get_or_emplace<Animator>(entity);
     auto &transform = reg.get_or_emplace<Transform>(entity);
     auto &body = reg.get_or_emplace<Body>(entity);
     auto &collision = reg.get_or_emplace<CircleCollision>(entity);
     auto &health = reg.get_or_emplace<Health>(entity);
     auto &demage = reg.get_or_emplace<Demage>(entity);
 
-    return Enemy{ entity, sprite, transform, body, collision, health, demage };
+    return Enemy{ entity, sprite, animator, transform, body, collision, health, demage };
 }
 
 Enemy Enemy::Create(
@@ -38,14 +39,13 @@ Enemy Enemy::Create(
     switch (tier_)
     {
     case 1u:
-        AssignSprite(enemy.sprite, "mandarian:tier1enemy");
-        enemy.body.mass = 1.0f;
+        AssignSprite(enemy.sprite, "mandarian:taotie1");
+        AnimatorPlay(enemy.animator, "taotie:RUN");
         enemy.health.current = 100;
         enemy.health.max = 100;
         break;
     case 2u:
         AssignSprite(enemy.sprite, "mandarian:tier2enemy");
-        enemy.body.mass = 3.0f;
         enemy.health.current = 125;
         enemy.health.max = 125;
         break;
@@ -59,6 +59,7 @@ Enemy Enemy::Create(
         break;
     }
 
+    Logger::trace("Scale: {}, {}", scale_.x, scale_.y);
     enemy.sprite.scale = { scale_ };
     enemy.sprite.color = { color_, 1.0f };
     

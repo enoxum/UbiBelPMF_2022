@@ -1,0 +1,9 @@
+{
+	"animation-name": "taotie:RUN",
+	"animation-length-ms": 200,
+	"animation-frames":
+	[
+		{ "texture-name": "mandarian:taotie1" },
+        { "texture-name": "mandarian:taotie2" }
+	]
+}
