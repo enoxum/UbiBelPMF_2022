@@ -22,6 +22,7 @@
 #include "core/core.h"
 #include "core/system.h"
 #include "core/game.h"
+#include "gameplay/platformer/camera_focus.h"
 
 using namespace dagger;
 
@@ -136,4 +137,5 @@ void team_game::initPlayer(double zPos) {
 
     reg.emplace<Player>(entity);
     reg.emplace<Gravity>(entity);
+    reg.emplace<platformer::CameraFollowFocus>(entity);
 }

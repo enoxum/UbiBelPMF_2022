@@ -62,7 +62,7 @@ void StorageSystem::Run()
                                 std::vector<std::string> parameters = splitLine(line);
 
                                 // if the line is comment line skip it
-                                if (parameters[0] == "#")
+                                if (parameters[0] == "#" || parameters[0] != i.id)
                                 {
                                     continue;
                                 }
