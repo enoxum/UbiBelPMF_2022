@@ -5,7 +5,7 @@
 
 enum struct EPlayerStates{
     Idle,
-    Running
+    Running,
     //Jumping
 };
 

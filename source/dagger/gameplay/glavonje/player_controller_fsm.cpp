@@ -38,7 +38,7 @@ void FSMPlayerController::Running::Enter(FSMPlayerController::StateComponent& st
 DEFAULT_EXIT(FSMPlayerController, Running);
 
 void FSMPlayerController::Running::Run(FSMPlayerController::StateComponent& state_){
-    auto&& [sprite, input, player] = Engine::Registry().get<Sprite, InputReceiver, glavonje::PlayerCharacter>(state_.entity);
+    auto&& [sprite,transform, input, player] = Engine::Registry().get<Sprite,Transform, InputReceiver, glavonje::PlayerCharacter>(state_.entity);
 
     Float32 run = input.Get("run");
 
@@ -49,6 +49,8 @@ void FSMPlayerController::Running::Run(FSMPlayerController::StateComponent& stat
 	else
 	{
 		sprite.scale.x = run;
-		sprite.position.x += (player.speed*1.5f) * sprite.scale.x * Engine::DeltaTime();
+		transform.position.x += (player.speed*1.5f) * sprite.scale.x * Engine::DeltaTime();
 	}
 }
+
+

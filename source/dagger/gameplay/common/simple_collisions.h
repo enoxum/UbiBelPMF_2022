@@ -9,6 +9,10 @@ struct SimpleCollision
     Vector2 size;
     Vector2 pivot {-0.5f, -0.5f};
 
+    Vector3 pos;
+    float side_x;
+    float side_y;
+
     bool colided = false;
     entt::entity colidedWith;
 

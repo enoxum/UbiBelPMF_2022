@@ -51,6 +51,7 @@ sources = [
     'source/dagger/gameplay/glavonje/gravity.cpp',
     'source/dagger/gameplay/glavonje/glavonje_main.cpp',
     'source/dagger/gameplay/glavonje/player_controller_fsm.cpp',
+    'source/dagger/gameplay/glavonje/ball_collision.cpp',
     'source/dagger/gameplay/common/jiggle.cpp',
     'source/dagger/gameplay/common/particles.cpp',
     'source/dagger/gameplay/common/simple_collisions.cpp',

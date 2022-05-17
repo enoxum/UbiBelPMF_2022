@@ -13,6 +13,7 @@
 #include "gameplay/common/simple_collisions.h"
 #include "gameplay/glavonje/gravity.h"
 #include "gameplay/glavonje/player_controller.h"
+#include "gameplay/glavonje/ball_collision.h"
 
 
 using namespace dagger;
@@ -24,6 +25,7 @@ void Glavonje::GameplaySystemsSetup(){
     engine.AddSystem<PlayerControllerSystem>();
     engine.AddSystem<SimpleCollisionsSystem>();
     engine.AddSystem<GravitySystem>();
+    engine.AddSystem<BallCollisionSystem>();
 }
 
 // dodas SimpleCollison kao komponentu za loptu i pod
@@ -80,6 +82,9 @@ struct Character
     Animator& animator;
     InputReceiver& inputRcv;
     PlayerCharacter& playerCharacter;
+    SimpleCollision& collision;
+    Transform& transform;
+    
 
     static Character Create(
         String input_ = "", 
@@ -96,13 +101,15 @@ struct Character
         auto& animator = reg.get_or_emplace<Animator>(characterEntity);
         auto& inputRcv = reg.get_or_emplace<InputReceiver>(characterEntity);
         auto& playerCharacter = reg.get_or_emplace<PlayerCharacter>(characterEntity);
+        auto& collision = reg.get_or_emplace<SimpleCollision>(characterEntity);
+        auto& transform = reg.get_or_emplace<Transform>(characterEntity);
 
-        auto character = Character{characterEntity, sprite, animator ,inputRcv, playerCharacter};
+        auto character = Character{characterEntity, sprite, animator ,inputRcv, playerCharacter,collision,transform};
 
         character.sprite.scale = { 1, 1 };
-        character.sprite.position = { position_, 0.0f };
+        //character.sprite.position = { position_, 0.0f };
         character.sprite.color = { color_, 1.0f };
-
+        character.transform.position = {position_, 0.0f};
         AssignSprite(character.sprite, "HeadBall:girlHead");
         //AnimatorPlay(character.animator, "souls_like_knight_character:IDLE");
 
@@ -132,12 +139,13 @@ void Glavonje::WorldSetup(){
         auto goalFieldEntity = reg.create();
         auto& sprite = reg.get_or_emplace<Sprite>(goalFieldEntity);
         
-        AssignSprite(sprite, "EmptyWhitePixel");
+        AssignSprite(sprite, "HeadBall:field");
         sprite.color = { 0, 1, 0, 1 };
         sprite.size = { 100, 345 };
         sprite.scale = { 10, 1 };
-        sprite.position = { 0, -200, 1 };
-
+        //sprite.position = { 0, -200, 1 };
+        auto& transform = reg.emplace<Transform>(goalFieldEntity);
+        transform.position = {0,-200,0};
         auto& collision = reg.emplace<SimpleCollision>(goalFieldEntity);
         collision.size = sprite.size;
     }
