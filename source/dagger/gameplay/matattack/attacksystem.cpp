@@ -8,6 +8,7 @@
 #include "core/graphics/shaders.h"
 #include "core/graphics/window.h"
 #include "core/game/transforms.h"
+#include "matattack.h"
 
 using namespace matattack;
 
@@ -30,14 +31,19 @@ void AttackSystem::DealDamage(AttackInfo& attacker_info, AttackInfo& victim_info
 		if (victim_info.hp == 0)
 		{
 			p1_health.num_of_hearts--;
+			AssignSprite(p1_heart_sprite, "matattack:items:" + std::to_string(p1_health.num_of_hearts));
 			if (!p1_health.num_of_hearts)
 			{
-				Logger::critical("Player died!");
+				Engine::ToggleSystemsPause(true);
+				auto view = Engine::Registry().view<matattack::CharacterInfo>();
+				auto it = view.begin();
+				it++;
+				auto& chr = view.get<CharacterInfo>(*it);
+				matattack::EndGame(chr.animationName);
 			}
 			else
 			{
 				AssignSprite(p1_health_sprite, "matattack:items:health_bar");
-				AssignSprite(p1_heart_sprite, "matattack:items:" + std::to_string(p1_health.num_of_hearts));
 				victim_info.hp = 100;
 			}
 		}
@@ -56,14 +62,18 @@ void AttackSystem::DealDamage(AttackInfo& attacker_info, AttackInfo& victim_info
 		if (victim_info.hp == 0)
 		{
 			p2_health.num_of_hearts--;
+			AssignSprite(p2_heart_sprite, "matattack:items:" + std::to_string(p2_health.num_of_hearts));
 			if (!p2_health.num_of_hearts)
 			{
-				Logger::critical("Player died!");
+				Engine::ToggleSystemsPause(true);
+				auto view = Engine::Registry().view<matattack::CharacterInfo>();
+				auto it = view.begin();
+				auto& chr = view.get<CharacterInfo>(*it);
+				matattack::EndGame(chr.animationName);
 			}
 			else
 			{
 				AssignSprite(p2_health_sprite, "matattack:items:health_bar");
-				AssignSprite(p2_heart_sprite, "matattack:items:" + std::to_string(p2_health.num_of_hearts));
 				victim_info.hp = 100;
 			}
 		}
@@ -114,19 +124,47 @@ void AttackSystem::SpinUp()
 
 void AttackSystem::Run()
 {
-	auto view = Engine::Registry().view<InputReceiver, Animator, AttackInfo>();
-
+	auto view = Engine::Registry().view<InputReceiver, Animator, AttackInfo, Transform>();
+	auto view1 = Engine::Registry().view<HealthInfo, Sprite>();
+	auto view2 = Engine::Registry().view<HeartInfo, Sprite>();
 	auto it = view.begin();
+	auto it1 = view1.begin();
+	auto it2 = view2.begin();
 
 	while (it != view.end())
 	{
 		auto& input = view.get<InputReceiver>(*it);
 		auto& animator = view.get<Animator>(*it);
 		auto& attack_info = view.get<AttackInfo>(*it);
+		auto& transform = view.get<Transform>(*it);
 
-		/*Logger::critical(attack_info.hp);
-		Logger::critical(attack_info.attack_damage);*/
+		auto& p_health = view1.get<HealthInfo>(*it1);
+		auto& p_health_sprite = view1.get<Sprite>(*it1);
+		auto& p_heart = view2.get<HeartInfo>(*it2);
+		auto& p_heart_sprite = view2.get<Sprite>(*it2);
 
+		if (transform.position.x > 810 || transform.position.x < -810 || transform.position.y < -540)
+		{
+			p_health.num_of_hearts--;
+			AssignSprite(p_heart_sprite, "matattack:items:" + std::to_string(p_health.num_of_hearts));
+			transform.position.x = -100;
+			transform.position.y = 250;
+			if (!p_health.num_of_hearts)
+			{
+				Engine::ToggleSystemsPause(true);
+				auto view = Engine::Registry().view<matattack::CharacterInfo>();
+				auto it = view.begin();
+				it++;
+				auto& chr = view.get<CharacterInfo>(*it);
+				matattack::EndGame(chr.animationName);
+			}
+			else
+			{
+				AssignSprite(p_health_sprite, "matattack:items:health_bar");
+				attack_info.hp = 100;
+			}
+			
+		}
 		
 		if (EPSILON_NOT_ZERO(input.Get("attack")))
 		{
@@ -143,6 +181,8 @@ void AttackSystem::Run()
 		}
 
 		it++;
+		it1++;
+		it2++;
 	}
 }
 

@@ -14,7 +14,6 @@ void SimpleCollisionsSystem::Run()
     auto it = view.begin();
     while(it != view.end())
     {
-        // data of the first entity
         auto &collision = view.get<SimpleCollision>(*it);
         auto &transform = view.get<Transform>(*it);
         collision.colided = false;
@@ -24,7 +23,6 @@ void SimpleCollisionsSystem::Run()
 
         while(it2 != view.end())
         {
-            // data of the second entity
             auto &col = view.get<SimpleCollision>(*it2);
             auto &tr = view.get<Transform>(*it2);
             col.colided = false;
@@ -33,8 +31,6 @@ void SimpleCollisionsSystem::Run()
             bool players_in_question = Engine::Registry().has<matattack::CharacterInfo>(*it) && Engine::Registry().has<matattack::CharacterInfo>(*it2);
             bool basic_collision_detection = collision.IsCollided(transform.position, col, tr.position);
 
-            // ovaj if moze u drugi, ali onda 2 player-a moraju reaguju
-            // kolizija 2 player-a
             if (players_in_question && basic_collision_detection) {
 
                 PlayerCollisionEvent event;
@@ -42,12 +38,8 @@ void SimpleCollisionsSystem::Run()
                 Engine::Dispatcher().trigger<PlayerCollisionEvent>(event);
 
             }
-            // ovo treba uvek se desava
-            // processing one collision per frame for each colider
-            // ako bar 1 od 2 entiteta ima is_collidable = true, onda moraju se colliduju, a su oboma false, onda se nece collide
             if (basic_collision_detection && (collision.is_collidable || col.is_collidable))
             {
-                //Logger::trace("they are colliding!");
                 collision.colided = true;
                 collision.colidedWith = *it2;
                 Vector2 side;
@@ -60,12 +52,8 @@ void SimpleCollisionsSystem::Run()
                     collision.side_x = side.x;
                     collision.side_y = side.y;
 
-                    // collision.pos.x => stara x pozicija igraca
                     transform.position.x -= (transform.position.x - collision.pos.x) * abs(side.x);
                     transform.position.y -= (transform.position.y - collision.pos.y) * abs(side.y);
-                    /*Logger::trace("Drugi side!:");
-                    Logger::trace(side.x);
-                    Logger::trace(side.y);*/
                 }
 
                 col.colided = true;
@@ -80,12 +68,8 @@ void SimpleCollisionsSystem::Run()
                     
                     tr.position.x -= (tr.position.x - col.pos.x) * abs(side.x);
                     tr.position.y -= (tr.position.y - col.pos.y) * abs(side.y);
-                    /*Logger::trace("Drugi side!:");
-                    Logger::trace(side.x);
-                    Logger::trace(side.y);*/
                 }
 
-                //tr.position = chr.previous_position;
             }
             it2++;
         }
@@ -93,8 +77,6 @@ void SimpleCollisionsSystem::Run()
         it++;
     }
 }
-
-// SimpleCollision
 
 bool SimpleCollision::IsCollided(const Vector3& pos_, const SimpleCollision& other_, const Vector3& posOther_)
 {

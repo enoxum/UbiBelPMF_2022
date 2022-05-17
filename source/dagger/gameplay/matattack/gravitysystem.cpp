@@ -14,9 +14,6 @@ void GravitySystem::Run()
 	auto it = view.begin();
 
 	while (it != view.end()) {
-		
-		//Logger::trace("prvi deo");
-
 		auto& gravity = view.get<Gravity>(*it);
 		auto& transform = view.get<Transform>(*it);
 		auto& simple_collision = view.get<SimpleCollision>(*it);
@@ -28,9 +25,6 @@ void GravitySystem::Run()
 			simple_collision.pos.y = transform.position.y;
 			transform.position.y -= gravity.speed * Engine::DeltaTime();
 		}
-
-		//Logger::trace("treci deo");
-
 		it++;
 	
 	}

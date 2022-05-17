@@ -7,7 +7,6 @@ using namespace dagger;
 
 struct KnockbackInfo
 {
-	// how fast its falling
 	bool is_knocked = false;
 	SInt16 direction = 0;
 	Float32 base_vertical_speed = 300.0F;

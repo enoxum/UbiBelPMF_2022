@@ -22,6 +22,7 @@ namespace matattack
 
     void SetupWorld(int lvl, String fstCharSprite, String sndCharSprite, String fstCharAnimation, String sndCharAnimation);
     void SetLevelChooser();
+    void EndGame(String char_won);
 
     class Matattack : public Game
     {

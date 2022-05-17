@@ -15,15 +15,10 @@ void KnockbackSystem::Run()
 	auto it = view.begin();
 
 	while (it != view.end()) {
-
-		//Logger::trace("prvi deo");
-
 		auto& gravity = view.get<Gravity>(*it);
 		auto& transform = view.get<Transform>(*it);
 		auto& simple_collision = view.get<SimpleCollision>(*it);
 		auto& knockback_info = view.get<KnockbackInfo>(*it);
-
-		// ako ocemo graple => takomentarisemo if, i uvek radimo
 		if (knockback_info.is_knocked)
 		{
 			if (knockback_info.horizontal_speed == 0)
@@ -40,9 +35,6 @@ void KnockbackSystem::Run()
 				knockback_info.horizontal_speed = 0.0f;
 			}
 		}
-
-		//Logger::trace("treci deo");
-
 		it++;
 
 	}

@@ -20,8 +20,6 @@ void MovementSystem::Run()
         auto& simple_colision = view.get<SimpleCollision>(*it);
 
         Float32 run = input.Get("run");
-        // probably will have a special system for jumping, we will see
-        // Float32 jump = input.Get("jump");
 
         if (EPSILON_NOT_ZERO(run)) {
             simple_colision.pos = transform.position;

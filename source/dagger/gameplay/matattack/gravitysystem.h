@@ -7,7 +7,6 @@ using namespace dagger;
 
 struct Gravity
 {
-	// how fast its falling
 	Float32 speed;
 	Float32 increase;
 };
