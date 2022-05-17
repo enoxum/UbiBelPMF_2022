@@ -9,6 +9,7 @@
 
 #include<iostream>
 #include <gameplay/team_game/Utilities/string_utility.h>
+#include "gameplay/team_game/Utilities/map_generator_utility.h"
 
 
 using namespace team_game;
@@ -25,9 +26,9 @@ void StorageSystem::Run()
         Sprite& sprite = ents.get<Sprite>(ent);
         sprite.UseAsUI();
         sprite.position = { - screenSize.x / 2 * 0.9 + offset * 0.1 * screenSize.x, - screenSize.y / 2 * 0.9, 0 };
-        //float ratio = sprite.size.y / sprite.size.x;
-        //sprite.size = { 40 / ratio, 40};
-        sprite.size = { 40 , 40};
+        float ratio = sprite.size.y / sprite.size.x;
+        sprite.size = { 60, 60 * ratio};
+        //sprite.size = { 40 , 40};
 
        
         if (offset == selectedItem - 1) {
@@ -68,6 +69,8 @@ void StorageSystem::Run()
                                     continue;
                                 }
 
+                                unsigned numberOfParameters = parameters.size();
+
                                 const std::string id = parameters[0];
                                 const std::string type = parameters[1];
                                 const auto xCoordinate = std::stoi(parameters[2]);
@@ -77,11 +80,18 @@ void StorageSystem::Run()
 
                                 auto entity = reg.create();
                                 auto& sprite = reg.emplace<Sprite>(entity);
-                                AssignSprite(sprite, "EscapeRoom:" + type);
-                                sprite.size = { width, height };
+                                team_game::assignSprite(sprite, type, width, height);
 
                                 auto& transform = reg.emplace<Transform>(entity);
                                 transform.position = { xCoordinate , yCoordinate, zPos };
+
+                                auto& col = reg.emplace<SimpleCollision>(entity);
+                                col.size = sprite.size;
+
+                                for (unsigned i = 6; i < numberOfParameters; i++)
+                                {
+                                    team_game::assignEntity(entity, reg, parameters[i], id);
+                                }
                             }
                        }
                        fin.close();
