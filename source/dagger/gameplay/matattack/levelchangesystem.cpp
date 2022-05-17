@@ -24,7 +24,7 @@ void LevelChangeSystem::WindDown()
 void LevelChangeSystem::LevelChooser(LevelChangeEvent lce)
 {
     int lvl = std::rand() % 3 + 1;
-    matattack::SetupWorld(lvl, "matattack:characters:fox:idle:idle1", "matattack:characters:fox:idle:idle1", "matattack:idle:fox", "matattack:idle:fox");
+    matattack::SetupWorld(lvl, "matattack:characters:fox:idle:idle1", "matattack:characters:fox:idle:idle1", "matattack:idle:fox", "matattack:idle:fox", HEAL, HEAL);
 }
 
 void LevelChangeSystem::LevelSelect(KeyboardEvent ke) 
@@ -65,15 +65,15 @@ void LevelChangeSystem::LevelSelect(KeyboardEvent ke)
                 {
                 case 0:
                     LevelChangeSystem::isStarted = true;
-                    matattack::SetupWorld(1, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation);
+                    matattack::SetupWorld(1, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation, specAttack1, specAttack2);
                     break;
                 case 1:
                     LevelChangeSystem::isStarted = true;
-                    matattack::SetupWorld(2, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation);
+                    matattack::SetupWorld(2, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation, specAttack1, specAttack2);
                     break;
                 case 2:
                     LevelChangeSystem::isStarted = true;
-                    matattack::SetupWorld(3, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation);
+                    matattack::SetupWorld(3, fstCharSprite, sndCharSprite, fstCharAnimation, sndCharAnimation, specAttack1, specAttack2);
                     break;
                 default:
                     break;
@@ -130,18 +130,22 @@ void LevelChangeSystem::CharacterSelect(KeyboardEvent ke)
                 case 0:
                     fstCharSprite = "matattack:characters:fox:idle:idle1"; 
                     fstCharAnimation = "fox";
+                    specAttack1 = UP_BOOST;
                     break;
                 case 1:
                     fstCharSprite = "matattack:characters:dude_monster:idle:idle1"; 
                     fstCharAnimation = "dude_monster";
+                    specAttack1 = ATTACK_BOOST;
                     break;
                 case 2:
                     fstCharSprite = "matattack:characters:chickboy:idle:idle1"; 
                     fstCharAnimation = "chickboy";
+                    specAttack1 = DASH;
                     break;
                 case 3:
                     fstCharSprite = "matattack:characters:otter:idle:idle1"; 
                     fstCharAnimation = "otter";
+                    specAttack1 = HEAL;
                     break;
                 default:
                     break;
@@ -155,18 +159,22 @@ void LevelChangeSystem::CharacterSelect(KeyboardEvent ke)
                 case 0:
                     sndCharSprite = "matattack:characters:fox:idle:idle1"; 
                     sndCharAnimation = "fox";
+                    specAttack2 = UP_BOOST;
                     break;
                 case 1:
                     sndCharSprite = "matattack:characters:dude_monster:idle:idle1"; 
                     sndCharAnimation = "dude_monster";
+                    specAttack2 = ATTACK_BOOST;
                     break;
                 case 2:
                     sndCharSprite = "matattack:characters:chickboy:idle:idle1"; 
                     sndCharAnimation = "chickboy";
+                    specAttack2 = DASH;
                     break;
                 case 3:
                     sndCharSprite = "matattack:characters:otter:idle:idle1"; 
                     sndCharAnimation = "otter";
+                    specAttack2 = HEAL;
                     break;
                 default:
                     break;

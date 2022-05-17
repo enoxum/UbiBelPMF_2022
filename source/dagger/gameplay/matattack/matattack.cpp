@@ -133,7 +133,7 @@ struct HealthBar
 		return HealthBar{ entity, health_info, sprite, transform };
 	}
 
-	static HealthBar Create(Vector3 position_ = { 0, 0, 0 }, String sprite_ = "matattack:items:health_bar")
+	static HealthBar Create(Vector3 position_ = { 0, 0, 0 }, String sprite_ = "matattack:items:health_bar100")
 	{
 		auto& reg = Engine::Registry();
 		auto entity = reg.create();
@@ -340,11 +340,11 @@ void setLevel(int lvl, String fstCharAnimation, String sndCharAnimation) {
 
 
 	setSingleBlock(-730, 380, 10, "matattack:characters:" + fstCharAnimation + ":idle:idle1", 100, 100, false, false);
-	auto heathbar1 = HealthBar::Create({-670, 340, 10}, "matattack:items:health_bar");
+	auto heathbar1 = HealthBar::Create({-670, 340, 10}, "matattack:items:health_bar100");
 	auto hearts1 = Heart::Create({-640, 380, 10}, "matattack:items:3");
 	
 	setSingleBlock(590, 380, 10, "matattack:characters:" + sndCharAnimation + ":idle:idle1", 100, 100, false, false);
-	auto heathbar2 = HealthBar::Create({650, 340, 10 }, "matattack:items:health_bar");
+	auto heathbar2 = HealthBar::Create({650, 340, 10 }, "matattack:items:health_bar100");
 	auto hearts2 = Heart::Create({ 680, 380, 10 }, "matattack:items:3");
 	
 
@@ -409,7 +409,7 @@ void setCharacterSelect()
 	setSingleBlock(150, -25, 0, "matattack:items:otter_text", 60, 15, false, false);
 }
 
-void matattack::SetupWorld(int lvl, String fstCharSprite = "matattack:characters:fox:idle:idle1", String sndCharSprite = "matattack:characters:fox:idle:idle1", String fstCharAnimation = "fox", String sndCharAnimation = "fox")
+void matattack::SetupWorld(int lvl, String fstCharSprite = "matattack:characters:fox:idle:idle1", String sndCharSprite = "matattack:characters:fox:idle:idle1", String fstCharAnimation = "fox", String sndCharAnimation = "fox", SpecialAbilities specAttack1 = HEAL, SpecialAbilities specAttack2 = HEAL)
 {
 	auto& reg = Engine::Registry();
 	reg.clear();
@@ -417,8 +417,8 @@ void matattack::SetupWorld(int lvl, String fstCharSprite = "matattack:characters
 	setCamera();
 	setLevel(lvl, fstCharAnimation, sndCharAnimation);
 
-	auto fstChar = Character::Create("ASDW", { -100, 250 }, SpecialAbilities::DASH, fstCharSprite, fstCharAnimation);
-	auto sndChar = Character::Create("Arrows", { 100, 250 }, SpecialAbilities::ATTACK_BOOST, sndCharSprite, sndCharAnimation);
+	auto fstChar = Character::Create("ASDW", { -100, 250 }, specAttack1, fstCharSprite, fstCharAnimation);
+	auto sndChar = Character::Create("Arrows", { 100, 250 }, specAttack2, sndCharSprite, sndCharAnimation);
 
 }
 

@@ -6,9 +6,8 @@
 namespace matattack
 {
     struct DamageBoostInfo {
-        SInt32 boost = 5;
+        SInt32 boost = 10;
         bool boost_added = false;
-        // verovatno bolji nacin => pitaj bakija
         Float32 boost_duration = 0;
         Float32 max_boost_duration = 10;
 

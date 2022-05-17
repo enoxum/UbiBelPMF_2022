@@ -51,11 +51,9 @@ void Heal::Run(const Entity& character)
 	if (heal_info.heal_amount > 0)
 	{
 		special_info.current_duration -= Engine::DeltaTime();
-
-		heal_info.heal_amount -= heal_info.heal_decrease;
-
-		// da ne bi nikad presao preko maximuma
-		attack_info.hp = std::min(attack_info.hp + heal_info.heal_decrease, attack_info.max_hp);
+		//heal_info.heal_amount -= heal_info.heal_decrease;
+		attack_info.hp = std::min(attack_info.hp + heal_info.max_heal_amount, attack_info.max_hp);
+		heal_info.heal_amount = 0;
 
 
 	}

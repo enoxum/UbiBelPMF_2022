@@ -2,6 +2,7 @@
 #include "core/core.h"
 #include "core/system.h"
 #include "core/input/inputs.h"
+#include "specialabilitysystem.h"
 
 using namespace dagger;
 
@@ -32,9 +33,10 @@ public:
 
     String fstCharSprite = "matattack:characters:fox:idle:idle1";
     String sndCharSprite = "matattack:characters:fox:idle:idle1";
-
     String fstCharAnimation = "fox";
     String sndCharAnimation = "fox";
+    SpecialAbilities specAttack1 = HEAL;
+    SpecialAbilities specAttack2 = HEAL;
 
 protected:
     void LevelChooser(LevelChangeEvent lce);

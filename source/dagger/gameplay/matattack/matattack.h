@@ -6,6 +6,7 @@
 #include "core/engine.h"
 #include "core/game/transforms.h"
 #include "core/graphics/sprite.h"
+#include "specialabilitysystem.h"
 
 
 
@@ -20,7 +21,7 @@ namespace matattack
         String animationName;
     };
 
-    void SetupWorld(int lvl, String fstCharSprite, String sndCharSprite, String fstCharAnimation, String sndCharAnimation);
+    void SetupWorld(int lvl, String fstCharSprite, String sndCharSprite, String fstCharAnimation, String sndCharAnimation, SpecialAbilities specAttack1, SpecialAbilities specAttack2);
     void SetLevelChooser();
     void EndGame(String char_won);
 

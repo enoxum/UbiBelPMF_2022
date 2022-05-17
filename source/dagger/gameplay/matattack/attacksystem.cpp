@@ -43,7 +43,7 @@ void AttackSystem::DealDamage(AttackInfo& attacker_info, AttackInfo& victim_info
 			}
 			else
 			{
-				AssignSprite(p1_health_sprite, "matattack:items:health_bar");
+				AssignSprite(p1_health_sprite, "matattack:items:health_bar100");
 				victim_info.hp = 100;
 			}
 		}
@@ -73,7 +73,7 @@ void AttackSystem::DealDamage(AttackInfo& attacker_info, AttackInfo& victim_info
 			}
 			else
 			{
-				AssignSprite(p2_health_sprite, "matattack:items:health_bar");
+				AssignSprite(p2_health_sprite, "matattack:items:health_bar100");
 				victim_info.hp = 100;
 			}
 		}
@@ -124,7 +124,7 @@ void AttackSystem::SpinUp()
 
 void AttackSystem::Run()
 {
-	auto view = Engine::Registry().view<InputReceiver, Animator, AttackInfo, Transform>();
+	auto view = Engine::Registry().view<InputReceiver, Animator, AttackInfo, Transform, CharacterInfo>();
 	auto view1 = Engine::Registry().view<HealthInfo, Sprite>();
 	auto view2 = Engine::Registry().view<HeartInfo, Sprite>();
 	auto it = view.begin();
@@ -137,12 +137,13 @@ void AttackSystem::Run()
 		auto& animator = view.get<Animator>(*it);
 		auto& attack_info = view.get<AttackInfo>(*it);
 		auto& transform = view.get<Transform>(*it);
-
+		auto& char_info = view.get<CharacterInfo>(*it);
 		auto& p_health = view1.get<HealthInfo>(*it1);
 		auto& p_health_sprite = view1.get<Sprite>(*it1);
 		auto& p_heart = view2.get<HeartInfo>(*it2);
 		auto& p_heart_sprite = view2.get<Sprite>(*it2);
 
+		AssignSprite(p_health_sprite, "matattack:items:health_bar" + std::to_string(attack_info.hp));
 		if (transform.position.x > 810 || transform.position.x < -810 || transform.position.y < -540)
 		{
 			p_health.num_of_hearts--;
@@ -151,19 +152,27 @@ void AttackSystem::Run()
 			transform.position.y = 250;
 			if (!p_health.num_of_hearts)
 			{
-				Engine::ToggleSystemsPause(true);
-				auto view = Engine::Registry().view<matattack::CharacterInfo>();
-				auto it = view.begin();
-				it++;
-				auto& chr = view.get<CharacterInfo>(*it);
-				matattack::EndGame(chr.animationName);
+				Engine::ToggleSystemsPause(true);	
+				if (it != view.begin())
+				{
+					it--;
+					auto& chr = view.get<CharacterInfo>(*it);
+					matattack::EndGame(chr.animationName);
+					it++;
+				}
+				else
+				{
+					it++;
+					auto& chr = view.get<CharacterInfo>(*it);
+					matattack::EndGame(chr.animationName);
+					it--;
+				}	
 			}
 			else
 			{
-				AssignSprite(p_health_sprite, "matattack:items:health_bar");
+				AssignSprite(p_health_sprite, "matattack:items:health_bar100");
 				attack_info.hp = 100;
 			}
-			
 		}
 		
 		if (EPSILON_NOT_ZERO(input.Get("attack")))
