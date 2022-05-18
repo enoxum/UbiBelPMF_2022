@@ -1,0 +1,11 @@
+{
+	"animation-name": "mandarian:IDLE",
+	"animation-length-ms": 600,
+	"animation-frames": 
+	[
+		{ "texture-name": "mandarian:mandarian1" },
+        { "texture-name": "mandarian:mandarian2" },
+        { "texture-name": "mandarian:mandarian3" },
+        { "texture-name": "mandarian:mandarian4" }
+	]
+}

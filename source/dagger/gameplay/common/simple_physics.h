@@ -9,7 +9,7 @@ struct Body
 {
     Vector2 velocity{ 0.0f, 0.0f };
     Vector2 force{ 0.0f, 0.0f };
-    Float32 mass{ 1.0f };
+    Float32 speed{ 1.0f };
 
     void applyForce(Vector2);
     void setVelocity(Vector2);

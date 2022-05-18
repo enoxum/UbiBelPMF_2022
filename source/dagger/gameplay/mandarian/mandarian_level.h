@@ -33,7 +33,7 @@ namespace mandarian
         static Mandarin Create(
             UInt16 points = 10u,
             Vector2 position_ = { 0.0f, 0.0f },
-            Vector2 scale_ = { 1.0f, 1.0f }
+            Vector2 scale_ = { 0.5f, 0.5f }
         );
     };
 
@@ -74,9 +74,9 @@ namespace mandarian
         void UpdateExperience();
         void SpawnEnemies();
 
-        void SpawnTier1Enemies();
+        void SpawnTier1Enemies(unsigned numberOfEnemies);
         void SpawnTier2Enemies();
-        void SpawnTier3Enemies();
+        void SpawnTier3Enemies(unsigned numberOfEnemies);
     };
 
 };

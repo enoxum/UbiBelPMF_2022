@@ -1,0 +1,9 @@
+{
+	"animation-name": "jingwei:RUN",
+	"animation-length-ms": 200,
+	"animation-frames": 
+	[
+		{ "texture-name": "mandarian:jingwei1" },
+        { "texture-name": "mandarian:jingwei2" }
+	]
+}
