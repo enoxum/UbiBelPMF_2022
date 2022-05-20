@@ -1,6 +1,8 @@
 #include "player_controller.h"
 
 #include "core/game/transforms.h"
+#include "gameplay/team_game/team_game_main.h"
+#include "gameplay/team_game/timer.h"
 
 
 using namespace dagger;
@@ -10,11 +12,13 @@ using namespace team_game;
 void PlayerControlSystem::SpinUp()
 {
     Engine::Dispatcher().sink<KeyboardEvent>().connect<&PlayerControlSystem::OnKeyboardEvent>(this);
+    Engine::Dispatcher().sink<NextFrame>().connect<&PlayerControlSystem::OnEndOfFrame>(this);
 }
 
 void PlayerControlSystem::WindDown()
 {
     Engine::Dispatcher().sink<KeyboardEvent>().disconnect<&PlayerControlSystem::OnKeyboardEvent>(this);
+    Engine::Dispatcher().sink<NextFrame>().disconnect<&PlayerControlSystem::OnEndOfFrame>(this);
 }
 
 void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
@@ -52,10 +56,15 @@ void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
 
 void PlayerControlSystem::Run() {
 
+    auto& engine = Engine::Instance();
     auto& reg = Engine::Registry();
     auto ents = reg.view<Transform, Player>();
 
     ents.each([this](Transform& ent, Player player) {
+        if (ent.position.x > 1200 || ent.position.x < -1200 || ent.position.y > 1200 || ent.position.y < -1200) {
+            m_restart = true;
+         }
+        
 
         ent.position.x += step * Engine::DeltaTime() * 300;
 
@@ -73,4 +82,14 @@ void PlayerControlSystem::Run() {
         }
     });
 
+}
+
+void PlayerControlSystem::OnEndOfFrame()
+{
+    if (m_restart)
+    {
+        m_restart = false;
+        Engine::Registry().clear();
+        team_game::SetupWorld();
+    }
 }

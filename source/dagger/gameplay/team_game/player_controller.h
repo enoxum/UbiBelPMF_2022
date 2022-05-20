@@ -21,10 +21,13 @@ namespace team_game
         double step = 0.0f;
         //bool jumping = false;
         double jumpVelocity = 0.0f;
+        bool m_restart = false;
 
     public:
         inline String SystemName() { return "Player control system"; }
         void Run() override;
+
+        void OnEndOfFrame();
 
         void SpinUp() override;
         void WindDown() override;

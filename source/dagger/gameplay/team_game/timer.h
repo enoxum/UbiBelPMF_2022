@@ -17,7 +17,6 @@ namespace team_game
 
     private:
         double seconds;
-
     public:
 
         inline String SystemName() { return "Timer system"; }

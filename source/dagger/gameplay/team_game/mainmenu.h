@@ -16,6 +16,10 @@ namespace team_game {
 
 	class mainmenu : public System
 	{
+
+    private:
+        bool m_restart;
+
     public:
 
         inline String SystemName() { return "Main menu system"; }

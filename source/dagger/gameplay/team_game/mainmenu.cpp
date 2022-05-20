@@ -4,6 +4,7 @@
 #include "core/graphics/text.h"
 
 #include "gameplay/team_game/Utilities/map_generator_utility.h"
+#include "gameplay/team_game/team_game_main.h"
 
 #include<iostream>
 
@@ -30,6 +31,10 @@ void mainmenu::OnKeyboardEvent(KeyboardEvent kEvent_) {
 		auto& sprite = ents.get<Sprite>(ent);
 		auto& mm = ents.get<MainMenu_>(ent);
 		auto& text = ents.get<Text>(ent);
+
+		if (kEvent_.key == EDaggerKeyboard::KeyR && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
+			m_restart = true;
+		}
 
 		if (kEvent_.key == EDaggerKeyboard::KeyEnter && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
 			show = !show;
@@ -67,6 +72,13 @@ void mainmenu::Run() {
 	auto ents = reg.view<Sprite, MainMenu_, Text>();
 
 	for (const auto ent : ents) {
+
+		if (m_restart) {
+			m_restart = false;
+			Engine::Registry().clear();
+			team_game::SetupWorld();
+		}
+
 		auto& sprite = ents.get<Sprite>(ent);
 		auto& text = ents.get<Text>(ent);		
 	}
