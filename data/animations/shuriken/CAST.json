@@ -1,0 +1,15 @@
+{
+	"animation-name": "shuriken:CAST",
+	"animation-length-ms": 800,
+	"animation-frames": 
+	[
+		{ "texture-name": "mandarian:shuriken1" },
+        { "texture-name": "mandarian:shuriken2" },
+        { "texture-name": "mandarian:shuriken3" },
+        { "texture-name": "mandarian:shuriken4" },
+        { "texture-name": "mandarian:shuriken5" },
+        { "texture-name": "mandarian:shuriken6" },
+        { "texture-name": "mandarian:shuriken7" },
+        { "texture-name": "mandarian:shuriken8" }
+	]
+}

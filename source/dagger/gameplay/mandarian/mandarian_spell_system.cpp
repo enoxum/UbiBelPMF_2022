@@ -22,6 +22,7 @@ Spell Spell::Get( Entity entity )
 
 Spell Spell::Create( const String &name
                    , Float32 cooldown
+                   , Float32 duration
                    , String spritePath
                    , String animatorPath
                    , Float32 scale)
@@ -42,8 +43,7 @@ Spell Spell::Create( const String &name
     spell.common.spritePath = spritePath;
     spell.common.animatorPath = animatorPath;
 
-    auto *animation = Engine::Res<Animation>()[animatorPath];
-    spell.common.duration = animation->absoluteLength;
+    spell.common.duration = duration;
 
     return spell;
 }
@@ -174,6 +174,48 @@ void FixTo::Apply(Entity spell)
     auto &spellTransform = Engine::Registry().get<Transform>(spell);
 
     spellTransform.position = targetTransform.position;
+}
+
+void Shuriken::Init(Entity spell)
+{
+
+    auto &mandarianTransform = Engine::Registry().get<Transform>(mandarian);
+    auto &spellTransform = Engine::Registry().get<Transform>(spell);
+    auto &spellCommon = Engine::Registry().get<CommonSpell>(spell);
+
+    spellTransform.position = mandarianTransform.position;
+
+    timer = spellCommon.duration / 5.0f;
+
+    auto directionX = rand() / static_cast<Float32>(RAND_MAX);
+    auto directionY = rand() / static_cast<Float32>(RAND_MAX);
+
+    direction = { directionX, directionY };
+    direction = NORMALIZE(direction);
+
+    auto signX = rand() % 2 == 0 ? 1.0f : -1.0f;
+    auto signY = rand() % 2 == 0 ? 1.0f : -1.0f;
+
+    direction.x *= signX;
+    direction.y *= signY;
+}
+
+void Shuriken::Apply(Entity spell)
+{
+    auto &spellTransform = Engine::Registry().get<Transform>(spell);
+    auto &mandarianTransform = Engine::Registry().get<Transform>(mandarian);
+    auto &mandarianStats = Engine::Registry().get<CharacterStats>(mandarian);
+
+    if (timer <= 0.0f) 
+    {
+        direction *= -1.0f;
+        timer = std::numeric_limits<Float32>::infinity();
+    }
+
+    spellTransform.position.x += speed * direction.x * Engine::DeltaTime();
+    spellTransform.position.y += speed * direction.y * Engine::DeltaTime();
+    
+    timer -= Engine::DeltaTime();
 }
 
 void MandarianSpellSystem::Run()

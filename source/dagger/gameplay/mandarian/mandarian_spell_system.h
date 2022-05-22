@@ -15,7 +15,7 @@ namespace mandarian
 {   
     class IEffect
     {
-        public:
+    public:
         virtual void Apply(Entity spell) = 0;
         virtual void Init(Entity spell) = 0;
     };
@@ -23,14 +23,14 @@ namespace mandarian
     class Aura
         : public IEffect
     {
-        public:
-
+    public:
         void Apply(Entity spell) override;
         void Init(Entity spell) override;
 
         Aura(Float32 damage_, Float32 radius_, Entity mandarian_)
             : damage(damage_), radius(radius_), mandarian(mandarian_) {};
 
+    private:
         Float32 damage;
         Float32 radius;
 
@@ -40,8 +40,7 @@ namespace mandarian
     class Thunder
         : public IEffect
     {
-        public:
-
+    public:
         void Apply(Entity spell) override;
         void Init(Entity spell) override;
 
@@ -49,6 +48,7 @@ namespace mandarian
             : damage(damage_), radius(radius_), mandarian(mandarian_) 
         {};
 
+    private:
         Float32 damage;
         Float32 radius;
 
@@ -61,16 +61,33 @@ namespace mandarian
     class FixTo
         : public IEffect
     {
-        public:
-
+    public:
         void Apply(Entity spell) override;
         void Init(Entity spell);
 
         FixTo(Entity target_) 
             : target(target_){};
 
-        private:
+    private:
         Entity target;
+    };
+
+    class Shuriken
+        : public IEffect
+    {
+    public:
+        void Apply(Entity spell) override;
+        void Init(Entity spell) override;
+
+        Shuriken(Entity mandarian_, Float32 speed_) 
+            : mandarian(mandarian_)
+            , speed(speed_) {};
+
+    private:
+        Entity mandarian;
+        Float32 speed;
+        Float32 timer;
+        Vector2 direction;
     };
 
     struct CommonSpell
@@ -96,6 +113,7 @@ namespace mandarian
 
         static Spell Create ( const String &name
                             , Float32 cooldown
+                            , Float32 duration
                             , String spritePath
                             , String animatorPath
                             , Float32 scale = 1.0f
