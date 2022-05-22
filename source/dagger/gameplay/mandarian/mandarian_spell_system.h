@@ -17,6 +17,7 @@ namespace mandarian
     {
         public:
         virtual void Apply(Entity spell) = 0;
+        virtual void Init(Entity spell) = 0;
     };
 
     class Aura
@@ -25,11 +26,34 @@ namespace mandarian
         public:
 
         void Apply(Entity spell) override;
+        void Init(Entity spell) override;
+
         Aura(Float32 damage_, Float32 radius_, Entity mandarian_)
             : damage(damage_), radius(radius_), mandarian(mandarian_) {};
 
         Float32 damage;
         Float32 radius;
+
+        Entity mandarian;
+    };
+
+    class Thunder
+        : public IEffect
+    {
+        public:
+
+        void Apply(Entity spell) override;
+        void Init(Entity spell) override;
+
+        Thunder(Float32 damage_, Float32 radius_, Entity mandarian_)
+            : damage(damage_), radius(radius_), mandarian(mandarian_) 
+        {};
+
+        Float32 damage;
+        Float32 radius;
+
+        Float32 dx;
+        Float32 dy;
 
         Entity mandarian;
     };
@@ -40,6 +64,8 @@ namespace mandarian
         public:
 
         void Apply(Entity spell) override;
+        void Init(Entity spell);
+
         FixTo(Entity target_) 
             : target(target_){};
 
@@ -72,6 +98,7 @@ namespace mandarian
                             , Float32 cooldown
                             , String spritePath
                             , String animatorPath
+                            , Float32 scale = 1.0f
                             );
         static Spell Get (Entity entity);
 

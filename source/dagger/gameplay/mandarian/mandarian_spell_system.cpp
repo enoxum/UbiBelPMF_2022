@@ -23,7 +23,8 @@ Spell Spell::Get( Entity entity )
 Spell Spell::Create( const String &name
                    , Float32 cooldown
                    , String spritePath
-                   , String animatorPath)
+                   , String animatorPath
+                   , Float32 scale)
 {   
     auto &reg = Engine::Registry();
     auto entity = reg.create();
@@ -31,7 +32,7 @@ Spell Spell::Create( const String &name
 
     spell.sprite.color = {1.0f, 1.0f, 1.0f, 0.0f};
     AssignSprite(spell.sprite, spritePath);
-    spell.sprite.scale = {1.0f, 1.0f };
+    spell.sprite.scale = {scale, scale};
     
     spell.common.name = name;
     spell.common.ready = true;
@@ -67,18 +68,24 @@ void MandarianSpellSystem::UpdateCooldowns()
 void MandarianSpellSystem::UpdateSpellActiveness()
 {
     Engine::Registry().view<CommonSpell, Sprite, Animator>().each(
-        [&](CommonSpell &commonSpell, Sprite &sprite, Animator &animator)
+        [&](Entity spellEntity, CommonSpell &commonSpell, Sprite &sprite, Animator &animator)
         {
             if (commonSpell.ready)
             {
+                for(auto *effect : commonSpell.effects)
+                {
+                    effect->Init(spellEntity);
+                }
+
                 commonSpell.ready = false;
                 sprite.color = {1.0f, 1.0f, 1.0f, 0.8f};
                 AnimatorPlay(animator, commonSpell.animatorPath);
                 commonSpell.active = true;
+                
             }
 
             if ( commonSpell.active 
-              && commonSpell.cooldown - commonSpell.duration > commonSpell.timer)
+              && commonSpell.cooldown - commonSpell.duration >= commonSpell.timer)
             {
                 sprite.color = {1.0f, 1.0f, 1.0f, 0.0f};
                 AnimatorStop(animator);
@@ -104,6 +111,9 @@ void MandarianSpellSystem::CastSpells()
     );
 }
 
+void Aura::Init(Entity spell)
+{}
+
 void Aura::Apply(Entity spell)
 {
     auto &reg = Engine::Registry();
@@ -121,6 +131,42 @@ void Aura::Apply(Entity spell)
         }
     });
 }
+
+void Thunder::Init(Entity spell)
+{
+    auto &reg = Engine::Registry();
+    
+    auto &mandarianTransform = reg.get<Transform>(mandarian);
+    auto &spellTransform = reg.get<Transform>(spell);
+
+    dx = (rand() % 400) - 200;
+    dy = (rand() % 400) - 200;
+
+    spellTransform.position.x = mandarianTransform.position.x + dx;
+    spellTransform.position.y = mandarianTransform.position.y + dy + 60.0f;
+}
+
+void Thunder::Apply(Entity spell)
+{
+    auto &reg = Engine::Registry();
+    auto &commonSpell = reg.get<CommonSpell>(spell);
+
+    auto &mandarianStats = reg.get<CharacterStats>(mandarian);
+    auto &spellTransform = reg.get<Transform>(spell);    
+
+    reg.view<Transform, Health, EnemyTag>().each(
+    [&](auto enemyEntity, auto &enemyTransform, auto &enemyHealth, auto &enemyTag)
+    {
+        if(glm::distance(spellTransform.position, enemyTransform.position + Vector3 { 0.0f, 80.0f, 0.0f}) <= radius)
+        {
+            enemyHealth.current -= damage * mandarianStats.might * Engine::DeltaTime();
+        }
+    });
+
+}
+
+void FixTo::Init(Entity spell)
+{}
 
 void FixTo::Apply(Entity spell)
 {

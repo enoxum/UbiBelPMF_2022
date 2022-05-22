@@ -126,7 +126,12 @@ void MandarianGame::WorldSetup()
     auto character = Character::Create();
 
     Engine::GetDefaultResource<MandarianSpellSystem>()->SetMandarian(character.entity); 
-    Spell::Create("Aura of Mandarian", 1.0f, "aura:CAST:aura1", "aura:CAST").AddEffects(new FixTo(character.entity), new Aura(100.0f, 100.0f, character.entity)); 
+    // Spell::Create("Aura of Mandarian", 1.0f, "aura:CAST:aura1", "aura:CAST").AddEffects(new FixTo(character.entity), new Aura(100.0f, 100.0f, character.entity)); 
+    Spell::Create("Soul of Mandarian", 0.7f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, character.entity));
+    Spell::Create("Soul of Mandarian", 0.8f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, character.entity));
+    Spell::Create("Soul of Mandarian", 0.9f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, character.entity));
+    Spell::Create("Soul of Mandarian", 1.0f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, character.entity));
+    Spell::Create("Soul of Mandarian", 1.1f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, character.entity));
 
     Engine::GetDefaultResource<EnemyDemageSystem>()->SetMandarian(character.entity);
     Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(character.entity);

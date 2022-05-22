@@ -1,0 +1,14 @@
+{
+	"animation-name": "thunder:CAST",
+	"animation-length-ms": 500,
+	"animation-frames": 
+	[
+		{ "texture-name": "thunder:CAST:thunder5" },
+		{ "texture-name": "thunder:CAST:thunder5" },
+		{ "texture-name": "thunder:CAST:thunder5" },
+		{ "texture-name": "thunder:CAST:thunder4" },
+        { "texture-name": "thunder:CAST:thunder3" },
+		{ "texture-name": "thunder:CAST:thunder2" },
+		{ "texture-name": "thunder:CAST:thunder1" }
+	]
+}
