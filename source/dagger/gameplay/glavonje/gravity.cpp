@@ -8,7 +8,7 @@
 using namespace dagger;
 using namespace glavonje;
 
-const double GravitySystem::gravityForce = 0.28f;
+const double GravitySystem::gravityForce = 0.1f;
 
 void GravitySystem::SpinUp()
 {

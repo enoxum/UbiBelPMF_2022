@@ -7,10 +7,13 @@
 using namespace dagger;
 
 namespace glavonje
-{
+{	
 	struct PlayerCharacter
 	{
-		float speed{ 1.0 };
+		Vector2 velocity{ 0.0f, 0.0f };
+		Float32 speed{1.0f};
+		int goals{0};
+
 	};
 
 	class PlayerControllerSystem

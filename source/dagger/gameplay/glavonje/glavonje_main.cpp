@@ -16,6 +16,7 @@
 #include "gameplay/glavonje/ball_collision.h"
 
 
+
 using namespace dagger;
 using namespace glavonje;
 
@@ -52,6 +53,8 @@ struct Goal
 {
     Entity entity;
     Sprite& sprite;
+    SimpleCollision& collision;
+    Transform& transform;
 
     static Goal Create( 
         ColorRGB color_ = { 0, 0, 0 }, 
@@ -61,11 +64,14 @@ struct Goal
         auto goalEntity = reg.create();
 
         auto& sprite = reg.get_or_emplace<Sprite>(goalEntity);
-        auto goal = Goal{goalEntity, sprite};
+        auto& collision = reg.get_or_emplace<SimpleCollision>(goalEntity);
+        auto& transform = reg.get_or_emplace<Transform>(goalEntity);
+        auto goal = Goal{goalEntity, sprite, collision,transform};
         
 
         goal.sprite.scale = { 1, 1 };
-        goal.sprite.position = { position_, 0.0f };
+        //goal.sprite.position = { position_, 0.0f };
+        goal.transform.position = {position_, 0.0f};
         goal.sprite.color = { color_, 1.0f };
         goal.sprite.size = Vector2(100,100);
         AssignSprite(goal.sprite, "HeadBall:goal");
@@ -74,6 +80,8 @@ struct Goal
         return goal;
     }
 };
+
+//struct FieldTag {};
 
 struct Character
 {
@@ -138,6 +146,7 @@ void Glavonje::WorldSetup(){
         auto& reg = Engine::Registry();
         auto goalFieldEntity = reg.create();
         auto& sprite = reg.get_or_emplace<Sprite>(goalFieldEntity);
+        // reg.get_or_emplace<FieldTag>(goalFieldEntity);
         
         AssignSprite(sprite, "HeadBall:field");
         sprite.color = { 0, 1, 0, 1 };
