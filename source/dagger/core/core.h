@@ -2,6 +2,7 @@
 
 //#define MEASURE_SYSTEMS
 
+#include "core/tsqueue.h"
 #include "core/view_ptr.h"
 #include "core/filesystem.h"
 #include <glm/glm.hpp>
@@ -28,6 +29,10 @@ using IniFile = CSimpleIni;
 
 using Registry = entt::registry;
 using Entity = entt::entity;
+
+// TODO: check if any other template is needed
+template<typename T>
+using Sink = entt::sink<T>;
 
 // handy template for crashing if x is not an enum
 #define ENUM_ONLY(x) class = typename std::enable_if<std::is_enum<x>::value>::type
@@ -78,10 +83,9 @@ using Map = tsl::sparse_map<K, V>;
 template<typename K>
 using Set = tsl::sparse_set<K>;
 
-// TODO
 // TSQueue<T>: a thread safe queue
 template<typename Archetype>
-using TSQueue = std::queue<Archetype>;
+using TSQueue = dagger::TSQueue<Archetype>;
 
 // BitSet<N>: a contiguous bitset with N elements. Can be used for quick membership checks.
 // Basically the same as a compile-time Sequence<Bool> with fixed size N.
