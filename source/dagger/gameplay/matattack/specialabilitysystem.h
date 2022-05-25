@@ -29,6 +29,17 @@ namespace matattack
 
         Float32 chargetime = 0;
         Float32 current_chargetime = 0;
+
+
+    };
+
+    struct SpecialBarInfo {
+        Float32 full_scale = 0;
+        bool bar = true;
+    };
+
+    struct SpecialBarBackInfo {
+        bool active = true;
     };
 
     class SpecialAbilitySystem : public System

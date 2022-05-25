@@ -149,6 +149,82 @@ struct HealthBar
 	}
 };
 
+struct SpecialBarBack
+{
+	Entity entity;
+	Sprite& sprite;
+	Transform& transform;
+	SpecialBarBackInfo& bar_back_info;
+
+	static SpecialBarBack Get(Entity entity)
+	{
+		auto& reg = Engine::Registry();
+		auto& sprite = reg.get_or_emplace<Sprite>(entity);
+		auto& transform = reg.get_or_emplace<Transform>(entity);
+		auto& info = reg.get_or_emplace<SpecialBarBackInfo>(entity);
+
+		return SpecialBarBack{ entity, sprite, transform, info };
+	}
+
+	static SpecialBarBack Create(Vector3 position_ = { 0, 0, 0 }, String sprite_ = "matattack:items:health_bar100")
+	{
+		auto& reg = Engine::Registry();
+		auto entity = reg.create();
+		auto specialBarBack = SpecialBarBack::Get(entity);
+
+		specialBarBack.sprite.scale = { 0.23, 0.40 };
+
+		specialBarBack.sprite.position = { position_ };
+
+		specialBarBack.sprite.size = { 180, 30 };
+
+		specialBarBack.transform.position = { position_ };
+
+		AssignSprite(specialBarBack.sprite, sprite_);
+
+		return specialBarBack;
+	}
+};
+
+struct SpecialBar
+{
+	Entity entity;
+	SpecialBarInfo& special_bar_info;
+	Sprite& sprite;
+	Transform& transform;
+
+	static SpecialBar Get(Entity entity)
+	{
+		auto& reg = Engine::Registry();
+		auto& special_bar_info = reg.get_or_emplace<SpecialBarInfo>(entity);
+		auto& sprite = reg.get_or_emplace<Sprite>(entity);
+		auto& transform = reg.get_or_emplace<Transform>(entity);
+
+		return SpecialBar{ entity, special_bar_info, sprite, transform };
+	}
+
+	static SpecialBar Create(Vector3 position_ = { 0, 0, 0 }, String sprite_ = "matattack:items:health_bar100")
+	{
+		auto& reg = Engine::Registry();
+		auto entity = reg.create();
+		auto specialBar = SpecialBar::Get(entity);
+
+		specialBar.special_bar_info.full_scale = 0.225;
+
+		specialBar.sprite.scale = { specialBar.special_bar_info.full_scale, 0.40 };
+
+		specialBar.sprite.position = { position_ };
+
+		specialBar.sprite.size = { 180, 30 };
+
+		specialBar.transform.position = { position_ };
+
+		AssignSprite(specialBar.sprite, sprite_);
+
+		return specialBar;
+	}
+};
+
 struct Character
 {
     Entity entity;
@@ -210,7 +286,7 @@ struct Character
         chr.transform.position = { position_, 1.0f };
 
         chr.simple_collision.size = { 50, 50 };
-        chr.simple_collision.pos = chr.transform.position;
+		   chr.simple_collision.pos = chr.transform.position;
         chr.simple_collision.is_collidable = false;
         chr.simple_collision.is_moveable = true;
 
@@ -342,10 +418,20 @@ void setLevel(int lvl, String fstCharAnimation, String sndCharAnimation) {
 	setSingleBlock(-730, 380, 10, "matattack:characters:" + fstCharAnimation + ":idle:idle1", 100, 100, false, false);
 	auto heathbar1 = HealthBar::Create({-670, 340, 10}, "matattack:items:health_bar100");
 	auto hearts1 = Heart::Create({-640, 380, 10}, "matattack:items:3");
+	auto specialbarback1 = SpecialBarBack::Create({ -670, 315, 10 }, "matattack:items:special_back");
+	auto specialbar1_1 = SpecialBar::Create({ -670, 315, 10 }, "matattack:items:special_bar");
+	specialbar1_1.transform.position = { specialbar1_1.transform.position - Vector3(specialbar1_1.sprite.scale.x *  388/ 2+2,0,0) };
+	auto specialbar1_2 = SpecialBar::Create({ -670, 315, 10 }, "matattack:items:special_bar");
+	specialbar1_2.transform.position = { specialbar1_2.transform.position + Vector3(specialbar1_2.sprite.scale.x * 388 / 2+2,0,0) };
 	
 	setSingleBlock(590, 380, 10, "matattack:characters:" + sndCharAnimation + ":idle:idle1", 100, 100, false, false);
 	auto heathbar2 = HealthBar::Create({650, 340, 10 }, "matattack:items:health_bar100");
 	auto hearts2 = Heart::Create({ 680, 380, 10 }, "matattack:items:3");
+	auto specialbarback2 = SpecialBarBack::Create({ 650, 315, 10 }, "matattack:items:special_back");
+	auto specialbar2_1 = SpecialBar::Create({ 650, 315, 10 }, "matattack:items:special_bar");
+	specialbar2_1.transform.position = { specialbar2_1.transform.position - Vector3(specialbar2_1.sprite.scale.x * 388 / 2 + 2,0,0) };
+	auto specialbar2_2 = SpecialBar::Create({ 650, 315, 10 }, "matattack:items:special_bar");
+	specialbar2_2.transform.position = { specialbar2_2.transform.position + Vector3(specialbar2_2.sprite.scale.x * 388 / 2 + 2,0,0) };
 	
 
 	switch (lvl)
