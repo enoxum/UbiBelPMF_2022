@@ -2,7 +2,8 @@ project('dagger', 'c', 'cpp', default_options : ['cpp_std=c++17' ])
 
 deps = [
     dependency('glfw3'),
-    dependency('fmt')
+    dependency('fmt'),
+    dependency('libenet'),
 ]
 
 if (host_machine.system() == 'linux')
@@ -27,7 +28,7 @@ includes = [
     include_directories('libs/imgui/include/imgui'),
     include_directories('libs/imgui/include/imgui/backends'),
     include_directories('libs/spdlog/include'),
-    include_directories('libs/simpleini')
+    include_directories('libs/simpleini'),
 ]
 
 sources = [
@@ -48,8 +49,11 @@ sources = [
     'source/dagger/core/engine.cpp',
     'source/dagger/core/game.cpp',
 
-    # 'source/dagger/core/net/message.cpp',
+    'source/dagger/core/net/v4/server_network_context.cpp',
 
+    'source/dagger/gameplay/common/network_server_system.cpp',
+    'source/dagger/gameplay/net_test/net_test_main.cpp',
+    'source/dagger/gameplay/common/network_sync_system.cpp',
     'source/dagger/gameplay/glavonje/glavonje_client.cpp',
     'source/dagger/gameplay/glavonje/glavonje_server.cpp',
 
