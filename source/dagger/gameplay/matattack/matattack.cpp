@@ -290,7 +290,7 @@ struct Character
         chr.simple_collision.is_collidable = false;
         chr.simple_collision.is_moveable = true;
 
-        chr.char_info.speed = 200.0F;
+        chr.char_info.speed = 300.0F;
 		chr.char_info.animationName = animation_name;
 
         chr.gravity.increase = 1200.0F;
