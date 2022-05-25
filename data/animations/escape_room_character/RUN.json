@@ -1,0 +1,11 @@
+{
+	"animation-name": "escape_room_character:RUN",
+	"animation-length-ms": 500,
+	"animation-frames": 
+	[
+		{ "texture-name": "escape_room_character:RUN:run0", "relative-length": 1 },
+		{ "texture-name": "escape_room_character:RUN:run1", "relative-length": 1 },
+		{ "texture-name": "escape_room_character:RUN:run2", "relative-length": 1 }
+
+	]
+}

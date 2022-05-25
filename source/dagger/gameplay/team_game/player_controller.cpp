@@ -3,6 +3,7 @@
 #include "core/game/transforms.h"
 #include "gameplay/team_game/team_game_main.h"
 #include "gameplay/team_game/timer.h"
+#include <core/graphics/animation.h>
 
 
 using namespace dagger;
@@ -24,22 +25,29 @@ void PlayerControlSystem::WindDown()
 void PlayerControlSystem::OnKeyboardEvent(KeyboardEvent kEvent_)
 {
     auto& reg = Engine::Registry();
-    auto ents = reg.view<Player, Transform>();
+    auto ents = reg.view<Player, Transform, Sprite, Animator>();
 
 
     for (const auto ent : ents)
     {
         auto& player = ents.get<Player>(ent);
         auto& pos = ents.get<Transform>(ent);
+        auto& sprite = ents.get<Sprite>(ent);
+        auto& anim = ents.get<Animator>(ent);
 
         if (kEvent_.key == EDaggerKeyboard::KeyLeft && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
             step = -0.7;
+            sprite.scale.x = -1;
+
         }
         else if (kEvent_.key == EDaggerKeyboard::KeyLeft && kEvent_.action == EDaggerInputState::Released) {
             step = 0.0;
+            
         }
         else if (kEvent_.key == EDaggerKeyboard::KeyRight && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
             step = 0.7;
+            sprite.scale.x = 1;
+
         }
         else if (kEvent_.key == EDaggerKeyboard::KeyRight && kEvent_.action == EDaggerInputState::Released) {
             step = 0.0;
@@ -61,7 +69,7 @@ void PlayerControlSystem::Run() {
     auto ents = reg.view<Transform, Player>();
 
     ents.each([this](Transform& ent, Player player) {
-        if (ent.position.x > 1200 || ent.position.x < -1200 || ent.position.y > 1200 || ent.position.y < -1200) {
+        if (ent.position.x > 1600 || ent.position.x < -1600 || ent.position.y > 1200 || ent.position.y < -1200) {
             m_restart = true;
          }
         

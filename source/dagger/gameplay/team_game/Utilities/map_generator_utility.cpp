@@ -39,6 +39,7 @@ void team_game::assignSprite(Sprite &sprite, const std::string type, const int w
     
     float ratio = sprite.size.y / sprite.size.x;
     sprite.size = { width / ratio, height  };
+
 }
 
 
@@ -125,7 +126,10 @@ void team_game::initPlayer(double zPos) {
 
     auto entity = reg.create();
     auto& sprite = reg.emplace<Sprite>(entity);
-    AssignSprite(sprite, "logos:character");
+    auto& anim = reg.emplace<Animator>(entity);
+    AssignSprite(sprite, "escape_room_character:idle");
+    //AnimatorPlay(anim, "escape_room_character:RUN");
+
     float ratio = sprite.size.y / sprite.size.x;
     sprite.size = { 150 / ratio, 150  };
 
