@@ -39,7 +39,7 @@ void ServerENetSystem::SpinUp()
     // TODO: move to .ini file
     UInt16 port = 5050;
 
-    auto *host = InitENetHost(port);
+    auto* host = InitENetHost(port);
     if (!host) 
     {
         Logger::critical("Failed to start ENet host");
@@ -106,7 +106,7 @@ void ServerENetSystem::WindDown()
 {
     auto& registry = Engine::Registry();
 
-    auto *host = registry.ctx<ENetHost*>();
+    auto* host = registry.ctx<ENetHost*>();
     enet_host_destroy(host);
     enet_deinitialize();
     registry.unset<ENetHost*>();

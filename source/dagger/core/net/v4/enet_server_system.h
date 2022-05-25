@@ -20,7 +20,7 @@ struct ClientEntityMap
 
 class ServerENetSystem : public System
 {
-    inline String SystemName() { return "ENet System"; }
+    inline String SystemName() { return "Server ENet System"; }
 
     void SpinUp() override;
     void Run() override;
