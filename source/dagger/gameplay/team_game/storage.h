@@ -17,7 +17,7 @@ namespace team_game
         void OnKeyboardEvent(KeyboardEvent kEvent_);
 
     public:
-
+        
         inline String SystemName() { return "Storage system"; }
         void Run() override;
         void SpinUp() override;

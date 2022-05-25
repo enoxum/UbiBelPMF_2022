@@ -52,8 +52,11 @@ void mainmenu::OnKeyboardEvent(KeyboardEvent kEvent_) {
 			pause = !pause;
 			if (pause) {
 				inst.ToggleSystemsPause(true);
-				sprite.size = { 0,0 };
+				AssignSprite(sprite, "Background:introduction");
+				sprite.size = { 400,300 };
+				sprite.position = {0,125,0};
 				text.Set("pixel-font", "Press P to resume the game", { 0,0,0 });
+				sprite.UseAsUI();
 			}
 			else {
 				inst.ToggleSystemsPause(false);

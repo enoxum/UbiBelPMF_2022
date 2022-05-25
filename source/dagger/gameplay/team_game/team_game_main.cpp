@@ -81,13 +81,21 @@ void team_game::SetupWorld()
     {
         auto menu = reg.create();
         auto& sprite = reg.emplace<Sprite>(menu);
-        AssignSprite(sprite, "Background:menu");
+        AssignSprite(sprite, "Background:background_with_introduction");
         sprite.size = { 1700, 1220 };
         auto mm = reg.emplace<MainMenu_>(menu);
         auto& text = reg.emplace<Text>(menu);
         text.spacing = 0.6f;
         String msg = "Press Enter to start the game!";
-        text.Set("pixel-font", msg, { 0, 0 ,0 });
+        text.Set("pixel-font", msg, { 0, -9 ,0 });
+
+        //In front of you is a room where you need to find a way out. 
+        //You can move using the left, right and up arrows. Collect lost items and use them in the right way,
+        //to be one step closer to getting out. When you collect the item and get to the place where you think you should use it,
+        //  press the number button on the keyboard that corresponds to the ordinal number of the item in storage and you will see
+        //  if you have successfully overcome that obstacle.
+        //Pay attention to the timer to make the final score better. Good luck!
+      
     }
 
     {
