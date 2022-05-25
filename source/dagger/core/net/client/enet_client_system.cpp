@@ -107,6 +107,8 @@ void ClientENetSystem::Run()
                 break;
         }
     }
+
+    // set RTT?
 }
 
 void ClientENetSystem::SendPacketToServer(const Packet& packet)
