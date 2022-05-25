@@ -18,6 +18,7 @@ namespace net_test
             return "net_test.ini";
         };
 
+        void CoreSystemsSetup() override;
         void GameplaySystemsSetup() override;
         void WorldSetup() override;
     };

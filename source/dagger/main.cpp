@@ -8,11 +8,12 @@
 #include "gameplay/editor/editor_main.h"
 #include "gameplay/glavonje/glavonje_client.h"
 #include "gameplay/glavonje/glavonje_server.h"
+#include "gameplay/net_test/net_test_main.h"
 
 int main(int argc_, char** argv_)
 {
 	dagger::Engine engine;
-	if (argc_ == 2 && strcmp(argv_[1], "client")) 
+	if (argc_ == 2 && strcmp(argv_[1], "client") == 0) 
 	{
 		return engine.Run<glavonje::GlavonjeClient>();
 	}

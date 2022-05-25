@@ -15,16 +15,9 @@ using namespace dagger;
 using namespace net_test;
 using namespace net;
 
-enum class EMsgType : UInt32 {
-    Shoot,
-    Jump,
-    Left,
-    Right
-};
-
 void test_message_io() {
     Message<EMsgType> msg;
-    msg.header.id = EMsgType::Jump;
+    msg.header.id = EMsgType::Shoot;
     
     int x = 3;
     bool b = false;
@@ -43,39 +36,17 @@ void test_message_io() {
     msg >> pts >> d >> b >> x;
 }
 
-class GlavonjeClient : public dagger::net::IClient<EMsgType> 
-{
-public:
-    bool Jump(UInt32 id)
-    {
-        Message<EMsgType> msg;
-        msg.header.id = EMsgType::Jump;
-        msg << id;
-        Send(msg);
-    }
-};
-
-class GlovanjeServer : public dagger::net::IServer<EMsgType>
-{
-
-};
-
 void NetTest::GameplaySystemsSetup(){
     test_message_io();
 }
 
+
+void NetTest::CoreSystemsSetup()
+{
+    auto& engine = Engine::Instance();
+    engine.AddSystem<TransformSystem>();
+}
+
 void NetTest::WorldSetup(){
-    ShaderSystem::Use("standard");
-
-    auto* camera = Engine::GetDefaultResource<Camera>();
-    camera->mode = ECameraMode::FixedResolution;
-    camera->size = { 800, 600 };
-    camera->zoom = 1;
-    camera->position = { 0, 0, 0 };
-    camera->Update();
-
-    GlavonjeClient client;
-    client.Connect("127.0.0.1", 3030);
-    client.Jump(0);
 }
 

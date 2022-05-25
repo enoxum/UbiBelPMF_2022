@@ -3,28 +3,36 @@
 #include "core/core.h"
 #include "core/engine.h"
 #include "core/input/inputs.h"
-#include "core/graphics/sprite.h"
-#include "core/graphics/animation.h"
-#include "core/graphics/shaders.h"
-#include "core/graphics/window.h"
 #include "core/game/transforms.h"
+#include "core/net/server.h"
+#include "core/net/connection.h"
 
 using namespace dagger;
 using namespace glavonje;
 
-void GlavonjeServer::GameplaySystemsSetup(){
+class GlavonjeNetServer : public dagger::net::IServer<EMsgType>
+{
+public:
+    GlavonjeNetServer(UInt16 port) : IServer(port) {}
+};
+
+void GlavonjeServer::CoreSystemsSetup()
+{
+    auto& engine = Engine::Instance();
+    engine.AddSystem<InputSystem>();
+    engine.AddSystem<TransformSystem>();
+}
+
+void GlavonjeServer::GameplaySystemsSetup()
+{
 
 }
 
-void GlavonjeServer::WorldSetup(){
-    ShaderSystem::Use("standard");
+void GlavonjeServer::WorldSetup()
+{
+    auto* server = new GlavonjeNetServer{3000};
 
-    auto* camera = Engine::GetDefaultResource<Camera>();
-    camera->mode = ECameraMode::FixedResolution;
-    camera->size = { 800, 600 };
-    camera->zoom = 1;
-    camera->position = { 0, 0, 0 };
-    camera->Update();
+    server->Start();
 }
 
 

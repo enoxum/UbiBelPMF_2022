@@ -16,6 +16,7 @@ namespace glavonje
             return "glavonje.ini";
         };
 
+        void CoreSystemsSetup() override;
         void GameplaySystemsSetup() override;
         void WorldSetup() override;
     };
