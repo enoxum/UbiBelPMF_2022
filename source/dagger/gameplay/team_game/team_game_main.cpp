@@ -82,7 +82,7 @@ void team_game::SetupWorld()
         auto menu = reg.create();
         auto& sprite = reg.emplace<Sprite>(menu);
         AssignSprite(sprite, "Background:menu");
-        sprite.size = { 2500, 2500 };
+        sprite.size = { 1700, 1220 };
         auto mm = reg.emplace<MainMenu_>(menu);
         auto& text = reg.emplace<Text>(menu);
         text.spacing = 0.6f;
