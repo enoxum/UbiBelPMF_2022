@@ -20,7 +20,18 @@ void CameraFollowSystem::Run()
         {
             for (UInt32 i = 0; i < focus_.weight; i++)
             {
-                center += (Vector2)sprite_.position;
+                if (((Vector2)sprite_.position).x >= 800 ) {
+                    center.x = 800;
+                    center.y = ((Vector2)sprite_.position).y;
+                }
+                else if (((Vector2)sprite_.position).x <= -800) {
+                    center.x = -800;
+                    center.y = ((Vector2)sprite_.position).y;
+                }
+                else {
+                    center += (Vector2)sprite_.position;
+                }
+                
             }
             count += focus_.weight;
         });
