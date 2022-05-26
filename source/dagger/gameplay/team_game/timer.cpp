@@ -3,21 +3,28 @@
 
 void team_game::TimerSystem::Run()
 {
-	seconds += Engine::DeltaTime();
+	
 
     auto& reg = Engine::Registry();
-    auto ents = reg.view<const Time, Text>();
+    auto ents = reg.view<Time, Text>();
+
+    for (const auto ent : ents) {
+        
+        auto& text = ents.get<Text>(ent);
+        auto& time = ents.get<Time>(ent);
+        time.seconds += Engine::DeltaTime();
+        String msg = std::to_string((int)time.seconds) + ":" + std::to_string((int)(time.seconds * 100) % 100);
+        text.Set("pixel-font", msg, { 350, 250 ,0 });
+    }
 
     ents.each([this](const Time, Text& text) {
-        String msg = std::to_string((int)seconds) + ":" + std::to_string((int)(seconds * 100) % 100); 
-        text.Set("pixel-font", msg, {350, 250 ,0});
+        
     });
 
 }
 
 void team_game::TimerSystem::SpinUp()
 {
-	seconds = 0.0;
 }
 
 void team_game::TimerSystem::WindDown()

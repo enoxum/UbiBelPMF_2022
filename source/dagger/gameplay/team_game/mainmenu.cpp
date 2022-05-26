@@ -6,6 +6,8 @@
 #include "gameplay/team_game/Utilities/map_generator_utility.h"
 #include "gameplay/team_game/team_game_main.h"
 
+#include "timer.h"
+
 #include<iostream>
 
 using namespace dagger;
@@ -80,6 +82,8 @@ void mainmenu::Run() {
 		if (m_restart) {
 			m_restart = false;
 			showMenu = true;
+		
+
 			pause = false;
 			Engine::Registry().clear();
 			team_game::SetupWorld();

@@ -10,13 +10,12 @@ using namespace dagger;
 namespace team_game
 {
     struct Time {
-        char c;
+        double seconds = 0.0;
     };
 
     class TimerSystem : public System {
 
     private:
-        double seconds;
     public:
 
         inline String SystemName() { return "Timer system"; }
