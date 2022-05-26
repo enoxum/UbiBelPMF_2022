@@ -34,7 +34,7 @@ void GUISystem::OnPreRender()
 
 void GUISystem::OnToolRender()
 {
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void GUISystem::WindDown()

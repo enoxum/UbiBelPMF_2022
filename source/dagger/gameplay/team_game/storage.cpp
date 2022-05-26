@@ -33,7 +33,7 @@ void StorageSystem::Run()
        
         if (offset == selectedItem - 1) {
             Item i = ents.get<Item>(ent);
-            Logger::critical(i.id);
+            //Logger::critical(i.id);
 
             auto view = reg.view<Player, Transform, SimpleCollision>();
             auto viewCollisions = reg.view<Obstacle, Transform, SimpleCollision>();
@@ -46,7 +46,12 @@ void StorageSystem::Run()
                     auto& obstacle = viewCollisions.get<Obstacle>(col.colidedWith);
 
                     if (i.id == obstacle.id) {
-                       Logger::critical("istiiiii ");
+                       //Logger::critical("istiiiii ");
+
+                        if (obstacle.id == "2") {
+                            Engine::ToggleSystemsPause(true);
+                            Logger::critical("gotovo");
+                        }
 
                        Transform& transform = viewCollisions.get<Transform>(col.colidedWith);
                        transform.position = { INFINITY, INFINITY, INFINITY };

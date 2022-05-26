@@ -3,7 +3,6 @@
 1 SimpleRockPlatform -300 250 50 30 Platform SimpleCollision
 1 SimpleRockPlatform -100 100 50 30 Platform
 1 SimpleRockPlatform 1200 -200 100 30 Platform 
-2 congratulation 690 16 72 72
 3 candle_with_fire -350 -30 300 300
 3 SimpleRockPlatform 400 350 50 30 Platform
 3 SimpleRockPlatform 700 500 50 30 Platform
