@@ -30,7 +30,7 @@ namespace team_game {
 
     private:
         void OnKeyboardEvent(KeyboardEvent kEvent_);
-        bool show = true;
+        bool showMenu = true;
         bool pause = false;
     };
 };

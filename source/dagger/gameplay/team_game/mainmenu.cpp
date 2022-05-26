@@ -37,32 +37,14 @@ void mainmenu::OnKeyboardEvent(KeyboardEvent kEvent_) {
 		}
 
 		if (kEvent_.key == EDaggerKeyboard::KeyEnter && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-			show = !show;
-			if (show) {
-
-			}
-			else {
-				inst.ToggleSystemsPause(false);
-				sprite.size = { 0,0 };
-				text.Set("pixel-font", "", { 0,0,0 });
-			}
+			showMenu = false;
 		}
 
 		if (kEvent_.key == EDaggerKeyboard::KeyP && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-			pause = !pause;
-			if (pause) {
-				inst.ToggleSystemsPause(true);
-				AssignSprite(sprite, "Background:introduction");
-				sprite.size = { 400,300 };
-				sprite.position = {0,125,0};
-				text.Set("pixel-font", "Press P to resume the game", { 0,0,0 });
-				sprite.UseAsUI();
+			if (!showMenu) {
+				pause = !pause;
 			}
-			else {
-				inst.ToggleSystemsPause(false);
-				sprite.size = { 0,0 };
-				text.Set("pixel-font", "", { 0,0,0 });
-			}
+			
 		}
 	}
 }
@@ -76,13 +58,31 @@ void mainmenu::Run() {
 
 	for (const auto ent : ents) {
 
-		if (m_restart) {
-			m_restart = false;
-			Engine::Registry().clear();
-			team_game::SetupWorld();
+		auto& sprite = ents.get<Sprite>(ent);
+		auto& mm = ents.get<MainMenu_>(ent);
+		auto& text = ents.get<Text>(ent);
+
+		if (!showMenu) {
+			inst.ToggleSystemsPause(false);
+			sprite.size = { 0,0 };
+			text.Set("pixel-font", "", { 0,0,0 });
 		}
 
-		auto& sprite = ents.get<Sprite>(ent);
-		auto& text = ents.get<Text>(ent);		
+		if (pause) {
+			inst.ToggleSystemsPause(true);
+			AssignSprite(sprite, "Background:introduction");
+			sprite.size = { 400,300 };
+			sprite.position = { 0,125,0 };
+			text.Set("pixel-font", "Press P to resume the game", { 0,0,0 });
+			sprite.UseAsUI();
+		}
+
+		if (m_restart) {
+			m_restart = false;
+			showMenu = true;
+			pause = false;
+			Engine::Registry().clear();
+			team_game::SetupWorld();
+		}	
 	}
 }

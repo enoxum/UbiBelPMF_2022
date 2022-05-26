@@ -99,9 +99,10 @@ void team_game::SetupWorld()
     }
 
     {
+        engine.ToggleSystemsPause(true);
         team_game::initPlayer(zPos);
         team_game::initMap(zPos, fileName);
-        engine.ToggleSystemsPause(true);
+        
     }
     // {
     //     auto entity = reg.create();
