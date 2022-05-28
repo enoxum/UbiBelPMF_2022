@@ -20,7 +20,7 @@ void Dash::Init(const Entity& character)
 	special_info.max_charges = 2;
 	special_info.current_charges = 2;
 
-	special_info.duration = 0;
+	special_info.duration = 2000;
 	special_info.current_duration = 0;
 
 	special_info.cooldown = 0.5;
@@ -47,13 +47,12 @@ void Dash::Run(const Entity& character)
 {
 	auto&& [special_info, transform, character_info] = Engine::Registry().get<SpecialInfo,Transform,CharacterInfo>(character);
 	
-	if (dash_info.speed > 0)
+	if (special_info.current_duration > 0)
 	{
-		special_info.current_duration -= Engine::DeltaTime();
 		
-		transform.position.x += dash_info.speed * Engine::DeltaTime() * character_info.side;
+		transform.position.x += special_info.current_duration * Engine::DeltaTime() * character_info.side;
 
-		dash_info.speed -= dash_info.speed_decrease;
+		special_info.current_duration -= dash_info.speed_decrease;
 	}
 
 }

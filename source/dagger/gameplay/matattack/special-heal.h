@@ -6,9 +6,7 @@
 namespace matattack
 {
     struct HealInfo {
-        SInt32 max_heal_amount = 50;
-        SInt32 heal_decrease = 10;
-        SInt32 heal_amount = 0;
+        SInt32 heal_amount = 10;
     };
 
     class Heal : public ISpecialAbility

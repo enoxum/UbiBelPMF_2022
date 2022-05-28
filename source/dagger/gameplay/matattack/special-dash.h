@@ -6,7 +6,7 @@
 namespace matattack
 {
     struct DashInfo {
-        Float32 max_speed = 3000;
+        Float32 max_speed = 2000;
         Float32 speed_decrease = 50;
         Float32 speed = 0;
     };
