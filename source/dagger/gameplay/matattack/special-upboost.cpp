@@ -40,7 +40,7 @@ void UpBoost::Start(const Entity& character)
 		special_info.current_charges--;
 		special_info.current_cooldown = special_info.cooldown;
 		gravity.speed = -upboost_info.speed;
-		Logger::critical("Boost");
+		//Logger::critical("Boost");
 	}
 }
 

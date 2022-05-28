@@ -6,7 +6,7 @@
 namespace matattack
 {
     struct UpBoostInfo {
-        Float32 speed = 500.0F;
+        Float32 speed = 600.0F;
     };
 
     class UpBoost : public ISpecialAbility
