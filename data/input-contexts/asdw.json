@@ -12,11 +12,11 @@
 		] },
 		{ "command-name": "attack", 
 		  "actions": [
-			{ "trigger": "KeyQ", "value": 1 }
+			{ "trigger": "KeyV", "value": 1 }
 		] }, 
 		{ "command-name": "special", 
 			"actions": [
-			  { "trigger": "KeyE", "value": 1 }
+			  { "trigger": "KeyB", "value": 1 }
 		  ] }, 
 		{ "command-name": "down", "trigger": "KeyS" },
 		{ "command-name": "light", "trigger": "KeyR", "event": "Released" },
