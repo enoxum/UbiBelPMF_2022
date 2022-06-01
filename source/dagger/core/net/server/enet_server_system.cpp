@@ -1,7 +1,7 @@
 #include "enet_server_system.h"
 #include "core/engine.h"
 #include <enet/enet.h>
-#include "core/net/v4/server.h"
+#include "core/net/server/server.h"
 #include <variant>
 
 using namespace dagger;

@@ -13,11 +13,11 @@ struct Packet
     double timestamp;
     std::variant<
         Jump,
-        Shoot,
+        Shoot
     > var;
 };
 
 Packet deserialize(UInt8* data_, UInt64 dataLength_);
-Sequence<UInt8> serialize(const Packet& packet);
+Sequence<UInt8> serialize(const Packet& packet_);
 
 }

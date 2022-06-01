@@ -1,6 +1,6 @@
 #pragma once
 #include "core/core.h"
-#include "core/net/v4/packet/packet.hpp"
+#include "core/net/packet/packet.h"
 
 
 namespace client {

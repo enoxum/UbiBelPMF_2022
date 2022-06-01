@@ -8,12 +8,16 @@
 #include "core/graphics/shaders.h"
 #include "core/graphics/window.h"
 #include "core/game/transforms.h"
-#include "core/net/client.h"
-#include "core/net/server.h"
+#include "core/net/client/client.h"
+#include "core/net/server/server.h"
 
 using namespace dagger;
 using namespace net_test;
 using namespace net;
+
+enum class EMsgType {
+    Shoot, Jump
+};
 
 void test_message_io() {
     Message<EMsgType> msg;

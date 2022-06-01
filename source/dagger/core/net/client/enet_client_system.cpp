@@ -1,7 +1,7 @@
-#include "enet_client_system.h"
+#include "core/net/client/enet_client_system.h"
 #include "core/engine.h"
 #include <enet/enet.h>
-#include "core/net/v4/client.h"
+#include "core/net/client/client.h"
 #include <variant>
 
 using namespace dagger;

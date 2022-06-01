@@ -10,25 +10,12 @@
 #include "core/game/transforms.h"
 #include <enet/enet.h>
 
-#include "core/net/client.h"
+#include "core/net/client/client.h"
+#include "core/net/client/enet_client_system.h"
 
 using namespace dagger;
 using namespace glavonje;
 
-using namespace net;
-
-
-class GlavonjeNetClient : public dagger::net::IClient<EMsgType> 
-{
-public:
-    bool Shoot(UInt32 id)
-    {
-        Message<EMsgType> msg;
-        msg.header.id = EMsgType::Shoot;
-        msg << id;
-        Send(msg);
-    }
-};
 
 void GlavonjeClient::CoreSystemsSetup()
 {
@@ -43,23 +30,7 @@ void GlavonjeClient::GameplaySystemsSetup()
 }
 
 void GlavonjeClient::WorldSetup(){
-
-    if (enet_initialize() != 0) {
-        Logger::critical("Failed to initialize ENet");
-    }
     // ShaderSystem::Use("standard");
-
-    GlavonjeNetClient* gl = new GlavonjeNetClient();
-    bool isgood= gl->Connect("127.0.0.1", 3000);
-    Logger::critical(fmt::format("Connected to server: {}", isgood));
-
-    Message<EMsgType> msg;
-    msg.header.id = EMsgType::Shoot;
-    
-    int x = 3;
-    msg << x;
-
-    gl->Send(msg);
     // auto* camera = Engine::GetDefaultResource<Camera>();
     // camera->mode = ECameraMode::FixedResolution;
     // camera->size = { 800, 600 };

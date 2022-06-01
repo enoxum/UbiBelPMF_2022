@@ -1,7 +1,7 @@
 #include <enet/enet.h>
 #include "core/core.h"
-#include "core/net/v4/remote_client.h"
-#include "core/net/v4/server.h"
+#include "core/net/client/remote_client.h"
+#include "core/net/server/server.h"
 
 Entity server::MakeClientEntity(Registry &registry) {
     auto &ctx = registry.ctx<server::NetworkContext>();
