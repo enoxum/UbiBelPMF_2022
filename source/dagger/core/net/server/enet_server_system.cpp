@@ -48,8 +48,10 @@ void ServerENetSystem::SpinUp()
     auto& registry = Engine::Registry();
     registry.set<ENetHost*>(host);
     registry.set<ClientEntityMap>();
-    auto serverNetworkContext = registry.set<server::NetworkContext>();
+    auto& serverNetworkContext = registry.set<server::NetworkContext>();
     serverNetworkContext.PacketSink().connect<&ServerENetSystem::SendPacketToClient>(*this);
+
+    Logger::info("Initialized ENet server on port {}", port);
 }
 
 void ServerENetSystem::Run()
@@ -66,15 +68,17 @@ void ServerENetSystem::Run()
         switch (event.type) {
             case ENET_EVENT_TYPE_CONNECT: 
             {
-                enet_peer_timeout(event.peer, 0, 10000, 30000);
+                // enet_peer_timeout(event.peer, 0, 10000, 30000);
+                enet_peer_timeout(event.peer, 0, 1000, 3000);
                 auto clientEntity = server::MakeClientEntity(registry);
                 registry.emplace<PeerID>(clientEntity, peerID);
-                Logger::info("Connected %d", peerID);
+                clientEntityMap[peerID] = clientEntity;
+                Logger::info("Connected {}", peerID);
                 break;
             }
             case ENET_EVENT_TYPE_DISCONNECT: 
             {
-                auto clientEntity = clientEntityMap.at(peerID);
+                auto& clientEntity = clientEntityMap.at(peerID);
                 // TODO destroy client
                 clientEntityMap.erase(peerID);
                 Logger::info("Disonnected {}", peerID);
@@ -85,7 +89,7 @@ void ServerENetSystem::Run()
                 // deserialize packet
                 Packet decodedPacket = packet::deserialize(event.packet->data, event.packet->dataLength);
 
-                auto clientEntity = clientEntityMap.at(peerID);
+                auto& clientEntity = clientEntityMap.at(peerID);
                 // receive packet for client
                 std::visit([&](auto &&decoded_packet) {
                     Logger::info("Processing packet");
@@ -120,6 +124,8 @@ void ServerENetSystem::SendPacketToClient(Entity clientEntity, const Packet& pac
     auto data = packet::serialize(packet);
     auto peerID = registry.get<PeerID>(clientEntity).value;
     auto* host = registry.ctx<ENetHost*>();
+
+    Logger::info("Sending to {}", peerID);
     
     ENetPacket* enet_packet = enet_packet_create(data.data(), data.size(), flags);
     ENetPeer* peer = &host->peers[peerID];

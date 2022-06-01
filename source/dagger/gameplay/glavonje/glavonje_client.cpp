@@ -22,6 +22,7 @@ void GlavonjeClient::CoreSystemsSetup()
     auto& engine = Engine::Instance();
     engine.AddSystem<InputSystem>();
     engine.AddSystem<TransformSystem>();
+    engine.AddSystem<ClientENetSystem>();
 }
 
 void GlavonjeClient::GameplaySystemsSetup()
@@ -37,8 +38,6 @@ void GlavonjeClient::WorldSetup(){
     // camera->zoom = 1;
     // camera->position = { 0, 0, 0 };
     // camera->Update();
-
-
 
 }
 

@@ -8,6 +8,7 @@
 #include "gameplay/editor/editor_main.h"
 #include "gameplay/glavonje/glavonje_client.h"
 #include "gameplay/glavonje/glavonje_server.h"
+#include "gameplay/glavonje/glavonje_main.h"
 #include "gameplay/net_test/net_test_main.h"
 
 int main(int argc_, char** argv_)
@@ -18,4 +19,5 @@ int main(int argc_, char** argv_)
 		return engine.Run<glavonje::GlavonjeClient>();
 	}
 	return engine.Run<glavonje::GlavonjeServer>();
+	// return engine.Run<glavonje::Glavonje>();
 }

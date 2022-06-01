@@ -51,10 +51,11 @@ sources = [
 
     'source/dagger/core/net/client/enet_client_system.cpp',
     'source/dagger/core/net/server/enet_server_system.cpp',
+    'source/dagger/core/net/server/server_state_sync_system.cpp',
     'source/dagger/core/net/server/server.cpp',
+    'source/dagger/core/net/packet/packet.cpp',
 
     'source/dagger/gameplay/net_test/net_test_main.cpp',
-    'source/dagger/gameplay/common/network_sync_system.cpp',
     'source/dagger/gameplay/glavonje/glavonje_client.cpp',
     'source/dagger/gameplay/glavonje/glavonje_server.cpp',
 

@@ -59,6 +59,7 @@ void ClientENetSystem::SpinUp()
         Logger::critical("Failed to connect to ENet server");
         return;
     }
+    Logger::info("Started ENet client");
 
     auto& registry = Engine::Registry();
     registry.set<ENetHost*>(host);
@@ -70,7 +71,7 @@ void ClientENetSystem::Run()
 {
     auto& registry = Engine::Registry();
     auto* host = registry.ctx<ENetHost*>();
-    auto clientNetworkContext = registry.ctx<client::NetworkContext>();
+    auto& clientNetworkContext = registry.ctx<client::NetworkContext>();
     ENetEvent event;
 
     while (enet_host_service(host, &event, 0) > 0) 

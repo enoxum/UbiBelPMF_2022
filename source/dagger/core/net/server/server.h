@@ -19,7 +19,7 @@ namespace server {
     Entity MakeClientEntity(Registry &registry);
 
 
-    void ServerReceivePacket(Entity clientEntity_, Packet &packet) 
+    inline void ServerReceivePacket(Entity clientEntity_, Packet &packet) 
     {
     }
 }
