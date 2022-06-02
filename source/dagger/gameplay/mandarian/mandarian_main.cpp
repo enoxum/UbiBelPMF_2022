@@ -128,17 +128,6 @@ void MandarianGame::WorldSetup()
     Engine::GetDefaultResource<MandarianSpellSystem>()->SetMandarian(character.entity); 
     Spell::Create("Aura of Mandarian", 1.0f, 0.5f, "aura:CAST:aura1", "aura:CAST").AddEffects(new FixTo(character.entity), new Aura(100.0f, 100.0f, character.entity)); 
 
-    Spell::Create("Soul of Mandarian", 3.0f, 0.5f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, character.entity));
-    Spell::Create("Soul of Mandarian", 3.0f, 0.5f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, character.entity));
-    Spell::Create("Soul of Mandarian", 3.0f, 0.5f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, character.entity));
-    Spell::Create("Soul of Mandarian", 3.0f, 0.5f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, character.entity));
-
-    Spell::Create("Shurikene of Mandarian", 5.0f, 3.0f, "mandarian:shuriken1", "shuriken:CAST").AddEffects(new Shuriken(character.entity, 200.0f), new Aura(300.0f, 40.0f, character.entity));
-    Spell::Create("Shurikene of Mandarian", 5.0f, 3.0f, "mandarian:shuriken1", "shuriken:CAST").AddEffects(new Shuriken(character.entity, 200.0f), new Aura(300.0f, 40.0f, character.entity));
-    Spell::Create("Shurikene of Mandarian", 5.0f, 3.0f, "mandarian:shuriken1", "shuriken:CAST").AddEffects(new Shuriken(character.entity, 200.0f), new Aura(300.0f, 40.0f, character.entity));
-    Spell::Create("Shurikene of Mandarian", 5.0f, 3.0f, "mandarian:shuriken1", "shuriken:CAST").AddEffects(new Shuriken(character.entity, 200.0f), new Aura(300.0f, 40.0f, character.entity));
-    Spell::Create("Shurikene of Mandarian", 5.0f, 3.0f, "mandarian:shuriken1", "shuriken:CAST").AddEffects(new Shuriken(character.entity, 200.0f), new Aura(300.0f, 40.0f, character.entity));
-
     Engine::GetDefaultResource<EnemyDemageSystem>()->SetMandarian(character.entity);
     Engine::GetDefaultResource<EnemyMovementSystem>()->SetMandarian(character.entity);
     Engine::GetDefaultResource<LevelSystem>()->SetMandarian(character.entity);

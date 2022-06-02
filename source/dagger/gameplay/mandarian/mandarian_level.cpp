@@ -5,6 +5,7 @@
 #include "core/game/transforms.h"
 #include "mandarian_enemy.h"
 #include "mandarian_controller.h"
+#include "mandarian_spell_system.h"
 
 using namespace mandarian;
 
@@ -265,6 +266,18 @@ void LevelSystem::UpdateExperience()
                 {
                     mandarianExperience.points = 0u;
                     mandarianExperience.level++;
+
+                    switch (mandarianExperience.level % 10)
+                    {
+                    case 5:
+                        Spell::Create("Soul of Mandarian", 3.0f, 0.5f, "thunder:CAST:thunder1", "thunder:CAST", 3.0f).AddEffects(new Thunder(1000.0f, 45.0f, mandarian));
+                        break;
+                    case 0:
+                        Spell::Create("Shurikene of Mandarian", 5.0f, 3.0f, "mandarian:shuriken1", "shuriken:CAST").AddEffects(new Shuriken(mandarian, 200.0f), new Aura(300.0f, 40.0f, mandarian));
+                        break;
+                    default:
+                        break;
+                    }
                     
                     mandarianStats.maxHealth += 2u;
                    
