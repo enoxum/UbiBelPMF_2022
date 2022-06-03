@@ -48,7 +48,6 @@ void StorageSystem::Run()
                     auto& obstacle = viewCollisions.get<Obstacle>(col.colidedWith);
 
                     if (i.id == obstacle.id) {
-                       //Logger::critical("istiiiii ");
 
                         if (obstacle.id == "2") {
                             Engine::ToggleSystemsPause(true);
@@ -62,7 +61,6 @@ void StorageSystem::Run()
                                 text.Set("pixel-font", "Congratulations!", { 0,0,0 });
                                 AssignSprite(sprite, "Background:introduction");
                             }
-                            Logger::critical("gotovo");
                         }
 
                        Transform& transform = viewCollisions.get<Transform>(col.colidedWith);
