@@ -30,12 +30,9 @@ void StorageSystem::Run()
         sprite.position = { - screenSize.x / 2 * 0.9 + offset * 0.1 * screenSize.x, - screenSize.y / 2 * 0.9, 0 };
         float ratio = sprite.size.y / sprite.size.x;
         sprite.size = { 60, 60 * ratio};
-        //sprite.size = { 40 , 40};
-
        
         if (offset == selectedItem - 1) {
             Item i = ents.get<Item>(ent);
-            //Logger::critical(i.id);
 
             auto view = reg.view<Player, Transform, SimpleCollision>();
             auto viewCollisions = reg.view<Obstacle, Transform, SimpleCollision>();

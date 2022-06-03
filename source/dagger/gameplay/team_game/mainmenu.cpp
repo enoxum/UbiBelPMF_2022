@@ -98,11 +98,11 @@ void mainmenu::Run() {
 		}
 
 		if (mm.won) {
-			//sprite.size = { 1700, 1220 };
 			reg.clear();
 			team_game::SetupWorld();
-			text.Set("pixel-font", "Bravo! Enter to play again.", { 0,-9,0 });
+			text.Set("pixel-font", "Bravo! Press Enter to play again.", { 0,-9,0 });
 			AssignSprite(sprite, "Background:menu");
+			sprite.size = { 1700, 1300 };
 			started = false;
 		}
 	}

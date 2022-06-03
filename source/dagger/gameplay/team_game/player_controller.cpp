@@ -72,7 +72,6 @@ void PlayerControlSystem::Run() {
         if (ent.position.x > 1600 || ent.position.x < -1600 || ent.position.y > 1200 || ent.position.y < -1200) {
             m_restart = true;
          }
-        
 
         ent.position.x += step * Engine::DeltaTime() * 300;
 
