@@ -45,6 +45,7 @@ void mainmenu::OnKeyboardEvent(KeyboardEvent kEvent_) {
 
 		if (kEvent_.key == EDaggerKeyboard::KeyEnter && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
 			if (!started) {
+				
 				inst.ToggleSystemsPause(false);
 				sprite.size = { 0,0 };
 				text.Set("pixel-font", "", { 0,0,0 });
@@ -91,14 +92,16 @@ void mainmenu::Run() {
 		auto& text = ents.get<Text>(ent);
 
 		if (mm.died) {
-			reg.clear();
+			
 			team_game::SetupWorld();
 			started = false;
 		}
 
 		if (mm.won) {
 			//sprite.size = { 1700, 1220 };
-			text.Set("pixel-font", "Congratulations! Press Enter to play again.", { 0,-9,0 });
+			reg.clear();
+			team_game::SetupWorld();
+			text.Set("pixel-font", "Bravo! Enter to play again.", { 0,-9,0 });
 			AssignSprite(sprite, "Background:menu");
 			started = false;
 		}
