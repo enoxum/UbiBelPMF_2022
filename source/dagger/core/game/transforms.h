@@ -5,9 +5,11 @@
 
 using namespace dagger;
 
-struct Transform
+// TODO: create separate components for position and velocity
+struct Transform 
 {
-    Vector3 position{ 0, 0, 0 };
+    Vector3 position{0, 0, 0};    
+    Vector2 velocity{0, 0};    
 };
 
 class TransformSystem
@@ -17,3 +19,4 @@ class TransformSystem
 
     void Run() override;
 };
+
