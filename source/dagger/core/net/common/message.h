@@ -41,15 +41,5 @@ namespace dagger {
                 return msg;
             }
         };
-
-        template<typename T>
-        class Connection;
-    
-        template <typename T>
-        struct OwnedMessage 
-        {
-            SharedPtr<Connection<T>> remote = nullptr;
-            Message<T> msg;
-        };
     }
 }

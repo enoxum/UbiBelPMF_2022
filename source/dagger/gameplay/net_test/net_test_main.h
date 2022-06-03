@@ -4,7 +4,7 @@
 #include "core/system.h"
 #include "core/game.h"
 #include "core/engine.h"
-#include "core/net/message.h"
+#include "core/net/common/message.h"
 
 
 using namespace dagger;
