@@ -10,7 +10,7 @@ Packet packet::deserialize(UInt8* rawData_, UInt64 dataLength_)
 {
     Sequence<UInt8> data;
     data.reserve(dataLength_);
-    std::copy_n(rawData_, dataLength_, data.begin());
+    std::copy_n(rawData_, dataLength_, std::back_inserter(data));
 
     UInt8 variantIdx = 0;
     data >> variantIdx;
