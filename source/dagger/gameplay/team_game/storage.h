@@ -5,6 +5,9 @@
 #include "core/game.h"
 #include "core/engine.h"
 
+#include "mainmenu.h"
+#include <core/graphics/text.h>
+
 using namespace dagger;
 
 namespace team_game

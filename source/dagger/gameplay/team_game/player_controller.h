@@ -8,6 +8,9 @@
 #include "item_collection.h"
 #include<vector>
 
+#include "mainmenu.h"
+#include <core/graphics/text.h>
+
 using namespace dagger;
 
 namespace team_game

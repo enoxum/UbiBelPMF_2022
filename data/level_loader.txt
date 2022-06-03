@@ -19,5 +19,5 @@ PLTCandle1 SimpleRockPlatform -200 -450 50 30 Platform
 PLTCandle2 SimpleRockPlatform -500 -300 100 30 Platform
 PLTCandle3 SimpleRockPlatform -100 -200 50 30 Platform
 PLTMatch1 SimpleRockPlatform 420 -800 100 30 Platform
-PLTFinalBottom SimpleRockPlatform -600 -1200 1700 30 Platform
+PLTFinalBottom SimpleRockPlatform -350 -1200 300 30 Platform
 Background background 0 0 2400 2400 Sprite

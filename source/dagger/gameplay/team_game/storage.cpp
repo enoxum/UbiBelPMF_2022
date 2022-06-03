@@ -57,9 +57,9 @@ void StorageSystem::Run()
                             for (const auto ent : ents) {
                                 auto& sprite = ents.get<Sprite>(ent);
                                 auto& text = ents.get<Text>(ent);
-                                sprite.size = { 1700, 1220 };
-                                text.Set("pixel-font", "Congratulations!", { 0,-9,0 });
-                                AssignSprite(sprite, "Background:menu");
+                                auto& mm = ents.get<MainMenu_>(ent);
+                                mm.won = true;
+                                
                             }
                         }
 

@@ -31,11 +31,11 @@ void CameraFollowSystem::Run()
                     center.x = ((Vector2)sprite_.position).x;
                 }
 
-                if (((Vector2)sprite_.position).y >= 800) {
-                    center.y = 800;
+                if (((Vector2)sprite_.position).y >= 610) {
+                    center.y = 610;
                 }
                 else if (((Vector2)sprite_.position).y <= -610) {
-                    center.y = -610;
+                    center.y = -600;
                 }
                 else {
                     center.y = ((Vector2)sprite_.position).y;

@@ -96,8 +96,17 @@ void PlayerControlSystem::OnEndOfFrame()
 {
     if (m_restart)
     {
+        auto& engine = Engine::Instance();
+        auto& reg = Engine::Registry();
+        auto ents = reg.view<Sprite, MainMenu_, Text>();
+
+        
         m_restart = false;
-        Engine::Registry().clear();
-        team_game::SetupWorld();
+        
+
+        for (const auto ent : ents) {
+            auto& mm = ents.get<MainMenu_>(ent);
+            mm.died = true;
+        }
     }
 }

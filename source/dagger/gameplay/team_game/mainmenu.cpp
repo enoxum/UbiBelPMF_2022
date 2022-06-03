@@ -35,16 +35,42 @@ void mainmenu::OnKeyboardEvent(KeyboardEvent kEvent_) {
 		auto& text = ents.get<Text>(ent);
 
 		if (kEvent_.key == EDaggerKeyboard::KeyR && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-			m_restart = true;
+			if (started) {
+				Engine::Registry().clear();
+				team_game::SetupWorld();
+				restarted = true;
+				started = false;
+			}
 		}
 
 		if (kEvent_.key == EDaggerKeyboard::KeyEnter && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-			showMenu = false;
+			if (!started) {
+				inst.ToggleSystemsPause(false);
+				sprite.size = { 0,0 };
+				text.Set("pixel-font", "", { 0,0,0 });
+				restarted = false;
+				started = true;
+			}
 		}
 
 		if (kEvent_.key == EDaggerKeyboard::KeyP && (kEvent_.action == EDaggerInputState::Pressed || kEvent_.action == EDaggerInputState::Held)) {
-			if (!showMenu) {
+			if (started) {
 				pause = !pause;
+				if (pause) {
+					inst.ToggleSystemsPause(true);
+					AssignSprite(sprite, "Background:introduction");
+					sprite.size = { 400,300 };
+					sprite.position = { 0,125,0 };
+					text.Set("pixel-font", "Press P to resume the game", { 0,0,0 });
+					sprite.UseAsUI();
+				}
+
+				else {
+					inst.ToggleSystemsPause(false);
+					sprite.size = { 0,0 };
+					text.Set("pixel-font", "", { 0,0,0 });
+					sprite.UseAsUI();
+				}
 			}
 			
 		}
@@ -64,29 +90,17 @@ void mainmenu::Run() {
 		auto& mm = ents.get<MainMenu_>(ent);
 		auto& text = ents.get<Text>(ent);
 
-		if (!showMenu) {
-			inst.ToggleSystemsPause(false);
-			sprite.size = { 0,0 };
-			text.Set("pixel-font", "", { 0,0,0 });
-		}
-
-		if (pause) {
-			inst.ToggleSystemsPause(true);
-			AssignSprite(sprite, "Background:introduction");
-			sprite.size = { 400,300 };
-			sprite.position = { 0,125,0 };
-			text.Set("pixel-font", "Press P to resume the game", { 0,0,0 });
-			sprite.UseAsUI();
-		}
-
-		if (m_restart) {
-			m_restart = false;
-			showMenu = true;
-		
-
-			pause = false;
-			Engine::Registry().clear();
+		if (mm.died) {
+			reg.clear();
 			team_game::SetupWorld();
-		}	
+			started = false;
+		}
+
+		if (mm.won) {
+			//sprite.size = { 1700, 1220 };
+			text.Set("pixel-font", "Congratulations! Press Enter to play again.", { 0,-9,0 });
+			AssignSprite(sprite, "Background:menu");
+			started = false;
+		}
 	}
 }

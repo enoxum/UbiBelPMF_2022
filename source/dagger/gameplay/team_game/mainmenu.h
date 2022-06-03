@@ -11,7 +11,8 @@ using namespace dagger;
 namespace team_game {
 
     struct MainMenu_ {
-        bool show = true;
+        bool died = false;
+        bool won = false;
     };
 
 	class mainmenu : public System
@@ -30,7 +31,9 @@ namespace team_game {
 
     private:
         void OnKeyboardEvent(KeyboardEvent kEvent_);
-        bool showMenu = true;
+        bool started = false;
+        bool paused = false;
         bool pause = false;
+        bool restarted = false;
     };
 };
