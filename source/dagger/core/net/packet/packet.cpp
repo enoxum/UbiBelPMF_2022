@@ -44,7 +44,7 @@ void packet::serialize(const Transform& transform_, UInt8 variantIdx_, Sequence<
           << transform_.position.y 
           << transform_.velocity.x
           << transform_.velocity.y
-          << variantIdx_;
+          << variantIdx_; // TODO: this shouldn't be the concern of the serialization implentation for Transform
 }
 
 void packet::deserialize(Sequence<UInt8>& data_, Transform& transform_) 
@@ -55,7 +55,27 @@ void packet::deserialize(Sequence<UInt8>& data_, Transform& transform_)
           >> transform_.position.x;
 }
 
-Packet::Packet(const Transform& transform_)
+void packet::serialize(const InputReceiver& input_, UInt8 variantIdx_, Sequence<UInt8>& data_) 
 {
-    var.emplace<Transform>(transform_);
+    // create a copy because .Get is non const 
+    InputReceiver input = input_;
+    // serialize inputs Left, Down, Right, Up
+    for (auto& key : input.contexts) 
+    {
+        data_ << input.Get(key);
+    }
+    data_ << variantIdx_;
+}
+
+void packet::deserialize(Sequence<UInt8>& data_, InputReceiver& input_) 
+{
+    Float32 up, right, down, left;
+    data_ >> up
+          >> right
+          >> down
+          >> left;
+    input_.values.insert({ "up", up });
+    input_.values.insert({ "right", right });
+    input_.values.insert({ "down", down });
+    input_.values.insert({ "left", left });
 }

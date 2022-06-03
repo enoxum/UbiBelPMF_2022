@@ -30,4 +30,5 @@ private:
     ENetHost* InitENetHost(UInt16 port_);
     void SendPacketToClient(Entity clientEntity, const Packet& packet);
     void ProcessPacket(Entity clientEntity_, const Transform& transform_);
+    void ProcessPacket(Entity clientEntity_, const InputReceiver& input_);
 };

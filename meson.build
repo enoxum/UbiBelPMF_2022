@@ -49,6 +49,8 @@ sources = [
     'source/dagger/core/engine.cpp',
     'source/dagger/core/game.cpp',
 
+    'source/dagger/core/net/client/client_input_sync_system.cpp',
+
     'source/dagger/core/net/client/enet_client_system.cpp',
     'source/dagger/core/net/server/enet_server_system.cpp',
     'source/dagger/core/net/server/server_state_sync_system.cpp',

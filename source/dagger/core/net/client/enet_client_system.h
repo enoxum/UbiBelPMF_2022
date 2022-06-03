@@ -21,4 +21,5 @@ private:
     ENetPeer* ConnectToServer(ENetHost* host_, const String& hostname_, UInt16 port_);
     void SendPacketToServer(const Packet& packet_);
     void ProcessPacket(const Transform& transform_);
+    void ProcessPacket(const InputReceiver& input_);
 };

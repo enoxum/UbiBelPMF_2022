@@ -136,3 +136,10 @@ void ServerENetSystem::ProcessPacket(Entity clientEntity_, const Transform& tran
 {
     Logger::warn("Got transform {} {}", transform_.position.x, transform_.position.y);
 } 
+
+void ServerENetSystem::ProcessPacket(Entity clientEntity_, const InputReceiver& input_)
+{
+    // create a copy because .Get is non const
+    InputReceiver input = input_;
+    Logger::warn("Got input {} {} {} {}", input.Get("left"), input.Get("down"), input.Get("right"), input.Get("up"));
+} 

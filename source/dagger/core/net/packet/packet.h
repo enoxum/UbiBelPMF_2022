@@ -5,17 +5,19 @@
 #include "core/net/common/message.h"
 
 #include "core/game/transforms.h"
+#include "core/input/inputs.h"
 
 namespace dagger::packet {
 
 struct Packet 
 {
-    Packet() = default;
-    Packet(const Transform& transform_);
+    // Packet() = default;
+    // Packet(const Transform& transform_);
 
     // TODO: somehow connect NetworkedComponents and this
     std::variant<
-        Transform
+        Transform,
+        InputReceiver
     > var;
 };
 
@@ -24,6 +26,9 @@ Sequence<UInt8> serialize(const Packet& packet_);
 
 void serialize(const Transform& transform_, UInt8 variantIdx_, Sequence<UInt8>& data_);
 void deserialize(Sequence<UInt8>& data_, Transform& transform_);
+
+void serialize(const InputReceiver& input_, UInt8 variantIdx_, Sequence<UInt8>& data_);
+void deserialize(Sequence<UInt8>& data_, InputReceiver& input_);
 
 template<typename T, IS_TRIVIALLY_COPYABLE(T)>
 Sequence<UInt8>& operator << (Sequence<UInt8>& data_, const T& field)
