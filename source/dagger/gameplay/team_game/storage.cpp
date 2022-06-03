@@ -6,10 +6,12 @@
 #include "gameplay/common/simple_collisions.h"
 #include "core/game/transforms.h"
 #include "obstacle.h"
+#include "mainmenu.h"
 
 #include<iostream>
 #include <gameplay/team_game/Utilities/string_utility.h>
 #include "gameplay/team_game/Utilities/map_generator_utility.h"
+#include <core/graphics/text.h>
 
 
 using namespace team_game;
@@ -50,6 +52,16 @@ void StorageSystem::Run()
 
                         if (obstacle.id == "2") {
                             Engine::ToggleSystemsPause(true);
+                            auto& inst = Engine::Instance();
+                            auto& reg = Engine::Registry();
+                            auto ents = reg.view<Sprite, MainMenu_, Text>();
+                            for (const auto ent : ents) {
+                                auto& sprite = ents.get<Sprite>(ent);
+                                auto& text = ents.get<Text>(ent);
+                                sprite.size = { 400, 300 };
+                                text.Set("pixel-font", "Congratulations!", { 0,0,0 });
+                                AssignSprite(sprite, "Background:introduction");
+                            }
                             Logger::critical("gotovo");
                         }
 
