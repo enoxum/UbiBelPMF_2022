@@ -90,10 +90,10 @@ void ServerENetSystem::Run()
                 Packet decodedPacket = packet::deserialize(event.packet->data, event.packet->dataLength);
 
                 auto& clientEntity = clientEntityMap.at(peerID);
-                // receive packet for client
-                std::visit([&](auto &&decoded_packet) {
+                // receive packet from client
+                std::visit([&](auto &&packetData) {
                     Logger::info("Processing packet");
-                    // process_packet(registry, clientEntity, decodedPacket);
+                    ProcessPacket(clientEntity, packetData);
                 }, decodedPacket.var);
 
                 // clean up the packet because we're done with it
@@ -131,3 +131,8 @@ void ServerENetSystem::SendPacketToClient(Entity clientEntity, const Packet& pac
     ENetPeer* peer = &host->peers[peerID];
     enet_peer_send(peer, flags, enet_packet);
 }
+
+void ServerENetSystem::ProcessPacket(Entity clientEntity_, const Transform& transform_)
+{
+    Logger::warn("Got transform {} {}", transform_.position.x, transform_.position.y);
+} 

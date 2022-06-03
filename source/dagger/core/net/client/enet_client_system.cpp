@@ -95,9 +95,9 @@ void ClientENetSystem::Run()
                 Packet decodedPacket = packet::deserialize(event.packet->data, event.packet->dataLength);
 
                 // receive packet for client
-                std::visit([&](auto &&decoded_packet) {
+                std::visit([&](auto &&packetData) {
                     Logger::info("Processing packet");
-                    // process_packet(registry, clientEntity, decodedPacket);
+                    ProcessPacket(packetData);
                 }, decodedPacket.var);
 
                 // clean up the packet because we're done with it
@@ -140,3 +140,8 @@ void ClientENetSystem::WindDown()
     registry.unset<ENetHost*>();
     registry.unset<ENetPeer*>();
 }
+
+void ClientENetSystem::ProcessPacket(const Transform& transform_)
+{
+    Logger::warn("Got transform {} {}", transform_.position.x, transform_.position.y);
+} 
