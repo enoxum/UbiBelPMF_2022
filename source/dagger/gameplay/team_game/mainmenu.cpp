@@ -93,6 +93,7 @@ void mainmenu::Run() {
 
 		if (mm.died) {
 			
+			reg.clear();
 			team_game::SetupWorld();
 			started = false;
 		}
